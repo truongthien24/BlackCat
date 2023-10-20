@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import Swal from 'sweetalert2';
+import toast from 'react-hot-toast';
 
 export const FormBaseLogin = (props) => {
 
@@ -34,7 +35,7 @@ export const FormBaseLogin = (props) => {
                             type={item.type} 
                             name={item.name}
                             placeholder={`Điền vào ${item.name}...`} 
-                            className={`w-[95%] outline-none`}
+                            className={`w-[95%] outline-none bg-transparent`}
                             {...register(`${item.name}`)}
                         />
                         {
@@ -68,38 +69,29 @@ export const FormBaseLogin = (props) => {
                     <span className='text-orange-400 cursor-pointer hover:underline text-[14px] md:text-[16px]'
                         onClick={
                             ()=> {
-                                Swal.fire({
-                                    icon: 'info',
-                                    iconColor: '#3790c7',
-                                    title: 'Chức năng đang phát triển!',
-                                    timer: 2000,
-                                    timerProgressBar: true,
-                                    confirmButtonColor: '#3790c7',
-                                    // didOpen: () => {
-                                    //     Swal.showLoading()
-                                    //     const b = Swal.getHtmlContainer().querySelector('b')
-                                    //     timerInterval = setInterval(() => {
-                                    //     b.textContent = Swal.getTimerLeft()
-                                    //     }, 100)
-                                    // },
-                                    // willClose: () => {
-                                    //     clearInterval(timerInterval)
-                                    // }
-                                })
+                                // Swal.fire({
+                                //     icon: 'info',
+                                //     iconColor: '#3790c7',
+                                //     title: 'Chức năng đang phát triển!',
+                                //     timer: 2000,
+                                //     timerProgressBar: true,
+                                //     confirmButtonColor: '#3790c7',
+                                // })
+                                toast.error('Chức năng đang phát triển!')
                             }
                         }
                     >{t('forgotPassword')}? </span>
-                    <span className='text-[#3790c7] font-[500] cursor-pointer hover:underline text-[14px] md:text-[16px]'
+                    <span className='text-[#498374] font-[500] cursor-pointer hover:underline text-[14px] md:text-[16px]'
                         onClick={
                             ()=> {
-                                navigate('/user/register')
+                                navigate('/register')
                             }
                         }
                     >{t('noAccount')} </span>
                 </div>
                 <div className='mt-[40px] xl:mt-[70px] w-[70%] grid grid-cols-2 gap-3'>
                     <button className='flex items-center justify-center bg-[white] py-[12px] rounded-[7px]' type="button" onClick={handleCancel}>{t('back')}</button>
-                    <button className='flex items-center justify-center bg-[#3790c7] text-white py-[12px] rounded-[7px] duration-300 hover:shadow-[#3790c7a6] hover:shadow-lg hover:translate-y-[-3px]' type="submit">{t('login')}</button>
+                    <button className='flex items-center justify-center bg-[#498374] text-white py-[12px] rounded-[7px] duration-300 hover:shadow-[#3790c7a6] hover:shadow-lg hover:translate-y-[-3px]' type="submit">{t('login')}</button>
                 </div>
             </form>
         </>

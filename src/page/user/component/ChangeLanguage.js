@@ -16,19 +16,19 @@ export const ChangeLanguage = () => {
 
     const language = localStorage.getItem('language')
 
-    useEffect(()=> {language === 'vn' ? setLang({
-        name: 'VN',
-        value: 'vn',
-        image: '/images/vn.png'
-    }) : language === 'en' ? setLang({
-        name: 'EN',
-        value: 'en',
-        image: '/images/us.png'
-    }) : setLang({
-        name: 'KR',
-        value: 'kr',
-        image: '/images/kr.png'
-    })},[language])
+    // useEffect(()=> {language === 'vn' ? setLang({
+    //     name: 'VN',
+    //     value: 'vn',
+    //     image: '/images/vn.png'
+    // }) : language === 'en' ? setLang({
+    //     name: 'EN',
+    //     value: 'en',
+    //     image: '/images/us.png'
+    // }) : setLang({
+    //     name: 'KR',
+    //     value: 'kr',
+    //     image: '/images/kr.png'
+    // })},[language])
 
     const dispatch = useDispatch();
 
@@ -62,16 +62,16 @@ export const ChangeLanguage = () => {
         //         })
         //     }
         // },
-        // {
-        //     name: 'EN',
-        //     value: 'en',
-        //     image: '/images/us.png',
-        //     method: () => {
-        //         handleMethod({
-        //             value: 'en',
-        //         })
-        //     }
-        // },
+        {
+            name: 'EN',
+            value: 'en',
+            image: '/images/us.png',
+            method: () => {
+                handleMethod({
+                    value: 'en',
+                })
+            }
+        },
         {
             name: 'VN',
             value: 'vn',

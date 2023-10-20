@@ -75,7 +75,7 @@ export const FormBaseRegister = (props) => {
                 {renderInput()}
                 <div className='w-[90%] lg:w-[80%] mt-[40px] xl:mt-[70px] grid grid-cols-2 gap-3'>
                     <button className='flex items-center justify-center bg-[white] py-[12px] rounded-[7px]' type="button" onClick={handleCancel}>{t('back')}</button>
-                    <button className='flex items-center justify-center bg-[#3790c7] text-white py-[12px] rounded-[7px] duration-300 hover:shadow-[#3790c7a6] hover:shadow-lg hover:translate-y-[-3px]' type="submit">{t('register')}</button>
+                    <button className='flex items-center justify-center bg-[#498374] text-white py-[12px] rounded-[7px] duration-300 hover:shadow-[#3790c7a6] hover:shadow-lg hover:translate-y-[-3px]' type="submit">{t('register')}</button>
                 </div>
             </form>
         </>

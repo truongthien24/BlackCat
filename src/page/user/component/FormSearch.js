@@ -4,6 +4,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { setLoading } from 'redux/action/homeAction';
 import { COLOR } from '../shareComponent/constant';
+import toast from 'react-hot-toast';
 
 const FormSearch = (props) => {
     // Props
@@ -31,7 +32,8 @@ const FormSearch = (props) => {
             dispatch(setLoading({
                 status: 'done'
             }));
-        }, 2000)
+            toast.error('Chức năng đang phát triển')
+        }, 1000)
     }
 
     return (

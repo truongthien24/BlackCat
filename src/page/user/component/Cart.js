@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import Swal from 'sweetalert2'
 import { COLOR } from '../shareComponent/constant'
 import { checkLogin } from '../shareComponent/Function/checkLogin'
+import toast from 'react-hot-toast'
 
 const Cart = () => {
 
@@ -13,13 +14,14 @@ const Cart = () => {
         if (checkLogin()) {
             navigate('/favouriteBook');
         } else {
-            Swal.fire({
-                icon: 'info',
-                text: 'Rất tiếc! Bạn chưa đăng nhập',
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true
-            })
+            // Swal.fire({
+            //     icon: 'info',
+            //     text: 'Rất tiếc! Bạn chưa đăng nhập',
+            //     showConfirmButton: false,
+            //     timer: 3000,
+            //     timerProgressBar: true
+            // })
+            toast.error('Rất tiếc! Bạn chưa đăng nhập');
         }
     }
 

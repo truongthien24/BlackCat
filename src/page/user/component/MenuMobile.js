@@ -1,108 +1,57 @@
-import React from 'react'
-import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
-import Swal from 'sweetalert2';
-import { Icon } from '../../../assets/icon';
+import React, { useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
+import { Icon } from "../../../assets/icon";
+import { Drawer } from "antd";
+import Caterory from "./Category/Caterory";
+import CateroryMobile from "./Category/CategoryMobile";
 
 export const MenuMobile = () => {
+  const { t } = useTranslation();
+  const navigate = useNavigate();
 
-    const {t} = useTranslation(); 
-    const navigate = useNavigate();
+  const [isToggle, setIsToggle] = useState(false);
 
-    // API
-    const APIMenu = [
-        {
-            name: `${t('aboutUs')}`,
-            icon: 'check',
-            method: () => {
-                // Swal.fire({
-                //     icon: 'info',
-                //     title: `${t('FuncIsDev')}`,
-                //     confirmButtonColor: '#3790c7',
-                //     confirmButtonText: `${t('ok')}`,
-                //     timer: 2000,
-                //     timerProgressBar: true
-                //   })
-                navigate('introduce')
-            }
-        },
-        {
-            name: `${t('booking')}`,
-            icon: 'calendar',
-            method: () => {
-                // alert('xin chào !')
-                // dispatch(setLoading({
-                //     status: 'isLoading',
-                // }))
-                // setTimeout(()=> {
-                //     dispatch(setLoading({
-                //         status: 'done',
-                //     }))
-                //     navigate('bookingSchedule');
-                // }, 1300)
-                const jwt = localStorage.getItem('jwt');
-                if(jwt) {
-                    navigate('bookingSchedule');
-                } else {
-                    Swal.fire({
-                        icon: 'info',
-                        title: `${t('youAreNotLoggedIn')}`,
-                        timer: 1500,
-                        timerProgressBar: true,
-                        confirmButtonText: `${t('ok')}`,
-                        confirmButtonColor: '#3790c7'
-                    })
-                }
-            }
-        },
-        {
-            name: `${t('service')}`,
-            icon: 'service',
-            method: () => {
-                // Swal.fire({
-                //     icon: 'info',
-                //     title: `${t('FuncIsDev')}`,
-                //     confirmButtonColor: '#3790c7',
-                //     confirmButtonText: `${t('ok')}`,
-                //     timer: 2000,
-                //     timerProgressBar: true
-                //   })
-                navigate('service');
-            }
-        },
-        {
-            name: `${t('contact')}`,
-            icon: 'phone',
-            method: () => {
-                // Swal.fire({
-                //     icon: 'info',
-                //     title: `${t('FuncIsDev')}`,
-                //     confirmButtonColor: '#3790c7',
-                //     confirmButtonText: `${t('ok')}`,
-                //     timer: 2000,
-                //     timerProgressBar: true
-                //   })
-                navigate('contact')
-            }
-        },
-    ]
+  // Method
+  const handleClickToggle = () => {
+    setIsToggle(true);
+  };
 
+  const onClose = () => {
+    setIsToggle(false);
+  };
 
-    const renderMenu = () => {
-        return APIMenu.map((item, index)=> {
-            return <div className="flex justify-center">
-                <div className="flex flex-col items-center" key={index} onClick={item.method}>
-                    <Icon name={item.icon}/>
-                    <span>{item.name}</span>
-                </div>    
-            </div>
-        })
-    }
+  // Return
+  return (
+    <>
+      <button
+        className="h-[35px] w-[35px] rounded-[5px] border-[1px] border-[#ffffff] flex items-center justify-center"
+        onClick={handleClickToggle}
+      >
+        <Icon name="bar" color="#fff" />
+      </button>
+      <Drawer
+        title={
+          <div className="flex items-center mr-[30px]">
+            <img
+              src="/images/logo.png"
+              className="w-[50px] md:w-[70px] lg:w-[80px] cursor-pointer"
+            />
+            <h1 className="text-[20px]">Black&Cat</h1>
+          </div>
+        }
+        placement="left"
+        closable={false}
+        onClose={onClose}
+        className="ant-drawer-mobile"
+        open={isToggle}
+        key="left"
+        width={250}
+        footer={<div className="flex justify-center items-center text-[gray]">@Copyright Steven Thien</div>}
+      >
+        <CateroryMobile />
 
-    // Return
-    return (
-        <div className="fixed grid grid-cols-4 items-center bottom-0 left-0 w-screen bg-[white] p-[8px] z-[100]" style={{boxShadow: "rgba(0, 0, 0, 0.5) 0px 5px 20px"}}>
-            {renderMenu()}
-        </div>
-    )
-}
+      </Drawer>
+    </>
+  );
+};

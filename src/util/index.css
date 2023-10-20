@@ -77,7 +77,7 @@ body {
   animation: box4 var(--duration) linear infinite;
 }
 .boxes .box > div {
-  --background: #3790c7;
+  --background: #498374;
   --top: auto;
   --right: auto;
   --bottom: auto;
@@ -100,12 +100,12 @@ body {
   --left: 0;
 }
 .boxes .box > div:nth-child(2) {
-  --background: #26658b;
+  --background: #2e5249;
   --right: 0;
   --rotateY: 90deg;
 }
 .boxes .box > div:nth-child(3) {
-  --background: #3182b3;
+  --background: #407366;
   --rotateX: -90deg;
 }
 .boxes .box > div:nth-child(4) {
@@ -326,4 +326,25 @@ html {
 
 .ant-slider.ant-slider-horizontal.ant-slider-with-marks {
   margin-bottom: 10px !important;
+}
+
+.category .ant-collapse-item .ant-collapse-header span {
+  color: #fff !important;
+  font-weight: 500;
+}
+.category .ant-collapse-content-box {
+  padding: 0 !important;
+}
+
+.category__mobile .ant-collapse-item .ant-collapse-header span {
+  color: #fff !important;
+  font-weight: 500;
+  font-size: 10px !important;
+}
+.category__mobile .ant-collapse-content-box {
+  padding: 0 !important;
+}
+
+.ant-drawer-mobile .ant-drawer-wrapper-body .ant-drawer-body {
+  padding: 10px !important;
 }/*# sourceMappingURL=index.css.map */

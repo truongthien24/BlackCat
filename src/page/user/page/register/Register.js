@@ -69,7 +69,7 @@ export const Register = () => {
       <>
         <div className='fixed top-0 left-0 w-screen h-screen bg-[white] z-[101] flex flex-col lg:flex-row items-center lg:justify-center'>
             <div className='mr-[10px] my-[20px] flex justify-center lg:flex-1'>
-              <img src="/images/fly.png" className='w-[200px] h-[86px] md:h-[106px] md:w-[250px]'/>
+              <img src="/images/logo.png" className='w-[200px] md:w-[250px]'/>
             </div>
             <div className="lg:flex-1 w-full flex justify-center">
               <div 
@@ -77,8 +77,8 @@ export const Register = () => {
                 style={{boxShadow: 'rgba(0, 0, 0, 0.26) 0px 5px 40px'}}
               >
                 <div className='flex items-center justify-between mb-[20px] md:mb-[30px]'>
-                  <h3 className='text-[20px] md:text-[25px] font-[500] text-[#3790c7]'>{t('register')}</h3>
-                  <span className='text-[25px] md:text-[30px] font-[500] translate-y-[-5px] text-[#3790c7] cursor-pointer' onClick={()=> {
+                  <h3 className='text-[20px] md:text-[25px] font-[500] text-[#498374]'>{t('register')}</h3>
+                  <span className='text-[25px] md:text-[30px] font-[500] translate-y-[-5px] text-[#498374] cursor-pointer' onClick={()=> {
                     navigate('/user/login')
                   }}>&times;</span>
                 </div>
