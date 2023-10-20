@@ -164,9 +164,6 @@ html {
   box-sizing: border-box;
 }
 
-.swiper {
-  padding: 10px 10px 30px 10px !important;
-}
 .swiper .swiper-pagination {
   left: 0 !important;
   width: 100% !important;

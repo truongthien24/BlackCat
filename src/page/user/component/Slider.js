@@ -18,7 +18,7 @@ export const Slider = (props) => {
   const renderSlider = () => {
     return data?.map((item, index) => {
       return <SwiperSlide>
-        <div className={`text-[white] h-[220px] rounded-[12px]`} style={{backgroundImage: `url('${item.image}')`}}>
+        <div className={`text-[white] h-[650px]`} style={{backgroundImage: `url('${item.image}')`, backgroundSize: 'cover'}}>
           
         </div>
       </SwiperSlide>
@@ -32,24 +32,21 @@ export const Slider = (props) => {
         keyboard={true}
         modules={[Navigation, Pagination, Mousewheel, Keyboard]}
         className="mySwiper"
-        breakpoints={{
-          320: {
-            slidesPerView: 1,
-            spaceBetween: 20
-          },
-          600: {
-            slidesPerView: 2,
-            spaceBetween: 20
-          },
-          1140: {
-            slidesPerView: 3,
-            spaceBetween: 20
-          },
-          1400: {
-            slidesPerView: 4,
-            spaceBetween: 20
-          }
-        }}
+        // breakpoints={{
+        //   320: {
+        //     slidesPerView: 1,
+        //   },
+        //   600: {
+        //     slidesPerView: 1,
+        //   },
+        //   1140: {
+        //     slidesPerView: 1,
+        //   },
+        //   1400: {
+        //     slidesPerView: 1,
+        //   }
+        // }}
+        slidesPerView={1}
     >
         {renderSlider()}
     </Swiper>

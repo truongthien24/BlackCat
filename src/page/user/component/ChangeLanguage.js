@@ -1,5 +1,6 @@
 import React, { useState, useEffect} from 'react';
 import { useDispatch } from 'react-redux';
+import Swal from 'sweetalert2';
 import i18n from '../../../assets/i18n/i18n';
 import { setLoading } from '../../../redux/action/homeAction';
 
@@ -32,40 +33,45 @@ export const ChangeLanguage = () => {
     const dispatch = useDispatch();
 
     const handleMethod = (data) => {
-        dispatch(setLoading({
-            status: 'isLoading'
-        }))
-        localStorage.setItem('language', data.value);
-        i18n.changeLanguage(data.value)
-        setTimeout(()=> {
-            setOpen(false);
-            dispatch(setLoading({
-                status: 'done'
-            }))
-        }, 500)   
+        // dispatch(setLoading({
+        //     status: 'isLoading'
+        // }))
+        // localStorage.setItem('language', data.value);
+        // i18n.changeLanguage(data.value)
+        // setTimeout(()=> {
+        //     setOpen(false);
+        //     dispatch(setLoading({
+        //         status: 'done'
+        //     }))
+        // }, 500)   
+        Swal.fire({
+            icon: 'info',
+            text: 'Chức năng đang được phát triển',
+            showConfirmButton: false,
+        })
     }
 
     const listLanguage = [
-        {
-            name: 'KR',
-            value: 'kr',
-            image: '/images/kr.png',
-            method: () => {
-                handleMethod({
-                    value: 'kr',
-                })
-            }
-        },
-        {
-            name: 'EN',
-            value: 'en',
-            image: '/images/us.png',
-            method: () => {
-                handleMethod({
-                    value: 'en',
-                })
-            }
-        },
+        // {
+        //     name: 'KR',
+        //     value: 'kr',
+        //     image: '/images/kr.png',
+        //     method: () => {
+        //         handleMethod({
+        //             value: 'kr',
+        //         })
+        //     }
+        // },
+        // {
+        //     name: 'EN',
+        //     value: 'en',
+        //     image: '/images/us.png',
+        //     method: () => {
+        //         handleMethod({
+        //             value: 'en',
+        //         })
+        //     }
+        // },
         {
             name: 'VN',
             value: 'vn',
@@ -89,9 +95,9 @@ export const ChangeLanguage = () => {
     }
 
     return (
-        <div className='relative'>
+        <div className='relative mr-[20px]'>
             <button 
-                className='flex items-center justify-between border-solid border-[#dadada] border-[1px] rounded-[8px] px-[8px] py-[5px]' 
+                className='flex items-center justify-between rounded-[8px] px-[8px] py-[5px]' 
                 onClick={()=> {
                     setOpen(!open);
                 }}>

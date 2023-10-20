@@ -33,79 +33,72 @@ import { User } from "./component/User";
 import { Lock } from "./component/Lock";
 import { LockOpen } from "./component/LockOpen";
 import { Chart } from "./component/Chart";
+import Heart from "./component/Heart";
+import Cart from "./component/Cart";
 
 export const Icon = (props) => {
-    switch(props.name) {
-        case "phone": return (<Phone {...props}/>);
-        break;
-        case "calendar": return (<Canlendar {...props}/>);
-        break;
-        case "check": return (<Check {...props}/>);
-        break;
-        case "warning": return (<Warning {...props}/>);
-        break;
-        case "search": return (<Search {...props}/>);
-        break;
-        case "star": return (<Star {...props}/>);
-        break;
-        case "building": return (<Building {...props}/>);
-        break;
-        case "more": return (<More {...props}/>);
-        break;
-        case "location": return (<Location {...props}/>);
-        break;
-        case "bank": return (<Bank {...props}/>);
-        break;  
-        case "bookMark": return (<BookMark {...props}/>);
-        break;  
-        case "tag": return (<Tag {...props}/>);
-        break;  
-        case "chat": return (<Chat {...props}/>);
-        break;         
-        case "top": return (<Top {...props}/>);
-        break;
-        case "logOut": return (<Logout {...props}/>);
-        break;              
-        case "service": return (<ServiceIcon {...props}/>);
-        break;
-        case "paper": return (<Paper {...props}/>);
-        break;          
-        case "like": return (<Like {...props}/>);
-        break;
-        case "reply": return (<Reply {...props}/>);
-        break;    
-        case "bath": return (<Bath {...props}/>);
-        break;  
-        case "bed": return (<Bed {...props}/>);
-        break;  
-        case "people": return (<People {...props}/>);
-        break;  
-        case "key": return (<Key {...props}/>);
-        break;  
-        case "swatch": return (<Swatch {...props}/>);
-        break;  
-        case "clock": return (<Clock {...props}/>);
-        break; 
-        case "card": return (<Card {...props}/>);
-        break;   
-        case "money": return (<Money {...props}/>);
-        break;   
-        case "mail": return (<Mail {...props}/>);
-        break;   
-        case "facebook": return (<Facebook {...props}/>);
-        break;   
-        case "instagram": return (<Instagram {...props}/>);
-        break;   
-        case "twitter": return (<Twitter {...props}/>);
-        break;   
-        case "user": return (<User {...props}/>);
-        break;   
-        case "lock": return (<Lock {...props}/>);
-        break;   
-        case "unlock": return (<LockOpen {...props}/>);
-        break;   
-        case "chart": return (<Chart {...props}/>);
-        break;   
+    switch (props.name) {
+        case "phone": return (<Phone {...props} />);
+
+        case "calendar": return (<Canlendar {...props} />);
+
+        case "check": return (<Check {...props} />);
+
+        case "warning": return (<Warning {...props} />);
+
+        case "search": return (<Search {...props} />);
+
+        case "star": return (<Star {...props} />);
+
+        case "building": return (<Building {...props} />);
+
+        case "more": return (<More {...props} />);
+
+        case "location": return (<Location {...props} />);
+
+        case "bank": return (<Bank {...props} />);
+
+        case "bookMark": return (<BookMark {...props} />);
+
+        case "tag": return (<Tag {...props} />);
+
+        case "chat": return (<Chat {...props} />);
+
+        case "top": return (<Top {...props} />);
+
+        case "logOut": return (<Logout {...props} />);
+
+        case "service": return (<ServiceIcon {...props} />);
+
+        case "paper": return (<Paper {...props} />);
+
+        case "like": return (<Like {...props} />);
+
+        case "reply": return (<Reply {...props} />);
+
+        case "bath": return (<Bath {...props} />);
+
+        case "bed": return (<Bed {...props} />);
+
+        case "people": return (<People {...props} />);
+
+        case "key": return (<Key {...props} />);
+
+        case "swatch": return (<Swatch {...props} />);
+
+        case "clock": return (<Clock {...props} />);
+        case "card": return (<Card {...props} />);
+        case "money": return (<Money {...props} />);
+        case "mail": return (<Mail {...props} />);
+        case "facebook": return (<Facebook {...props} />);
+        case "instagram": return (<Instagram {...props} />);
+        case "twitter": return (<Twitter {...props} />);
+        case "user": return (<User {...props} />);
+        case "lock": return (<Lock {...props} />);
+        case "unlock": return (<LockOpen {...props} />);
+        case "chart": return (<Chart {...props} />);
+        case "heart": return (<Heart {...props} />);
+        case "cart": return (<Cart {...props} />);
         default: return <></>;
     }
 }
