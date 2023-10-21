@@ -5,6 +5,9 @@ import { Loading } from "./component/Loading/Loading";
 import "antd/dist/reset.css";
 import { Toaster } from "react-hot-toast";
 // import "@ant-design/flowchart/dist/index.css";
+import 'swiper/css';
+import 'swiper/css/grid';
+import 'swiper/css/pagination';
 
 function App() {
   const { statusLoading } = useSelector((state) => state.home);
