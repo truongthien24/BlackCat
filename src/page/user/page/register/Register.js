@@ -5,11 +5,16 @@ import * as yup from 'yup';
 import { Loading } from '../../../../component/Loading/Loading';
 import { loginUser, registerUser } from '../../../../redux/action/accountAction';
 import { useTranslation } from 'react-i18next';
+import axios from 'axios';
 
 export const Register = () => {
 
     const navigate = useNavigate();
     const {t} = useTranslation();
+
+    useEffect(()=> {
+      axios.get('http://localhost:3001/getAll-user');
+    }, [])
 
     const initialValue = {
       userName: "",
@@ -62,6 +67,10 @@ export const Register = () => {
     //     window.onclick = () => navigate("/user");
     //   }
     // })
+
+    const registerForm = (data) => {
+      axios.post('http://localhost:3001/create-user', data?.data);
+    }
     
 
     // Xúất ra giao diện
@@ -87,7 +96,7 @@ export const Register = () => {
                     initialValue={initialValue} 
                     formField={formField} 
                     validationSchema={validationSchema} 
-                    methodSubmit={registerUser}
+                    methodSubmit={registerForm}
                   />
                 </div>
               </div>
