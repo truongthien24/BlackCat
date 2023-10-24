@@ -6,11 +6,16 @@ import { Loading } from '../../../../component/Loading/Loading';
 import { loginUser, registerUser } from '../../../../redux/action/accountAction';
 import { useTranslation } from 'react-i18next';
 import axios from 'axios';
+import useRegister from './hook/useRegister';
+import { toast } from 'react-hot-toast';
 
 export const Register = () => {
 
     const navigate = useNavigate();
     const {t} = useTranslation();
+
+  const { mutate, isLoading: isSubmitting } = useRegister();
+
 
     const initialValue = {
       tenDangNhap: "",
@@ -65,11 +70,23 @@ export const Register = () => {
     // })
 
     useEffect(()=> {
-      axios.get('http://localhost:3003/getAll-TaiKhoan');
+      axios.get('http://localhost:3001/getAll-TaiKhoan');
     }, []);
 
-    const registerUserTest = (data) => {
-      axios.post("http://localhost:3003/create-TaiKhoan", data?.data).then(result=> console.log('result', result)).catch(err=> console.log('err', err))
+    const registerUserTest = async (data) => {
+      // axios.post("http://localhost:3001/create-TaiKhoan", data?.data).then(result=> console.log('result', result)).catch(err=> console.log('err', err))
+      await mutate({
+        Data: data?.data,
+        onSuccess: async (msg) => {
+          toast.success("Register success");
+          setTimeout(() => {
+            window.location.replace("/login");
+          }, 500);
+        },
+        onError: async (err) => {
+          toast.error(err.error);
+        },
+      });
     }
     
 

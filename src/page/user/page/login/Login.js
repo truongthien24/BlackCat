@@ -48,11 +48,11 @@ export const Login = () => {
       onSuccess: async (msg) => {
         console.log("msg", msg);
         toast.success("Login success");
-        localStorage.setItem("jwt", msg.data.token);
-        localStorage.setItem("current_user", msg.data.Data);
-        // setTimeout(() => {
-        //   window.location.replace("/");
-        // }, 500);
+        localStorage.setItem("jwt", JSON.stringify(msg.data.token));
+        localStorage.setItem("current_user", JSON.stringify(msg.data.Data));
+        setTimeout(() => {
+          window.location.replace("/");
+        }, 500);
       },
       onError: async (err) => {
         toast.error(err.error);

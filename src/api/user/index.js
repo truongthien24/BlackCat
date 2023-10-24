@@ -7,6 +7,13 @@ export default {
     });
   },
 
+
+  userRegister: (params) => {
+    return axiosWrapper.post(`/create-taiKhoan`, {
+      ...params,
+    })
+  }
+
   //   getDataProduction: (params: object) => {
   //     return axiosWrapper.post(`/Production/DataService/GetData`, {
   //       ...params,
