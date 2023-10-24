@@ -2,7 +2,7 @@ import axios from "axios";
 
 const axiosWrapper = axios.create({
   // baseURL: process.env.API_DEV_PATH,
-  baseURL: "http://localhost:3003",
+  baseURL: "http://localhost:3001",
 });
 
 axiosWrapper.interceptors.request.use((config) => {

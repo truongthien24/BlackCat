@@ -6,6 +6,8 @@ import { Loading } from '../../../../component/Loading/Loading';
 import { loginUser, registerUser } from '../../../../redux/action/accountAction';
 import { useTranslation } from 'react-i18next';
 import axios from 'axios';
+import useRegister from './hook/useRegister';
+import { toast } from 'react-hot-toast';
 
 export const Register = () => {
 
