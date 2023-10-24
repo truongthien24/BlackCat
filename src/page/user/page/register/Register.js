@@ -5,6 +5,7 @@ import * as yup from 'yup';
 import { Loading } from '../../../../component/Loading/Loading';
 import { loginUser, registerUser } from '../../../../redux/action/accountAction';
 import { useTranslation } from 'react-i18next';
+import axios from 'axios';
 
 export const Register = () => {
 
@@ -14,7 +15,7 @@ export const Register = () => {
   const initialValue = {
     tenDangNhap: "",
     matKhau: "",
-    loaiTaiKhoan: "user" //user
+    loaiTaiKhoan: "guest" //user
   }
 
   const formField = [
@@ -27,7 +28,7 @@ export const Register = () => {
       type: "password"
     },
     {
-      name: "xacNhanMatKhau",
+      name: "confirmPassword",
       type: "password"
     },
     {
@@ -46,7 +47,7 @@ export const Register = () => {
         return false; //Không hợp lệ
       }
     ),
-    xacNhanMatKhau: yup.string().required("Please input....").oneOf([yup.ref('matKhau')], "Mật khẩu nhập lại không chính xác").test('len', 'Must be 6-24 characters',
+    confirmPassword: yup.string().required("Please input....").oneOf([yup.ref('matKhau')], "Password does not match").test('len', 'Must be 6-24 characters',
       (data) => {
         if (data.toString().length >= 6 && data.toString().length <= 24) {
           return true;
@@ -62,6 +63,14 @@ export const Register = () => {
   //     window.onclick = () => navigate("/user");
   //   }
   // })
+
+  useEffect(() => {
+    axios.get('http://localhost:3003/getAll-TaiKhoan');
+  }, []);
+
+  const registerUserTest = (data) => {
+    axios.post("http://localhost:3003/create-TaiKhoan", data?.data).then(result => console.log('result', result)).catch(err => console.log('err', err))
+  }
 
 
   // Xúất ra giao diện
@@ -79,7 +88,7 @@ export const Register = () => {
             <div className='flex items-center justify-between mb-[20px] md:mb-[30px]'>
               <h3 className='text-[20px] md:text-[25px] font-[500] text-[#498374]'>{t('register')}</h3>
               <span className='text-[25px] md:text-[30px] font-[500] translate-y-[-5px] text-[#498374] cursor-pointer' onClick={() => {
-                navigate('/login')
+                navigate('/user/login')
               }}>&times;</span>
             </div>
             <div className='flex items-center justify-center'>
@@ -87,9 +96,30 @@ export const Register = () => {
                 initialValue={initialValue}
                 formField={formField}
                 validationSchema={validationSchema}
-                methodSubmit={registerUser}
+                methodSubmit={registerUserTest}
               />
             </div>
+          </div>
+        </div>
+      </div>
+      <div className="lg:flex-1 w-full flex justify-center">
+        <div
+          className='bg-[white] w-[85%] md:w-[70%] lg:w-[80%] xl:w-[70%] 2xl:w-[70%] rounded-[10px] px-[15px] lg:px-[30px] py-[20px]'
+          style={{ boxShadow: 'rgba(0, 0, 0, 0.26) 0px 5px 40px' }}
+        >
+          <div className='flex items-center justify-between mb-[20px] md:mb-[30px]'>
+            <h3 className='text-[20px] md:text-[25px] font-[500] text-[#498374]'>{t('register')}</h3>
+            <span className='text-[25px] md:text-[30px] font-[500] translate-y-[-5px] text-[#498374] cursor-pointer' onClick={() => {
+              navigate('/login')
+            }}>&times;</span>
+          </div>
+          <div className='flex items-center justify-center'>
+            <FormBaseRegister
+              initialValue={initialValue}
+              formField={formField}
+              validationSchema={validationSchema}
+              methodSubmit={registerUser}
+            />
           </div>
         </div>
       </div>
