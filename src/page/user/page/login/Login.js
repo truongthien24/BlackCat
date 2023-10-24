@@ -12,24 +12,24 @@ export const Login = () => {
   const { t } = useTranslation();
 
   const initialValue = {
-    userName: "",
-    password: "",
+    tenDangNhap: "",
+    matKhau: "",
   }
 
   const formField = [
     {
-      name: "userName",
+      name: "tenDangNhap",
       type: "string"
     },
     {
-      name: "password",
+      name: "matKhau",
       type: "password"
     }
   ]
 
   const validationSchema = yup.object().shape({
-    userName: yup.string().required("Please input...."),
-    password: yup.string().required("Please input...."),
+    tenDangNhap: yup.string().required("Please input...."),
+    matKhau: yup.string().required("Please input...."),
   });
 
   // useEffect(()=> {

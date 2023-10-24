@@ -6,20 +6,22 @@ import { setLoading } from "./homeAction";
 // Đăng nhập user
 export const loginUser = (data) => async (dispatch) => {
     try {
+
         dispatch(setLoading({
             status: 'isLoading'
         }))
-        const accountRef = collection(db, 'Account');
+        const accountRef = collection(db, 'taiKhoan');
         const result = await getDocs(accountRef);
         // console.log('result docs', result.docs[0].data());
-        
-        const dataResult = result.docs.map((doc)=> ({...doc.data(), id: doc.id}));
+        console.log('data', data)
 
-        const findUser = dataResult?.filter((item)=>  item?.userName === data?.data?.userName && item?.password === data?.data?.password );
+        const dataResult = result.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
 
-        if(findUser.length > 0) {
-            if(findUser[0].loaiTaiKhoan === 'guest') {
-                setTimeout(async()=> {
+        const findUser = dataResult?.filter((item) => item?.tenDangNhap === data?.data?.tenDangNhap && item?.matKhau === data?.data?.matKhau);
+
+        if (findUser.length > 0) {
+            if (findUser[0]?.loaiTaiKhoan === 'user') {
+                setTimeout(async () => {
                     await dispatch({
                         type: 'DANG_NHAP_USER',
                         payload: {
@@ -29,7 +31,7 @@ export const loginUser = (data) => async (dispatch) => {
                     })
                 }, 1000)
             } else {
-                setTimeout(()=> {
+                setTimeout(() => {
                     dispatch(setLoading({
                         status: 'done'
                     }))
@@ -54,7 +56,7 @@ export const loginUser = (data) => async (dispatch) => {
             //     })
             // }, 1000)
             // alert()
-            setTimeout(()=> {
+            setTimeout(() => {
                 dispatch(setLoading({
                     status: 'done'
                 }))
@@ -80,7 +82,7 @@ export const loginUser = (data) => async (dispatch) => {
             }, 1000)
         }
     }
-    catch(error) {
+    catch (error) {
         dispatch({
             type: 'DANG_NHAP_USER',
             payload: {
@@ -98,16 +100,17 @@ export const registerUser = (data) => async (dispatch) => {
             status: 'isLoading'
         }))
         // Lấy collection từ firebase 
-        const accountRef = collection(db, 'Account');
+        const accountRef = collection(db, 'taiKhoan');
         const result = await getDocs(accountRef);
-        const dataResult = result.docs.map((item)=> item.data());
+        const dataResult = result.docs.map((item) => item.data());
         // ES6 => Tìm vị trí => Nếu tìm thấy vị trí sẽ xuất ra giá trị khác -1, và ngược lại
-        const findIndex = dataResult.findIndex(item=>item.userName === (data.data.userName || data.userName));
-        if(findIndex === -1) {
-            setTimeout(async ()=> {
+        const findIndex = dataResult.findIndex(item => item.tenDangNhap === (data.data.tenDangNhap || data.tenDangNhap));
+        if (findIndex === -1) {
+            setTimeout(async () => {
                 // Tạo document trong collection Account 
-                await addDoc(collection(db, 'Account'), {
-                    ...data.data, createAt: serverTimestamp()});
+                await addDoc(collection(db, 'taiKhoan'), {
+                    ...data.data, createAt: serverTimestamp()
+                });
                 dispatch(setLoading({
                     status: 'done'
                 }))
@@ -120,14 +123,14 @@ export const registerUser = (data) => async (dispatch) => {
                     timerProgressBar: true
                 })
                 // Chuyển hướng người dùng về trang login
-                if(data.data.loaiTaiKhoan === "guest") {
-                    window.location.replace('/user/login');
+                if (data.data?.loaiTaiKhoan === "user") {
+                    window.location.replace('/login');
                 }
             }, 1000);
             return true;
         } else {
             // Trường hợp tài khoản đã tồn tại
-            setTimeout(async ()=> {
+            setTimeout(async () => {
                 dispatch(setLoading({
                     status: 'done'
                 }))
@@ -141,7 +144,7 @@ export const registerUser = (data) => async (dispatch) => {
             }, 1000);
             return false;
         }
-    } catch(error) {
+    } catch (error) {
         console.log(error)
         return false;
     }
@@ -149,22 +152,25 @@ export const registerUser = (data) => async (dispatch) => {
 
 // Đăng nhập admin
 export const loginAdmin = (data) => async (dispatch) => {
+    console.log('data', data)
     try {
         dispatch(setLoading({
             status: 'isLoading'
         }))
-        const accountRef = collection(db, 'Account');
+        const accountRef = collection(db, 'taiKhoan');
         const result = await getDocs(accountRef);
         // console.log('result docs', result.docs[0].data());
-        
-        const dataResult = result.docs.map((doc)=> ({...doc.data(), id: doc.id}));
 
-        const findUser = dataResult?.filter((item)=>  item?.userName === data?.data?.userName && item?.password === data?.data?.password );
+        const dataResult = result.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+
+        console.log('dataResult', dataResult)
+
+        const findUser = dataResult?.filter((item) => item?.tenDangNhap === data?.data?.tenDangNhap && item?.matKhau === data?.data?.matKhau);
 
 
-        if(findUser.length > 0) {
-            if(findUser[0].loaiTaiKhoan === 'admin') {
-                setTimeout(async()=> {
+        if (findUser.length > 0) {
+            if (findUser[0].loaiTaiKhoan === 'admin') {
+                setTimeout(async () => {
                     await dispatch({
                         type: 'DANG_NHAP_ADMIN',
                         payload: {
@@ -174,7 +180,7 @@ export const loginAdmin = (data) => async (dispatch) => {
                     })
                 }, 1000)
             } else {
-                setTimeout(()=> {
+                setTimeout(() => {
                     dispatch(setLoading({
                         status: 'done'
                     }))
@@ -189,7 +195,7 @@ export const loginAdmin = (data) => async (dispatch) => {
                 }, 1000)
             }
         } else {
-            setTimeout(()=> {
+            setTimeout(() => {
                 dispatch(setLoading({
                     status: 'done'
                 }))
@@ -205,7 +211,7 @@ export const loginAdmin = (data) => async (dispatch) => {
             }, 1000)
         }
     }
-    catch(error) {
+    catch (error) {
         dispatch({
             type: 'DANG_NHAP_ADMIN',
             payload: {
@@ -219,12 +225,12 @@ export const loginAdmin = (data) => async (dispatch) => {
 // Lấy thông tin account với id
 export const getUser = (id) => async (dispatch) => {
     try {
-        const accountRef = collection(db, 'Account');
+        const accountRef = collection(db, 'taiKhoan');
         const result = await getDocs(accountRef);
         const resultFilter = result.docs.filter(item => item.id === id);
         dispatch({
             type: 'LAY_DU_LIEU_USER',
-            payload: {...resultFilter[0].data(), id: resultFilter[0].id},
+            payload: { ...resultFilter[0].data(), id: resultFilter[0].id },
         })
     } catch (error) {
         console.log(error);
@@ -243,7 +249,7 @@ export const getAllUser = () => async (dispatch) => {
             type: 'LAY_DU_LIEU_USER_ALL',
             payload: result,
         })
-        setTimeout(async()=> {
+        setTimeout(async () => {
             dispatch(setLoading({
                 status: 'done'
             }))
@@ -263,7 +269,7 @@ export const getAllUserNotReducer = () => async (dispatch) => {
         // dispatch(setLoading({
         //     status: 'done'
         // }))
-        return result.docs.map((item)=>({...item.data(), id: item.id}));
+        return result.docs.map((item) => ({ ...item.data(), id: item.id }));
     } catch (error) {
         // console.log(error)
         return 500;
@@ -277,9 +283,9 @@ export const updateUser = (data) => async (dispatch) => {
         dispatch(setLoading({
             status: 'isLoading'
         }))
-        setTimeout(async ()=> {
+        setTimeout(async () => {
             // Lấy trên firebase một document có id bằng ...
-            const accountRef = doc(db,'Account', data.data.id);
+            const accountRef = doc(db, 'Account', data.data.id);
             await updateDoc(accountRef, data.data);
             dispatch(setLoading({
                 status: 'done'
@@ -309,8 +315,8 @@ export const deleteUser = (data) => async (dispatch) => {
         debugger;
         const phieuDatPhongRef = collection(db, 'phieuDatPhong');
         const dataRef = await getDocs(phieuDatPhongRef);
-        setTimeout(async()=> {
-            if((dataRef.docs.findIndex((item)=> item.data().idKhachHang === data.data.id)) != -1) {
+        setTimeout(async () => {
+            if ((dataRef.docs.findIndex((item) => item.data().idKhachHang === data.data.id)) != -1) {
                 // Trường hợp khách hàng đang đặt phòng
                 dispatch(setLoading({
                     status: 'done'

@@ -18,107 +18,107 @@ import { columns, ColumnsCreate, ColumnsEdit, getDataTable, validationSchemaCrea
 
 const AccountManagement = (props) => {
 
-    // State
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [isModalEditOpen, setIsModalEditOpen] = useState(false);
-    const [dataEdit, setDataEdit] = useState({});
+  // State
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalEditOpen, setIsModalEditOpen] = useState(false);
+  const [dataEdit, setDataEdit] = useState({});
 
-    // SomeThing
-    const dispatch = useDispatch();
+  // SomeThing
+  const dispatch = useDispatch();
 
-    const {t} = useTranslation();
+  const { t } = useTranslation();
 
-    useEffect(()=> {
-        dispatch(getAllUser());
-    }, []);
+  useEffect(() => {
+    dispatch(getAllUser());
+  }, []);
 
-    useEffect(()=> {
-      // Khi có một account thay đổi => gọi lại dữ liệu
-      onSnapshot(collection(db,'Account'), (snapShot) => {
-        dispatch(getAllUser())
-      });
-    }, [])
+  useEffect(() => {
+    // Khi có một account thay đổi => gọi lại dữ liệu
+    onSnapshot(collection(db, 'Account'), (snapShot) => {
+      dispatch(getAllUser())
+    });
+  }, [])
 
-    // API
-    const {listUser} = useSelector(state=>state.account);
+  // API
+  const { listUser } = useSelector(state => state.taiKhoan);
 
-    // Method
-    const handleAdd = () => {
-      setIsModalOpen(true);
-    }
+  // Method
+  const handleAdd = () => {
+    setIsModalOpen(true);
+  }
 
-    const handleEdit = (data) => {
-      setDataEdit(data);
-      setIsModalEditOpen(true);
-    }
+  const handleEdit = (data) => {
+    setDataEdit(data);
+    setIsModalEditOpen(true);
+  }
 
-    const handleDelete = async (data) => {
-      await dispatch(setConfirm({
-        status: 'open',
-        method: async () => await dispatch(deleteUser({
-            data: data
-        })).then((clg)=> {
-            if(clg) {
-                // reset();
-                // methodCancel();
-            }
-        }).catch((err)=> {
-            Swal.fire({
-                icon: 'error',
-                title: 'Xoá thất bại !',
-                showConfirmButton: false,
-                timer: 1500,
-                timerProgressBar: true
-            })
+  const handleDelete = async (data) => {
+    await dispatch(setConfirm({
+      status: 'open',
+      method: async () => await dispatch(deleteUser({
+        data: data
+      })).then((clg) => {
+        if (clg) {
+          // reset();
+          // methodCancel();
+        }
+      }).catch((err) => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Xoá thất bại !',
+          showConfirmButton: false,
+          timer: 1500,
+          timerProgressBar: true
         })
-      }))
-    }
+      })
+    }))
+  }
 
-    const data = useMemo(()=> 
-      getDataTable(listUser)
+  const data = useMemo(() =>
+    getDataTable(listUser)
     , [listUser]);
 
-    // Render 
-    return (
-      <>
-        <div className="h-[12%] flex justify-between items-center">
-          <h3 className="text-[20px] text-[#3790c7] font-bold">{t('Account Management')}</h3>
-          <button className='flex items-center justify-center bg-[#3790c7] text-white py-[10px] px-[20px] rounded-[7px] duration-300 hover:shadow-[#3790c7a6] hover:shadow-lg hover:translate-y-[-3px]' type="submit" onClick={handleAdd}>{t('add')}</button>
-        </div>
-        <div className="h-[88%]">
-            <TableMain data={data} columns={columns} handleEdit={handleEdit} handleDelete={handleDelete}/>
-        </div>
-        <ModalCreate
-          methodCancel={()=>setIsModalOpen(false)}
-          title={t('Create Account Management ')}
-          isOpen={isModalOpen}
-          childrenForm={
-            <FormCreate
-              columns={ColumnsCreate} 
-              methodCancel={()=>setIsModalOpen(false)} 
-              methodSubmit={registerUser}
-              validationSchema={validationSchemaCreateUser}
-            />
-          }
-        />
-        <ModalEdit
-          methodCancel={()=>setIsModalEditOpen(false)}
-          title={t('Edit Account Management ')}
-          isOpen={isModalEditOpen}
-          childrenForm={
-            <FormUpdate
-              columns={ColumnsEdit} 
-              methodCancel={()=>setIsModalEditOpen(false)} 
-              methodSubmit={updateUser}
-              validationSchema={validationSchemaCreateUser}
-              dataEdit={dataEdit}
-            />
-            // <>fdaffsaf</>
-          }
-        />
-        <Confirm/>
-      </>
-    )
+  // Render 
+  return (
+    <>
+      <div className="h-[12%] flex justify-between items-center">
+        <h3 className="text-[20px] text-[#3790c7] font-bold">{t('Account Management')}</h3>
+        <button className='flex items-center justify-center bg-[#3790c7] text-white py-[10px] px-[20px] rounded-[7px] duration-300 hover:shadow-[#3790c7a6] hover:shadow-lg hover:translate-y-[-3px]' type="submit" onClick={handleAdd}>{t('add')}</button>
+      </div>
+      <div className="h-[88%]">
+        <TableMain data={data} columns={columns} handleEdit={handleEdit} handleDelete={handleDelete} />
+      </div>
+      <ModalCreate
+        methodCancel={() => setIsModalOpen(false)}
+        title={t('Create Account Management ')}
+        isOpen={isModalOpen}
+        childrenForm={
+          <FormCreate
+            columns={ColumnsCreate}
+            methodCancel={() => setIsModalOpen(false)}
+            methodSubmit={registerUser}
+            validationSchema={validationSchemaCreateUser}
+          />
+        }
+      />
+      <ModalEdit
+        methodCancel={() => setIsModalEditOpen(false)}
+        title={t('Edit Account Management ')}
+        isOpen={isModalEditOpen}
+        childrenForm={
+          <FormUpdate
+            columns={ColumnsEdit}
+            methodCancel={() => setIsModalEditOpen(false)}
+            methodSubmit={updateUser}
+            validationSchema={validationSchemaCreateUser}
+            dataEdit={dataEdit}
+          />
+          // <>fdaffsaf</>
+        }
+      />
+      <Confirm />
+    </>
+  )
 }
 
 export default AccountManagement

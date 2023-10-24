@@ -9,7 +9,7 @@ import { danhGiaReducer } from "./danhGiaReducer";
 
 const reducers = combineReducers({
     phong: PhongReducer,
-    account: AccountReducer,
+    taiKhoan: AccountReducer,
     home: homeReducer,
     area: AreaReducer,
     booking: BookingReducer,

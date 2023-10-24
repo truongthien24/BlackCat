@@ -11,7 +11,9 @@ export const UserLogin = (props) => {
 
   const userLogin = localStorage.getItem("jwt");
 
-  const { userInfo } = useSelector((state) => state.account);
+  const { userInfo } = useSelector((state) => state.taiKhoan);
+
+  console.log('userInfo', userInfo)
 
   return (
     <div>
@@ -29,7 +31,7 @@ export const UserLogin = (props) => {
             {/* {t('hi')} */}
             ĐĂNG XUẤT |
             <span className="text-[#3790c7] ml-[5px]">
-              {userInfo?.userName}
+              {userInfo?.tenDangNhap}
             </span>
           </span>
           {/* <img className='w-[50px] h-[50px] rounded-[50%] ml-[10px] object-cover cursor-pointer' src="https://img5.thuthuatphanmem.vn/uploads/2022/01/12/anh-tokuda-dep-nhat_101702809.jpg" 

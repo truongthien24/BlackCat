@@ -11,42 +11,42 @@ import toast from 'react-hot-toast';
 export const FormBaseLogin = (props) => {
 
     // Props
-    const {formField, initialValue, validationSchema, methodSubmit} = props;
+    const { formField, initialValue, validationSchema, methodSubmit } = props;
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const {t} = useTranslation();
+    const { t } = useTranslation();
 
     // Form
-    const {setValue, watch, formState: { errors }, handleSubmit, register, getValues} = useForm({
+    const { setValue, watch, formState: { errors }, handleSubmit, register, getValues } = useForm({
         mode: 'onChange',
         defaultValues: initialValue,
         resolver: yupResolver(validationSchema),
     });
 
     const renderInput = () => {
-        return formField.map((item, index)=> {
+        return formField.map((item, index) => {
             return (
                 <div className='w-[90%] lg:w-[80%] mt-[20px]'>
                     <h5 className='mb-[7px] text-[17px]'>* {item.name}:</h5>
                     <div className={`border-[1px] border-solid border-[#b4b4b4] rounded-[5px] px-[15px] py-[7px] relative ${errors?.[item.name]?.message ? 'border-orange-400' : ""}`}>
-                        <input 
-                            key={index} 
-                            type={item.type} 
+                        <input
+                            key={index}
+                            type={item.type}
                             name={item.name}
-                            placeholder={`Điền vào ${item.name}...`} 
+                            placeholder={`Điền vào ${item.name}...`}
                             className={`w-[95%] outline-none bg-transparent`}
                             {...register(`${item.name}`)}
                         />
                         {
                             errors?.[item.name] && <div className='absolute right-2 md:right-4 top-[50%] translate-y-[-50%]'>
                                 <span className="hover-span">
-                                    <Icon color="#c80000" name="warning"/>
+                                    <Icon color="#c80000" name="warning" />
                                 </span>
                                 <span className='absolute right-[110%] top-0 bg-[white] w-[max-content] rounded-[20px] border-[1.5px] border-solid border-orange-400 text-orange-400 px-[10px] z-[2] hidden'>{errors?.[item.name].message}</span>
                             </div>
                         }
-                                    {/* <span className='absolute right-[110%] top-0 bg-[white] w-[max-content] rounded-[20px] border-[1.5px] border-solid border-[#c80000] text-[#c80000] px-[10px] z-[2] hidden'>{errors?.[item.name]?.message}</span> */}
+                        {/* <span className='absolute right-[110%] top-0 bg-[white] w-[max-content] rounded-[20px] border-[1.5px] border-solid border-[#c80000] text-[#c80000] px-[10px] z-[2] hidden'>{errors?.[item.name]?.message}</span> */}
                     </div>
                 </div>
             )
@@ -54,7 +54,7 @@ export const FormBaseLogin = (props) => {
     }
 
     const handleLogin = () => {
-        dispatch(methodSubmit({data: watch()}));
+        dispatch(methodSubmit({ data: watch() }));
     }
 
     const handleCancel = () => {
@@ -68,7 +68,7 @@ export const FormBaseLogin = (props) => {
                 <div className='w-[90%] lg:w-[80%] mt-[10px] flex justify-between items-center'>
                     <span className='text-orange-400 cursor-pointer hover:underline text-[14px] md:text-[16px]'
                         onClick={
-                            ()=> {
+                            () => {
                                 // Swal.fire({
                                 //     icon: 'info',
                                 //     iconColor: '#3790c7',
@@ -83,7 +83,7 @@ export const FormBaseLogin = (props) => {
                     >{t('forgotPassword')}? </span>
                     <span className='text-[#498374] font-[500] cursor-pointer hover:underline text-[14px] md:text-[16px]'
                         onClick={
-                            ()=> {
+                            () => {
                                 navigate('/register')
                             }
                         }
