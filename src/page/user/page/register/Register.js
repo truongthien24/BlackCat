@@ -79,6 +79,7 @@ export const Register = () => {
         Data: data?.data,
         onSuccess: async (msg) => {
           toast.success("Register success");
+          console.log('success')
           setTimeout(() => {
             window.location.replace("/login");
           }, 500);
