@@ -8,7 +8,6 @@ import { BookingSchedule } from '../page/user/page/bookingSchedule/BookingSchedu
 import { Layout1Admin } from '../page/admin/layout/Layout1Admin';
 import { MoreRoom } from '../page/user/page/moreRoom/MoreRoom';
 import { Register } from '../page/user/page/register/Register';
-import { Welcome } from '../page/welcome/Welcome';
 import { Profile } from '../page/user/page/profile/Profile';
 import { Service } from '../page/user/page/service/Service';
 import { Dashboard } from '../page/admin/page/Dashboard/Dashboard';
