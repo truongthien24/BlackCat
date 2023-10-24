@@ -70,9 +70,23 @@ export const Register = () => {
     axios.get('http://localhost:3003/getAll-TaiKhoan');
   }, []);
 
-  const registerUserTest = (data) => {
-    axios.post("http://localhost:3003/create-TaiKhoan", data?.data).then(result => console.log('result', result)).catch(err => console.log('err', err))
+  const registerUserTest = async (data) => {
+    // axios.post("http://localhost:3001/create-TaiKhoan", data?.data).then(result=> console.log('result', result)).catch(err=> console.log('err', err))
+    await mutate({
+      Data: data?.data,
+      onSuccess: async (msg) => {
+        toast.success("Register success");
+        console.log('success')
+        setTimeout(() => {
+          window.location.replace("/login");
+        }, 500);
+      },
+      onError: async (err) => {
+        toast.error(err.error);
+      },
+    });
   }
+
 
 
   // Xúất ra giao diện
