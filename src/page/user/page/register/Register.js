@@ -5,6 +5,7 @@ import * as yup from 'yup';
 import { Loading } from '../../../../component/Loading/Loading';
 import { loginUser, registerUser } from '../../../../redux/action/accountAction';
 import { useTranslation } from 'react-i18next';
+import axios from 'axios';
 
 export const Register = () => {
 
@@ -12,18 +13,18 @@ export const Register = () => {
     const {t} = useTranslation();
 
     const initialValue = {
-      userName: "",
-      password: "",
+      tenDangNhap: "",
+      matKhau: "",
       loaiTaiKhoan: "guest" //user
     }
 
     const formField = [
       {
-        name: "userName",
+        name: "tenDangNhap",
         type: "string"
       },
       {
-        name: "password",
+        name: "matKhau",
         type: "password"
       },
       {
@@ -37,8 +38,8 @@ export const Register = () => {
     ]
 
     const validationSchema = yup.object().shape({
-      userName: yup.string().required("Please input...."),  //Reuired: bắt buộc nhập, string là kiểu kí tự chuỗi
-      password: yup.string().required("Please input....").test('len', 'Must be 6-24 characters', 
+      tenDangNhap: yup.string().required("Please input...."),  //Reuired: bắt buộc nhập, string là kiểu kí tự chuỗi
+      matKhau: yup.string().required("Please input....").test('len', 'Must be 6-24 characters', 
        (data) => {
         if(data.toString().length >=6 && data.toString().length <= 24) {
           return true; //Hợp lệ
@@ -46,7 +47,7 @@ export const Register = () => {
         return false; //Không hợp lệ
        }
       ),
-      confirmPassword: yup.string().required("Please input....").oneOf([yup.ref('password')], "Password does not match").test('len', 'Must be 6-24 characters', 
+      confirmPassword: yup.string().required("Please input....").oneOf([yup.ref('matKhau')], "Password does not match").test('len', 'Must be 6-24 characters', 
         (data) => {
         if(data.toString().length >=6 && data.toString().length <= 24) {
           return true;
@@ -62,6 +63,14 @@ export const Register = () => {
     //     window.onclick = () => navigate("/user");
     //   }
     // })
+
+    useEffect(()=> {
+      axios.get('http://localhost:3003/getAll-TaiKhoan');
+    }, []);
+
+    const registerUserTest = (data) => {
+      axios.post("http://localhost:3003/create-TaiKhoan", data?.data).then(result=> console.log('result', result)).catch(err=> console.log('err', err))
+    }
     
 
     // Xúất ra giao diện
@@ -87,7 +96,7 @@ export const Register = () => {
                     initialValue={initialValue} 
                     formField={formField} 
                     validationSchema={validationSchema} 
-                    methodSubmit={registerUser}
+                    methodSubmit={registerUserTest}
                   />
                 </div>
               </div>
