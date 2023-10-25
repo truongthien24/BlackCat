@@ -51,7 +51,7 @@ export const Register = () => {
         }
         return false; //Không hợp lệ
        }
-      ),
+      ),  
       confirmPassword: yup.string().required("Please input....").oneOf([yup.ref('matKhau')], "Password does not match").test('len', 'Must be 6-24 characters', 
         (data) => {
         if(data.toString().length >=6 && data.toString().length <= 24) {
