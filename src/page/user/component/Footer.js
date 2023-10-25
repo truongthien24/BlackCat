@@ -8,8 +8,8 @@ export const Footer = () => {
 
             </div>
             <div className="flex flex-col items-center justify-around min-h-[220px]">
-                <img src="/images/fly.png" className="w-[230px]"/>
-                <p className="text-[25px]">@Fly Room</p>
+                <img src="/images/logo.png" className="w-[170px]"/>
+                <p className="text-[25px]">@Black Cat</p>
             </div>
         </div>
     </div>
