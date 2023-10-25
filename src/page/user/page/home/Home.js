@@ -50,10 +50,10 @@ export const HomeUser = () => {
       </div>
       {/* <SearchArea/> */}
       {/* <ListRoomArea /> */}
-      <div className="w-[90%] lg:w-[80%] py-[20px]">
+      {/* <div className="w-[90%] lg:w-[80%] py-[20px]">
         <AreaBook data={fakeData} />
       </div>
-      <Reason />
+      <Reason /> */}
     </div>
   );
 };
