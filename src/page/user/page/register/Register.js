@@ -79,10 +79,10 @@ export const Register = () => {
         Data: data?.data,
         onSuccess: async (msg) => {
           toast.success("Register success");
-          console.log('success')
-          setTimeout(() => {
-            window.location.replace("/login");
-          }, 500);
+          // console.log('success')
+          // setTimeout(() => {
+          //   window.location.replace("/login");
+          // }, 500);
         },
         onError: async (err) => {
           toast.error(err.error);

@@ -18,6 +18,7 @@ import { CheckingManagement } from '../page/admin/page/CheckingManagement/Checki
 import { Introduce } from '../page/user/page/introduce/Introduce';
 import { ServiceManagement } from '../page/admin/page/ServiceManagement/ServiceManagement';
 import { Contact } from 'page/user/page/contact/Contact';
+import VerifyEmail from 'page/user/page/verifyEmail/VerifyEmail';
 // import { Contact } from '../page/user/page/contact/Contact';
 
 
@@ -38,6 +39,7 @@ export const MainRoutes = () => {
                 <Route path="service" element={<Service/>}/> 
                 <Route path="introduce" element={<Introduce/>}/> 
                 <Route path="contact" element={<Contact/>}/> 
+                <Route path="/:id/verify/:token" element={<VerifyEmail/>}/> 
             </Route>
             <Route path="/admin" element={<Layout1Admin/>}>
               <Route index element={<Dashboard/>}/>
