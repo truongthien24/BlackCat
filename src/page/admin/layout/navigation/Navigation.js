@@ -53,10 +53,6 @@ export const Navigation = () => {
       getItem(<div onClick={()=> {
         navigate('/admin/serviceManagement')
       }}>Service Management</div>, '9', <ContainerOutlined />),
-      // getItem('Revenue', 'sub3', <AppstoreOutlined />, [
-      //   getItem('Invoices Management', '10'),
-      //   getItem('Statistical Management', '11'),
-      // ]),
     ];
 
     return (

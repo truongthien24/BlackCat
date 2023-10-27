@@ -81,13 +81,6 @@ export const FormBaseLogin = (props) => {
                             }
                         }
                     >{t('forgotPassword')}? </span>
-                    <span className='text-[#498374] font-[500] cursor-pointer hover:underline text-[14px] md:text-[16px]'
-                        onClick={
-                            ()=> {
-                                navigate('/register')
-                            }
-                        }
-                    >{t('noAccount')} </span>
                 </div>
                 <div className='mt-[40px] xl:mt-[70px] w-[70%] grid grid-cols-2 gap-3'>
                     <button className='flex items-center justify-center bg-[white] py-[12px] rounded-[7px]' type="button" onClick={handleCancel}>{t('back')}</button>

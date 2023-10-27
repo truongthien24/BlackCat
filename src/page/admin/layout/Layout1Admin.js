@@ -11,7 +11,7 @@ export const Layout1Admin = () => {
   const {pathname} = window.location;
 
   useEffect(()=> {
-    if(!localStorage.getItem('jwtAdmin')) {
+    if(!localStorage.getItem('jwt')) {
       navigate('/admin/login');
     }
   }, [pathname])

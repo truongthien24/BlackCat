@@ -21,11 +21,11 @@ const VerifyEmail = () => {
   return (
     <div className="w-screen h-screen flex items-center flex-col justify-center">
         <h2>Chúc mừng bạn đã đăng ký thành công !</h2>
-        <img className="w-[200px]" src="https://img.freepik.com/premium-vector/opened-envelope-document-with-green-check-mark-line-icon-official-confirmation-message-mail-sent-successfully-email-delivery-verification-email-flat-design-vector_662353-720.jpg"/>
-        <button onClick={()=> {
+        <img className="w-[250px] my-[30px]" src="https://img.freepik.com/premium-vector/opened-envelope-document-with-green-check-mark-line-icon-official-confirmation-message-mail-sent-successfully-email-delivery-verification-email-flat-design-vector_662353-720.jpg"/>
+        <button className="btnConfirmToLogin" onClick={()=> {
             navigate('/login')
         }}>
-            Đăng nhập thôi nào
+            <span>Đăng nhập thôi nào</span>
         </button>
     </div>
   )

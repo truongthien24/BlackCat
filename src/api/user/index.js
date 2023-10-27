@@ -7,6 +7,12 @@ export default {
     });
   },
 
+  adminLogin: (params) => {
+    return axiosWrapper.post(`/login-admin`, {
+      ...params,
+    });
+  },
+
 
   userRegister: (params) => {
     return axiosWrapper.post(`/create-taiKhoan`, {

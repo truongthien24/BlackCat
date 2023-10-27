@@ -2,8 +2,8 @@ import React from 'react'
 import { useTranslation } from 'react-i18next';
 import * as yup from 'yup';
 import { useNavigate } from 'react-router-dom';
-import { FormBaseLogin } from '../component/form/FormBaseLogin';
 import { loginAdmin } from '../../../redux/action/accountAction';
+import { FormBaseLogin } from 'page/user/component/Form/FormBaseLogin';
 
 export const LoginAdmin = () => {
     const navigate = useNavigate();
