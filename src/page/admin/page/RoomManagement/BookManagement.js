@@ -16,7 +16,7 @@ import { setConfirm } from '../../../../redux/action/homeAction';
 import Swal from 'sweetalert2';
 import { ModalEditReaction } from './component/modal/ModalEditReaction';
 
-export const RoomManagement = () => {
+export const BookManagement = () => {
 
     // State
     const [isModalOpen, setIsModalOpen] = useState(false);

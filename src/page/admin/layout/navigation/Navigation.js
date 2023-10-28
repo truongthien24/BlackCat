@@ -40,8 +40,8 @@ export const Navigation = () => {
         navigate('/admin/accountManagement')
       }}>Account Management</div>, '2', <DesktopOutlined />),
       getItem(<div onClick={()=> {
-        navigate('/admin/roomManagement')
-      }}>Room Management</div>, '3', <ContainerOutlined />),
+        navigate('/admin/bookManagement')
+      }}>Book Management</div>, '3', <ContainerOutlined />),
       getItem('Booking', 'sub2', <MailOutlined />, [
         getItem(<div onClick={()=> {
           navigate('/admin/checkingManagement')
@@ -69,7 +69,7 @@ export const Navigation = () => {
             { <MenuFoldOutlined />}
             </Button> */}
             <div className="flex items-center justify-center py-[20px]">
-              <img src='/images/fly.png' className="w-[55%]"/>
+              <img src='/images/logo.png' className="w-[100px]"/>
             </div>
             <Menu
               defaultSelectedKeys={['1']}

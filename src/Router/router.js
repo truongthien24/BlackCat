@@ -13,7 +13,7 @@ import { Service } from "../page/user/page/service/Service";
 import { Dashboard } from "../page/admin/page/Dashboard/Dashboard";
 import AccountManagement from "../page/admin/page/AccountManagement";
 import { Login as LoginAdmin } from "../page/admin/page/login/Login";
-import { RoomManagement as BookManagement } from "../page/admin/page/RoomManagement/RoomManagement";
+import { BookManagement } from "../page/admin/page/RoomManagement/BookManagement";
 import { CheckingManagement } from "../page/admin/page/CheckingManagement/CheckingManagement";
 import { Introduce } from "../page/user/page/introduce/Introduce";
 import { ServiceManagement } from "../page/admin/page/ServiceManagement/ServiceManagement";
