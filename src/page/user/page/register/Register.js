@@ -14,6 +14,9 @@ export const Register = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
 
+  const { mutate, isLoading: isSubmitting } = useRegister();
+
+
   const initialValue = {
     tenDangNhap: "",
     matKhau: "",
