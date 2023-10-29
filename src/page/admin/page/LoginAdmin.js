@@ -2,32 +2,32 @@ import React from 'react'
 import { useTranslation } from 'react-i18next';
 import * as yup from 'yup';
 import { useNavigate } from 'react-router-dom';
-import { FormBaseLogin } from '../component/form/FormBaseLogin';
 import { loginAdmin } from '../../../redux/action/accountAction';
+import { FormBaseLogin } from 'page/user/component/Form/FormBaseLogin';
 
 export const LoginAdmin = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
 
   const initialValue = {
-    tenDangNhap: "",
-    matKhau: "",
+    userName: "",
+    password: "",
   }
 
   const formField = [
     {
-      name: "tenDangNhap",
+      name: "userName",
       type: "string"
     },
     {
-      name: "matKhau",
+      name: "password",
       type: "password"
     }
   ]
 
   const validationSchema = yup.object().shape({
-    tenDangNhap: yup.string().required("Please input...."),
-    matKhau: yup.string().required("Please input...."),
+    userName: yup.string().required("Please input...."),
+    password: yup.string().required("Please input...."),
   });
 
   // useEffect(()=> {

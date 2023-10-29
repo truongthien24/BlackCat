@@ -1,38 +1,29 @@
     export const columns = (onClickFuncc) => {
         return [
             {
-                title: 'tenPhong',  
-                dataIndex: 'tenPhong',
-                key: 'tenPhong',
+                title: 'Tên sách',  
+                dataIndex: 'tenSach',
+                key: 'tenSach',
                 width: '15%',
             },
             {
-                title: 'dacDiemPhong',
-                dataIndex: 'dacDiemPhong',
-                key: 'dacDiemPhong',
+                title: 'Thể loại',
+                dataIndex: 'theLoai',
+                key: 'theLoai',
+                width: '15%',
+            },
+            {
+                title: 'Số lượng',
+                dataIndex: 'soLuong',
+                key: 'soLuong',
+                width: '15%'
+            },
+            {
+                title: 'Mô tả',
+                dataIndex: 'moTa',
+                key: 'moTa',
                 width: '40%',
             },
-            {
-                title: 'soLuongPhong',
-                dataIndex: 'soLuongPhong',
-                key: 'soLuongPhong',
-                width: '5%'
-            },
-            // {
-            //     title: 'giaThueNgay',  
-            //     dataIndex: 'giaThueNgay',
-            //     key: 'giaThueNgay',
-            //     width: '15%',
-            // },
-            {
-                title: 'danhGia',
-                dataIndex: 'btn',
-                key: 'btn',
-                width: '15%',
-                onClickFunc: (data) => {
-                    onClickFuncc(data);
-                }
-            }
         ]
     }
 
