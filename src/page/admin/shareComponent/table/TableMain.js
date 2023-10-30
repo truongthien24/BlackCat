@@ -77,7 +77,7 @@ export const TableMain = (props) => {
             >
               Reset
             </Button>
-            <Button
+            {/* <Button
               type="link"
               size="small"
               onClick={() => {
@@ -89,7 +89,7 @@ export const TableMain = (props) => {
               }}
             >
               Filter
-            </Button>
+            </Button> */}
             <Button
               type="link"
               size="small"

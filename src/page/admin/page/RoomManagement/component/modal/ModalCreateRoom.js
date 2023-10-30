@@ -1,10 +1,10 @@
-import { Badge, Button, Modal, Popover, Skeleton } from 'antd'
-import React, { useEffect, useState } from 'react'
+import { Badge, Modal, Popover, Skeleton } from 'antd'
+import React, { useEffect, useMemo, useState } from 'react'
 import { Icon } from '../../../../../../assets/icon';
 import { UploadOutlined } from '@ant-design/icons';
 import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage';
 import { app } from '../../../../../../firebase/firebase.config';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setConfirm, setLoading } from '../../../../../../redux/action/homeAction';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -12,7 +12,9 @@ import * as yup from 'yup';
 import { useTranslation } from 'react-i18next';
 import { setGridColumn } from '../../helper';
 import { FormAddRoom } from '../form/FormAddRoom';
-import { createRoom } from '../../../../../../redux/action/phongAction';
+import useCreateBook from '../../hook/useCreateBook';
+import useLoadingEffect from 'fuse/hook/useLoadingEffect';
+import { toast } from 'react-hot-toast';
 
 export const ModalCreateRoom = (props) => {
 
@@ -27,12 +29,15 @@ export const ModalCreateRoom = (props) => {
 
     const [isSkeleton, setIsSkeleton] = useState(false);
 
+    const { mutate, isLoading: isSubmitting } = useCreateBook();
+
     const [open, setOpen] = useState(false);
 
     const dispatch = useDispatch();
 
     const { t } = useTranslation();
 
+    const { tacGia, theLoai, nhaXuatBan, nhaCungCap } = useSelector(state => state.commonCode);
 
     // Effect
     useEffect(() => {
@@ -43,81 +48,112 @@ export const ModalCreateRoom = (props) => {
         }, 500)
     }, [isOpen]);
 
+    useLoadingEffect(isSubmitting);
+
     // Form 
-    const APIEdit = [
-        {
-            name: 'tenSach',
-            type: 'string',
-            required: true,
-            size: '3',
-            label: 'Tên sách'
-        },
-        {
-            name: 'theLoai',
-            type: 'select',
-            dataSelect: [
-                {
-                    label: 'Trinh Thám',
-                    value: 'TL01'
-                },
-                {
-                    label: 'Tình yêu',
-                    value: 'TL02'
-                },
-            ],
-            required: true,
-            label: 'Thể loại'
-        },
-        {
-            name: 'nhaXuatBan',
-            type: 'select',
-            dataSelect: [
-                {
-                    label: 'Kim Đồng',
-                    value: 'NXB01'
-                },
-                {
-                    label: 'Văn Học',
-                    value: 'NXB02'
-                },
-            ],
-            required: true,
-            label: 'Nhà xuất bản'
-        },
-        {
-            name: 'tenTacGia',
-            type: 'string',
-            required: true,
-            label: 'Tên tác giả'
-        },
-        {
-            name: 'gia',
-            type: 'number',
-            required: true,
-            label: 'Giá'
-        },
-        {
-            name: 'soLuong',
-            type: 'number',
-            required: true,
-            label: 'Số lượng'
-        },
-        // {
-        //     name: 'Số lượng',
-        //     type: 'array',
-        //     dataArray: [],
-        //     dataItemName: 'soPhong',
-        //     required: true,
-        //     size: '3'
-        // }
-    ]
+    const APIEdit = useMemo(() => {
+        return [
+            {
+                name: 'tenSach',
+                type: 'string',
+                required: true,
+                size: '1',
+                label: 'Tên sách'
+            },
+            {
+                name: 'maSach',
+                type: 'string',
+                required: true,
+                size: '1',
+                label: 'Mã sách'
+            },
+            {
+                name: 'theLoai',
+                type: 'select',
+                dataSelect: theLoai?.map((tg) => {
+                    return {
+                        label: tg?.tenTheLoai,
+                        value: tg?._id
+                    }
+                }),
+                required: true,
+                label: 'Thể loại'
+            },
+            {
+                name: 'nhaXuatBan',
+                type: 'select',
+                dataSelect: nhaXuatBan?.map((tg) => {
+                    return {
+                        label: tg?.tenNXB,
+                        value: tg?._id
+                    }
+                }),
+                required: true,
+                label: 'Nhà xuất bản'
+            },
+            {
+                name: 'tacGia',
+                type: 'string', type: 'select',
+                dataSelect: tacGia?.map((tg) => {
+                    return {
+                        label: tg?.tenTacGia,
+                        value: tg?._id
+                    }
+                }),
+                required: true,
+                label: 'Tác giả'
+            },
+            {
+                name: 'namXuatBan',
+                type: 'number',
+                required: true,
+                label: 'Năm xuất bản'
+            },
+            {
+                name: 'nhaCungCap',
+                type: 'select',
+                dataSelect: nhaCungCap?.map((tg) => {
+                    return {
+                        label: tg?.tenNhaCungCap,
+                        value: tg?._id
+                    }
+                }),
+                required: true,
+                label: 'Nhà cung cấp'
+            },
+            {
+                name: 'tinhTrang',
+                type: 'select',
+                dataSelect: [
+                    { label: 'New Arrival', value: 0 },
+                    { label: 'Hot', value: 1 },
+                    { label: 'Old', value: 2 },
+                ],
+                required: true,
+                label: 'Tình trạng'
+            },
+            {
+                name: 'gia',
+                type: 'number',
+                required: true,
+                label: 'Giá'
+            },
+            {
+                name: 'tienCoc',
+                type: 'number',
+                required: true,
+                label: 'Tiền cọc'
+            },
+            {
+                name: 'soLuong',
+                type: 'number',
+                required: true,
+                label: 'Số lượng'
+            },
+        ]
+    }, [tacGia, theLoai, nhaXuatBan, nhaCungCap])
 
     const validationSchema = yup.object().shape({
-        tenPhong: yup.string().required('Please input'),
-        diaChi: yup.string().required('Please input'),
-        soLuongPhong: yup.array().required('Please input'),
-        sale: yup.number().typeError('Please input number').required('Please input'),
-        dacDiemPhong: yup.string().required('Please input'),
     })
 
     const {
@@ -132,11 +168,7 @@ export const ModalCreateRoom = (props) => {
         method: 'onChange',
         resolver: yupResolver(validationSchema),
         defaultValues: {
-            tenPhong: "",
-            diaChi: "",
-            soLuongPhong: [],
-            sale: null,
-            dacDiemPhong: ""
+            tenSach: "",
         }
     })
 
@@ -164,13 +196,24 @@ export const ModalCreateRoom = (props) => {
         }))
     }
 
-    const handleSubmitData = () => {
+    const handleSubmitData = async (data) => {
         // dispatch(createRoom({ data: watch() })).then(data => {
         //     reset();
         //     setImage('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSDF9695aEHL20tZNMzJ26nIGr5AYMKr_eaoxXWtDkngU8M8KXhqPQXkhyamMWJ1mvbeYU&usqp=CAU')
         // }).catch(err => {
         //     console.log('Lỗi rồi');
         // });;
+        console.log(data)
+        await mutate({
+            Data: { ...data },
+            onSuccess: async (msg) => {
+                toast.success(msg?.data?.message);
+            },
+            onError: async (err) => {
+                console.log('err', err)
+                toast.error(err?.error?.message);
+            },
+        });
     }
 
     const handleCancel = () => {
@@ -302,10 +345,10 @@ export const ModalCreateRoom = (props) => {
                         </div>
                         <div className="col-span-5">
                             <h5 className="mb-[7px] ml-[3px]">
-                                Mô tả
+                                Nội dung
                                 <span className="text-[red]">*</span>
                             </h5>
-                            <textarea required {...register('moTa')} className="border-[1px] border-solid border-[#b4b4b4] rounded-[5px] px-[15px] py-[7px] min-h-[80px] max-h-[120px] w-full" />
+                            <textarea required {...register('noiDung')} className="border-[1px] border-solid border-[#b4b4b4] rounded-[5px] px-[15px] py-[7px] min-h-[80px] max-h-[120px] w-full" />
                         </div>
                         <div className="col-span-5 flex justify-end items-center">
                             <button className='flex items-center justify-center bg-[white] py-[10px] px-[30px] rounded-[7px]' type="button" onClick={methodCancel}>{t('back')}</button>

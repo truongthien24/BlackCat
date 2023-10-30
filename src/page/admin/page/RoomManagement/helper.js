@@ -4,7 +4,7 @@
                 title: 'Tên sách',  
                 dataIndex: 'tenSach',
                 key: 'tenSach',
-                width: '15%',
+                width: '35%',
             },
             {
                 title: 'Thể loại',
@@ -19,10 +19,10 @@
                 width: '15%'
             },
             {
-                title: 'Mô tả',
-                dataIndex: 'moTa',
-                key: 'moTa',
-                width: '40%',
+                title: 'Tác giả',
+                dataIndex: 'tacGia',
+                key: 'tacGia',
+                width: '20%',
             },
         ]
     }
