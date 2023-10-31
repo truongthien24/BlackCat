@@ -9,7 +9,7 @@ const VerifyEmail = () => {
     useEffect(()=> {
         const verifyEmailUrl = async () => {
             try {
-                const url = `http://localhost:3001/taiKhoan/${param.id}/verify/${param.token}`;
+                const url = `http://localhost:3001/api/taiKhoan/${param.id}/verify/${param.token}`;
                 const data = await axios.get(url);
                 console.log('data', data);
             } catch (error) {
