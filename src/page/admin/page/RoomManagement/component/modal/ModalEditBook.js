@@ -1,25 +1,26 @@
-import { Badge, Modal, Popover, Skeleton } from 'antd'
+import { Badge, Button, Modal, Popconfirm, Popover, Skeleton } from 'antd'
 import React, { useEffect, useMemo, useState } from 'react'
 import { Icon } from '../../../../../../assets/icon';
 import { UploadOutlined } from '@ant-design/icons';
 import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage';
 import { app } from '../../../../../../firebase/firebase.config';
 import { useDispatch, useSelector } from 'react-redux';
-import { setConfirm, setLoading } from '../../../../../../redux/action/homeAction';
+import { setConfirm } from '../../../../../../redux/action/homeAction';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useTranslation } from 'react-i18next';
 import { setGridColumn } from '../../helper';
 import { FormAddRoom } from '../form/FormAddRoom';
-import useCreateBook from '../../hook/useCreateBook';
+import { updateRoom } from '../../../../../../redux/action/phongAction';
 import useLoadingEffect from 'fuse/hook/useLoadingEffect';
+import useUpdateBook from '../../hook/useUpdateBook';
 import { toast } from 'react-hot-toast';
 
-export const ModalCreateRoom = (props) => {
+export const ModalEditBook = (props) => {
 
     // Props
-    const { title, isOpen, childrenForm, methodCancel } = props;
+    const { title, isOpen, childrenForm, methodSubmit, methodCancel, dataEdit, fetcher } = props;
 
 
     // State
@@ -29,26 +30,29 @@ export const ModalCreateRoom = (props) => {
 
     const [isSkeleton, setIsSkeleton] = useState(false);
 
-    const { mutate, isLoading: isSubmitting } = useCreateBook();
-
     const [open, setOpen] = useState(false);
+
+    const [isChangeImage, setIsChangeImage] = useState(false);
+
+    const { tacGia, theLoai, nhaXuatBan, nhaCungCap } = useSelector(state => state.commonCode);
+
+    const {mutate, isLoading: isSubmitting} = useUpdateBook();
+
 
     const dispatch = useDispatch();
 
     const { t } = useTranslation();
 
-    const { tacGia, theLoai, nhaXuatBan, nhaCungCap } = useSelector(state => state.commonCode);
 
     // Effect
     useEffect(() => {
         setIsSkeleton(true);
         setTimeout(() => {
-            setImage('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSDF9695aEHL20tZNMzJ26nIGr5AYMKr_eaoxXWtDkngU8M8KXhqPQXkhyamMWJ1mvbeYU&usqp=CAU')
             setIsSkeleton(false);
         }, 500)
-    }, [isOpen]);
+    }, [dataEdit]);
 
-    useLoadingEffect(isSubmitting);
+    // useLoadingEffect(isSubmitting);
 
     // Form 
     const APIEdit = useMemo(() => {
@@ -65,7 +69,8 @@ export const ModalCreateRoom = (props) => {
                 type: 'string',
                 required: true,
                 size: '1',
-                label: 'Mã sách'
+                label: 'Mã sách',
+                disable: true,
             },
             {
                 name: 'theLoai',
@@ -162,51 +167,62 @@ export const ModalCreateRoom = (props) => {
         setValue,
         handleSubmit,
         reset,
-        watch,
         formState: { errors }
     } = useForm({
         method: 'onChange',
         resolver: yupResolver(validationSchema),
-        defaultValues: {
-            tenSach: "",
-        }
     })
+
+    useEffect(() => {
+        if (dataEdit) {
+            // APIEdit.forEach(data => setValue(`${data.name}`, dataEdit?.[data.name]));
+            reset({...dataEdit})
+        }
+    }, [dataEdit])
+
 
     // Method
     const handleChangeImage = async (e) => {
-        dispatch(setLoading({
-            status: 'isLoading'
-        }))
         const file = e.target.files[0];
-        setImage(file);
         let reader = new FileReader();
         reader.readAsDataURL(file);
-        reader.onload = (event) => {
-            setImage(event.target.result);
-            setValue('image', event.target.result);
+        reader.onload = (e) => {
+            setFileImage(file);
+            setImage(e.target.result);
+            setValue('image', e.target.result);
+            setIsChangeImage(true);
         }
-        const storageRef = getStorage(app);
-        const testRef = ref(storageRef, `${file?.name}`);
-        await uploadBytes(testRef, file).then(async (snapshot) => {
-            const down = await getDownloadURL(testRef);
-            setValue('image', down);
-        });
-        dispatch(setLoading({
-            status: 'done'
-        }))
     }
 
-    const handleSubmitData = async (data) => {
+    const submitForm = async (data) => {
+        // if (isChangeImage) {
+        //     const storageRef = getStorage(app);
+        //     const testRef = ref(storageRef, `${fileImage?.name}`);
+        //     await uploadBytes(testRef, fileImage).then(async (snapshot) => {
+        //         const down = await getDownloadURL(testRef);
+        //         setValue('image', down);
+        //     });
+        // }
         await mutate({
             Data: { ...data },
             onSuccess: async (msg) => {
                 toast.success(msg?.data?.message);
+                await fetcher()
             },
             onError: async (err) => {
-                console.log('err', err)
-                toast.error(err?.error?.message);
+                toast.error(err?.error);
             },
         });
+        await dispatch(setConfirm({
+            status: 'close'
+        }))
+    }
+
+    const handleSubmitData = async (data) => {
+        await dispatch(setConfirm({
+            status: 'open',
+            method: ()=> submitForm(data)
+        }))
     }
 
     const handleCancel = () => {
@@ -240,7 +256,7 @@ export const ModalCreateRoom = (props) => {
                     })
                 }
                 {
-                    (getValues('soLuongPhong')?.length < 5 || !getValues('soLuongPhong')?.length)
+                    getValues('soLuongPhong')?.length < 5
                     &&
                     <Popover
                         content={
@@ -270,13 +286,14 @@ export const ModalCreateRoom = (props) => {
                 {...register(`${item.name}`)}
             />
         } else {
-            return <div className={`border-[1px] border-solid border-[#b4b4b4] rounded-[5px] px-[15px] py-[7px] relative ${errors?.[item.name]?.message ? 'border-orange-400' : ""}`}>
+            return <div className={`border-[1px] border-solid border-[#b4b4b4] rounded-[5px] px-[15px] py-[7px] relative ${item?.disable ? 'bg-[#cfcece]' : ''} ${errors?.[item.name]?.message ? 'border-orange-400' : ""}`}>
                 <input
                     // key={index} 
                     type={item.type}
+                    readOnly={item.disable}
                     name={item.name}
                     placeholder={`Điền vào ${item.label}...`}
-                    className={`w-[92%] outline-none`}
+                    className={`w-[92%] outline-none ${item?.disable ? 'bg-[#cfcece]' : ''}`}
                     {...register(`${item.name}`)}
                 />
                 {
@@ -292,6 +309,8 @@ export const ModalCreateRoom = (props) => {
             </div>
         }
     }
+
+    useLoadingEffect(isSubmitting);
 
     return (
         <Modal title={title} open={isOpen} onCancel={handleCancel} footer={null} width={950}>
