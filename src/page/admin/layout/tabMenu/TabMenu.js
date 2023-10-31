@@ -2,7 +2,7 @@ import React from 'react';
 import { ChangeLanguage } from '../../../user/component/ChangeLanguage';
 import { AdminInfo } from '../../component/AdminInfo';
 
-const Navigation = () => {
+const TabMenu = () => {
   return (
     <div className="w-full h-[60px] p-[10px] bg-[white] shadow-lg shadow-gray-200 flex items-center justify-end">
       {/* <div>
@@ -14,4 +14,4 @@ const Navigation = () => {
   )
 }
 
-export default Navigation;
+export default TabMenu;
