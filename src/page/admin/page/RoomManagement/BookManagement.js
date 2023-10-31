@@ -8,13 +8,14 @@ import { TableMain } from '../../shareComponent/table/TableMain'
 import { useDispatch } from 'react-redux';
 import { deleteRoom } from '../../../../redux/action/phongAction';
 import { columns, getDataTable } from './helper';
-import { ModalEditRoom } from './component/modal/ModalEditRoom';
+import { ModalEditBook } from './component/modal/ModalEditBook';
 import { ModalCreateRoom } from './component/modal/ModalCreateRoom';
 import { setConfirm } from '../../../../redux/action/homeAction';
 import Swal from 'sweetalert2';
 import { ModalEditReaction } from './component/modal/ModalEditReaction';
 import { getCommonCode } from 'redux/action/getCommonCode';
 import useGetDataBook from './hook/useGetDataBook';
+import useGetDetailBook from './hook/useGetDetailBook';
 
 export const BookManagement = () => {
 
@@ -43,7 +44,15 @@ export const BookManagement = () => {
       "0",
     );
 
-    console.log('sachData', sachData)
+  const { sachDataDetail, isDataDetailLoading, fetchData: fetchDetail, isFetching: isFetchingDetail } =
+    useGetDetailBook(
+      "0",
+      "0",
+      dataEdit?._id,
+    );
+
+    console.log('sachDataDetail', sachDataDetail)
+
 
   // Method
   const handleAdd = () => {
@@ -56,23 +65,23 @@ export const BookManagement = () => {
   }
 
   const handleDelete = async (data) => {
-    await dispatch(setConfirm({
-      status: 'open',
-      method: async () => {
-        dispatch(deleteRoom(data)).then(data => {
+    // await dispatch(setConfirm({
+    //   status: 'open',
+    //   method: async () => {
+    //     dispatch(deleteRoom(data)).then(data => {
 
-        }).catch(err => {
-          Swal.fire({
-            icon: 'error',
-            title: 'Xoá thất bại !',
-            showConfirmButton: false,
-            timer: 1500,
-            timerProgressBar: true
-          })
-        });
-      }
+    //     }).catch(err => {
+    //       Swal.fire({
+    //         icon: 'error',
+    //         title: 'Xoá thất bại !',
+    //         showConfirmButton: false,
+    //         timer: 1500,
+    //         timerProgressBar: true
+    //       })
+    //     });
+    //   }
 
-    }))
+    // }))
   }
 
   const handleViewDanhGia = (data) => {
@@ -94,18 +103,19 @@ export const BookManagement = () => {
           handleDelete={handleDelete}
         />
       </div>
-      <ModalEditRoom
+      <ModalEditBook
         methodCancel={() => setIsModalEditOpen(false)}
-        title={t('Edit Room Management')}
+        title={t('Edit Book Management')}
         isOpen={isModalEditOpen}
-        dataEdit={dataEdit}
+        dataEdit={sachDataDetail}
+        fetcher={fetchDetail}
         childrenForm={
           <></>
         }
       />
       <ModalCreateRoom
         methodCancel={() => setIsModalOpen(false)}
-        title={t('Create Room Management')}
+        title={t('Create Book Management')}
         isOpen={isModalOpen}
       />
       <ModalEditReaction

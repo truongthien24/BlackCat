@@ -13,6 +13,18 @@ export default {
     });
   },
 
+  getSachByID: (params) => {
+    return axiosWrapper.get(`/getSachByID/${params?.data}`, {
+      ...params
+    });
+  },
+
+  updateSach: (params) => {
+    return axiosWrapper.patch(`/updateSach/${params?._id}`, {
+      ...params
+    });
+  },
+
   //   getDataProduction: (params: object) => {
   //     return axiosWrapper.post(`/Production/DataService/GetData`, {
   //       ...params,
