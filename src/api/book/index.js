@@ -15,13 +15,13 @@ export default {
 
   getSachByID: (params) => {
     return axiosWrapper.get(`/getSachByID/${params?.data}`, {
-      ...params
+      ...params,
     });
   },
 
   updateSach: (params) => {
     return axiosWrapper.patch(`/updateSach/${params?._id}`, {
-      ...params
+      ...params,
     });
   },
 
