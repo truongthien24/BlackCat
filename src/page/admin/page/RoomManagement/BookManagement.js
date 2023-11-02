@@ -16,6 +16,7 @@ import { ModalEditReaction } from './component/modal/ModalEditReaction';
 import { getCommonCode } from 'redux/action/getCommonCode';
 import useGetDataBook from './hook/useGetDataBook';
 import useGetDetailBook from './hook/useGetDetailBook';
+import useLoadingEffect from 'fuse/hook/useLoadingEffect';
 
 export const BookManagement = () => {
 
@@ -50,8 +51,6 @@ export const BookManagement = () => {
       "0",
       dataEdit?._id,
     );
-
-    console.log('sachDataDetail', sachDataDetail)
 
 
   // Method
@@ -89,6 +88,8 @@ export const BookManagement = () => {
     setIsModalEditReaction(true);
   }
 
+  useLoadingEffect(isDataLoading, isDataDetailLoading);
+
   return (
     <>
       <div className="h-[12%] flex justify-between items-center">
@@ -109,6 +110,7 @@ export const BookManagement = () => {
         isOpen={isModalEditOpen}
         dataEdit={sachDataDetail}
         fetcher={fetchDetail}
+        fetch={fetchData}
         childrenForm={
           <></>
         }
@@ -117,6 +119,8 @@ export const BookManagement = () => {
         methodCancel={() => setIsModalOpen(false)}
         title={t('Create Book Management')}
         isOpen={isModalOpen}
+        fetcher={fetchDetail}
+        fetch={fetchData}
       />
       <ModalEditReaction
         isOpen={isModalEditReaction}

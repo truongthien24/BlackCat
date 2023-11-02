@@ -28,6 +28,7 @@ export const ModalEditBook = (props) => {
     methodCancel,
     dataEdit,
     fetcher,
+    fetch,
   } = props;
 
   // State
@@ -174,6 +175,7 @@ export const ModalEditBook = (props) => {
     setValue,
     handleSubmit,
     reset,
+    watch,
     formState: { errors },
   } = useForm({
     method: "onChange",
@@ -192,7 +194,7 @@ export const ModalEditBook = (props) => {
     const file = e.target.files[0];
     const base64 = await convertToBase64(file);
     setImage(base64);
-    setFileImage(base64);
+    setValue("hinhAnh", base64)
   };
 
   const submitForm = async (data) => {
@@ -205,10 +207,11 @@ export const ModalEditBook = (props) => {
     //     });
     // }
     await mutate({
-      Data: { ...data, hinhAnh: fileImage },
+      Data: { ...data },
       onSuccess: async (msg) => {
         toast.success(msg?.data?.message);
         await fetcher();
+        await fetch();
       },
       onError: async (err) => {
         toast.error(err?.error);
@@ -378,7 +381,7 @@ export const ModalEditBook = (props) => {
             <div className="rounded-[10px] border-solid border-[1px] border-[#cdcdcd] shadow-lg shadow-gray-400">
               <div className="p-[10px] w-full">
                 <img
-                  src={getValues("hinhAnh")}
+                  src={watch("hinhAnh")}
                   className="md:h-[200px] lg:h-[250px] w-full rounded-[5px]"
                 />
                 {/* {renderImage} */}
