@@ -24,6 +24,12 @@
                 key: 'tacGia',
                 width: '20%',
             },
+            {
+                title: 'Hình ảnh',
+                dataIndex: 'hinhAnh',
+                key: 'hinhAnh',
+                width: '20%',
+            },
         ]
     }
 
