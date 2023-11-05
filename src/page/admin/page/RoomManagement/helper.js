@@ -4,7 +4,7 @@ export const columns = (onClickFuncc) => {
       title: "Tên sách",
       dataIndex: "tenSach",
       key: "tenSach",
-      width: "30%",
+      width: "35%",
     },
     {
       title: "Thể loại",
@@ -16,31 +16,19 @@ export const columns = (onClickFuncc) => {
       title: "Số lượng",
       dataIndex: "soLuong",
       key: "soLuong",
-      width: "9%",
+      width: "15%",
     },
     {
       title: "Tác giả",
       dataIndex: "tacGia",
       key: "tacGia",
-      width: "15%",
-    },
-    {
-      title: "Nhà cung cấp",
-      dataIndex: "nhaCungCap",
-      key: "nhaCungCap",
-      width: "12%",
-    },
-    {
-      title: "Nhà xuất bản",
-      dataIndex: "nhaXuatBan",
-      key: "nhaXuatBan",
-      width: "12%",
+      width: "20%",
     },
     {
       title: "Hình ảnh",
       dataIndex: "hinhAnh",
       key: "hinhAnh",
-      width: "15%",
+      width: "20%",
     },
   ];
 };

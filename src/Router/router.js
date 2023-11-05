@@ -19,6 +19,7 @@ import { Introduce } from "../page/user/page/introduce/Introduce";
 import { ServiceManagement } from "../page/admin/page/ServiceManagement/ServiceManagement";
 import { Contact } from "page/user/page/contact/Contact";
 import VerifyEmail from "page/user/page/verifyEmail/VerifyEmail";
+import TheLoaiManagement from "page/admin/page/System/theLoaiManagement/TheLoaiManagement";
 // import { Contact } from '../page/user/page/contact/Contact';
 
 export const MainRoutes = () => {
@@ -47,6 +48,8 @@ export const MainRoutes = () => {
           <Route path="bookManagement" element={<BookManagement />} />
           <Route path="checkingManagement" element={<CheckingManagement />} />
           <Route path="serviceManagement" element={<ServiceManagement />} />
+          <Route path="theLoaiManagement" element={<TheLoaiManagement />} />
+          <Route path="tacGiaManagement" element={<div></div>} />
           <Route path="login" element={<LoginAdmin />} />
           <Route path="*" element={<div>Page not found</div>} />
         </Route>

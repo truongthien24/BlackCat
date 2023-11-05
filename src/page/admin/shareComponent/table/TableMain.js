@@ -199,5 +199,7 @@ export const TableMain = (props) => {
         }
     }, [columns])
 
-    return <Table columns={dataColumns} dataSource={data} bordered size="middle"/>;
+    return <>
+      <Table columns={dataColumns} dataSource={data} bordered size="middle"/>
+    </>;
 }
