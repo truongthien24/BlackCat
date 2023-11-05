@@ -1,17 +1,11 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Confirm } from "../../../../component/Confirm/Confirm";
-// import { FormCreate } from '../../shareComponent/form/FormCreate';
-// import { FormUpdate } from '../../shareComponent/form/FormUpdate';
-// import { ModalCreate } from '../../shareComponent/modal/ModalCreate';
 import { TableMain } from "../../shareComponent/table/TableMain";
 import { useDispatch } from "react-redux";
-import { deleteRoom } from "../../../../redux/action/phongAction";
-import { columns, getDataTable } from "./helper";
+import { columns } from "./helper";
 import { ModalEditBook } from "./component/modal/ModalEditBook";
 import { ModalCreateRoom } from "./component/modal/ModalCreateRoom";
-import { setConfirm } from "../../../../redux/action/homeAction";
-import Swal from "sweetalert2";
 import { ModalEditReaction } from "./component/modal/ModalEditReaction";
 import { getCommonCode } from "redux/action/getCommonCode";
 import useGetDataBook from "./hook/useGetDataBook";
@@ -60,21 +54,6 @@ export const BookManagement = () => {
   };
 
   const handleDelete = async (data) => {
-    // await dispatch(setConfirm({
-    //   status: 'open',
-    //   method: async () => {
-    //     dispatch(deleteRoom(data)).then(data => {
-    //     }).catch(err => {
-    //       Swal.fire({
-    //         icon: 'error',
-    //         title: 'Xoá thất bại !',
-    //         showConfirmButton: false,
-    //         timer: 1500,
-    //         timerProgressBar: true
-    //       })
-    //     });
-    //   }
-    // }))
   };
 
   const handleViewDanhGia = (data) => {

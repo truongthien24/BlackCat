@@ -42,6 +42,14 @@ export const Navigation = () => {
     getItem(<div onClick={() => {
       navigate('/admin/bookManagement')
     }}>Book Management</div>, '3', <ContainerOutlined />),
+    getItem('System', 'sub1', <ContainerOutlined />, [
+      getItem(<div onClick={() => {
+        navigate('/admin/theLoaiManagement')
+      }}>The Loai Management</div>, '4'),
+      getItem(<div onClick={() => {
+        navigate('/admin/tacGiaManagement')
+      }}>Tac Gia Service</div>, '5'),
+    ]),
     getItem('Booking', 'sub2', <MailOutlined />, [
       getItem(<div onClick={() => {
         navigate('/admin/checkingManagement')
