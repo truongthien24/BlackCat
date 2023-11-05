@@ -1,11 +1,10 @@
-<<<<<<< HEAD
 export const columns = (onClickFuncc) => {
   return [
     {
       title: "Tên sách",
       dataIndex: "tenSach",
       key: "tenSach",
-      width: "25%",
+      width: "30%",
     },
     {
       title: "Thể loại",
@@ -17,13 +16,13 @@ export const columns = (onClickFuncc) => {
       title: "Số lượng",
       dataIndex: "soLuong",
       key: "soLuong",
-      width: "8%",
+      width: "9%",
     },
     {
       title: "Tác giả",
       dataIndex: "tacGia",
       key: "tacGia",
-      width: "20%",
+      width: "15%",
     },
     {
       title: "Nhà cung cấp",
@@ -37,44 +36,14 @@ export const columns = (onClickFuncc) => {
       key: "nhaXuatBan",
       width: "12%",
     },
+    {
+      title: "Hình ảnh",
+      dataIndex: "hinhAnh",
+      key: "hinhAnh",
+      width: "15%",
+    },
   ];
 };
-=======
-    export const columns = (onClickFuncc) => {
-        return [
-            {
-                title: 'Tên sách',  
-                dataIndex: 'tenSach',
-                key: 'tenSach',
-                width: '35%',
-            },
-            {
-                title: 'Thể loại',
-                dataIndex: 'theLoai',
-                key: 'theLoai',
-                width: '15%',
-            },
-            {
-                title: 'Số lượng',
-                dataIndex: 'soLuong',
-                key: 'soLuong',
-                width: '15%'
-            },
-            {
-                title: 'Tác giả',
-                dataIndex: 'tacGia',
-                key: 'tacGia',
-                width: '20%',
-            },
-            {
-                title: 'Hình ảnh',
-                dataIndex: 'hinhAnh',
-                key: 'hinhAnh',
-                width: '20%',
-            },
-        ]
-    }
->>>>>>> 481df719f819c3d7493cb33eb13321dde8868f66
 
 // getDataTable
 export const getDataTable = (data) => {
