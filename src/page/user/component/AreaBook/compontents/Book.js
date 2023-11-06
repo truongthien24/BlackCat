@@ -53,7 +53,7 @@ const Book = (props) => {
                     <span className="text-[13px] text-[#f7941d]">{data?.soLuong > 0 ? 'In Stock' : 'Sold out'}</span>
                 </div>
             </div>
-            <ModalReviewSach data={review?.data} title="" onReview={onReview}/>
+            <ModalReviewSach open={review?.open} data={review?.data} title="" onReview={onReview}/>
         </>
     )
 }
