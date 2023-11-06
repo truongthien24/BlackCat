@@ -18,9 +18,7 @@ const CateroryMobile = () => {
     },
   ];
 
-  const onChange = (key) => {
-    console.log(key);
-  };
+  const onChange = (key) => {};
 
   return (
     <div className="h-[45px]">

@@ -194,7 +194,7 @@ export const ModalEditBook = (props) => {
     const file = e.target.files[0];
     const base64 = await convertToBase64(file);
     setImage(base64);
-    setValue("hinhAnh", base64)
+    setValue("hinhAnh", base64);
   };
 
   const submitForm = async (data) => {

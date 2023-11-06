@@ -197,7 +197,6 @@ export const ModalCreateRoom = (props) => {
         handleCancel();
       },
       onError: async (err) => {
-        console.log("err", err);
         toast.error(err?.error?.message);
       },
     });

@@ -20,6 +20,9 @@ import { ServiceManagement } from "../page/admin/page/ServiceManagement/ServiceM
 import { Contact } from "page/user/page/contact/Contact";
 import VerifyEmail from "page/user/page/verifyEmail/VerifyEmail";
 import TheLoaiManagement from "page/admin/page/System/theLoaiManagement/TheLoaiManagement";
+import TacGiaManagement from "page/admin/page/System/tacGiaManagement/TacGiaManagement";
+import NhaCungCapManagement from "page/admin/page/System/nhaCungCapManagement/NhaCungCapManagement";
+import NhaXuatBanManagement from "page/admin/page/System/nhaXuatBanManagement/NhaXuatBanManagement";
 // import { Contact } from '../page/user/page/contact/Contact';
 
 export const MainRoutes = () => {
@@ -49,7 +52,15 @@ export const MainRoutes = () => {
           <Route path="checkingManagement" element={<CheckingManagement />} />
           <Route path="serviceManagement" element={<ServiceManagement />} />
           <Route path="theLoaiManagement" element={<TheLoaiManagement />} />
-          <Route path="tacGiaManagement" element={<div></div>} />
+          <Route path="tacGiaManagement" element={<TacGiaManagement />} />
+          <Route
+            path="nhaCungCapManagement"
+            element={<NhaCungCapManagement />}
+          />
+          <Route
+            path="nhaXuatBanManagement"
+            element={<NhaXuatBanManagement />}
+          />
           <Route path="login" element={<LoginAdmin />} />
           <Route path="*" element={<div>Page not found</div>} />
         </Route>

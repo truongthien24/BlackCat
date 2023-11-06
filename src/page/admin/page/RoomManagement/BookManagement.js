@@ -45,16 +45,25 @@ export const BookManagement = () => {
 
   // Method
   const handleAdd = () => {
-    setIsModalOpen(true);
+    setIsModalOpen({
+      open: true,
+      initData: null,
+    });
   };
+
+  // const handleAdd = () => {
+  //   onShowSlice({
+  //     open: true,
+  //     initData: null,
+  //   });
+  // };
 
   const handleEdit = (data) => {
     setDataEdit(data);
     setIsModalEditOpen(true);
   };
 
-  const handleDelete = async (data) => {
-  };
+  const handleDelete = async (data) => {};
 
   const handleViewDanhGia = (data) => {
     setDataEdit(data);
@@ -83,6 +92,7 @@ export const BookManagement = () => {
           columns={columns(handleViewDanhGia)}
           handleEdit={handleEdit}
           handleDelete={handleDelete}
+          setIsModalOpen={setIsModalOpen}
         />
       </div>
       <ModalEditBook

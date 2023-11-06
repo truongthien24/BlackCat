@@ -13,8 +13,6 @@ export const UserLogin = (props) => {
 
   const { userInfo } = useSelector((state) => state.taiKhoan);
 
-  console.log('userInfo', userInfo)
-
   return (
     <div>
       {userLogin ? (

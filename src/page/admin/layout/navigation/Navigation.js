@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   AppstoreOutlined,
   ContainerOutlined,
@@ -6,11 +6,11 @@ import {
   PieChartOutlined,
   MenuUnfoldOutlined,
   DesktopOutlined,
-  MailOutlined
-} from '@ant-design/icons';
-import { Button, Menu } from 'antd';
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+  MailOutlined,
+} from "@ant-design/icons";
+import { Button, Menu } from "antd";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function getItem(label, key, icon, children, type) {
   return {
@@ -22,9 +22,7 @@ function getItem(label, key, icon, children, type) {
   };
 }
 
-
 export const Navigation = () => {
-
   const [collapsed, setCollapsed] = useState(false);
   const toggleCollapsed = () => {
     setCollapsed(!collapsed);
@@ -33,40 +31,129 @@ export const Navigation = () => {
   const navigate = useNavigate();
 
   const items = [
-    getItem(<div onClick={() => {
-      navigate('/admin/dashboard')
-    }}>Dashboard</div>, '1', <PieChartOutlined />),
-    getItem(<div onClick={() => {
-      navigate('/admin/accountManagement')
-    }}>Account Management</div>, '2', <DesktopOutlined />),
-    getItem(<div onClick={() => {
-      navigate('/admin/bookManagement')
-    }}>Book Management</div>, '3', <ContainerOutlined />),
-    getItem('System', 'sub1', <ContainerOutlined />, [
-      getItem(<div onClick={() => {
-        navigate('/admin/theLoaiManagement')
-      }}>The Loai Management</div>, '4'),
-      getItem(<div onClick={() => {
-        navigate('/admin/tacGiaManagement')
-      }}>Tac Gia Service</div>, '5'),
+    getItem(
+      <div
+        onClick={() => {
+          navigate("/admin/dashboard");
+        }}
+      >
+        Dashboard
+      </div>,
+      "1",
+      <PieChartOutlined />
+    ),
+    getItem(
+      <div
+        onClick={() => {
+          navigate("/admin/accountManagement");
+        }}
+      >
+        Account Management
+      </div>,
+      "2",
+      <DesktopOutlined />
+    ),
+    getItem(
+      <div
+        onClick={() => {
+          navigate("/admin/bookManagement");
+        }}
+      >
+        Sách Management
+      </div>,
+      "3",
+      <ContainerOutlined />
+    ),
+    getItem("System", "sub1", <ContainerOutlined />, [
+      getItem(
+        <div
+          onClick={() => {
+            navigate("/admin/theLoaiManagement");
+          }}
+        >
+          Thể loại Management
+        </div>,
+        "4"
+      ),
+      getItem(
+        <div
+          onClick={() => {
+            navigate("/admin/tacGiaManagement");
+          }}
+        >
+          Tác giả Management
+        </div>,
+        "5"
+      ),
+      getItem(
+        <div
+          onClick={() => {
+            navigate("/admin/nhaCungCapManagement");
+          }}
+        >
+          Nhà cung cấp Management
+        </div>,
+        "6"
+      ),
+      getItem(
+        <div
+          onClick={() => {
+            navigate("/admin/nhaXuatBanManagement");
+          }}
+        >
+          Nhà Xuất bản Management
+        </div>,
+        "7"
+      ),
     ]),
-    getItem('Booking', 'sub2', <MailOutlined />, [
-      getItem(<div onClick={() => {
-        navigate('/admin/checkingManagement')
-      }}>Checking Management</div>, '7'),
-      getItem(<div onClick={() => {
-        navigate('/admin/bookingService')
-      }}>Booking Service</div>, '8'),
+    getItem("Booking", "sub2", <MailOutlined />, [
+      getItem(
+        <div
+          onClick={() => {
+            navigate("/admin/checkingManagement");
+          }}
+        >
+          Checking Management
+        </div>,
+        "8"
+      ),
+      getItem(
+        <div
+          onClick={() => {
+            navigate("/admin/bookingService");
+          }}
+        >
+          Booking Service
+        </div>,
+        "9"
+      ),
     ]),
-    getItem(<div onClick={() => {
-      navigate('/admin/serviceManagement')
-    }}>Service Management</div>, '9', <ContainerOutlined />),
+    getItem(
+      <div
+        onClick={() => {
+          navigate("/admin/serviceManagement");
+        }}
+      >
+        Service Management
+      </div>,
+      "10",
+      <ContainerOutlined />
+    ),
+    getItem(
+      <div
+        onClick={() => {
+          navigate("/admin/baiVietManagement");
+        }}
+      >
+        Bai Viet
+      </div>,
+      "11",
+      <ContainerOutlined />
+    ),
   ];
 
   return (
-    <div
-      className='admin__navigation bg-[#000B16] w-[256px] h-[calc(100vh-100px)]'
-    >
+    <div className="admin__navigation bg-[#000B16] w-[256px] h-[calc(100vh-100px)]">
       {/* <Button
             type="primary"
             onClick={toggleCollapsed}
@@ -77,16 +164,16 @@ export const Navigation = () => {
             { <MenuFoldOutlined />}
             </Button> */}
       <div className="flex items-center justify-center py-[20px]">
-        <img src='/images/logo.png' className="w-[100px]" />
+        <img src="/images/logo.png" className="w-[100px]" />
       </div>
       <Menu
-        defaultSelectedKeys={['1']}
-        defaultOpenKeys={['sub1']}
+        defaultSelectedKeys={["1"]}
+        defaultOpenKeys={["sub1"]}
         mode="inline"
         theme="dark"
         inlineCollapsed={collapsed}
         items={items}
       />
     </div>
-  )
-}
+  );
+};

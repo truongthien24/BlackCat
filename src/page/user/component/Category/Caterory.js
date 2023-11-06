@@ -13,9 +13,7 @@ const Caterory = () => {
     },
   ];
 
-  const onChange = (key) => {
-    console.log(key);
-  };
+  const onChange = (key) => {};
 
   return (
     <div className="h-[45px]">
@@ -25,7 +23,7 @@ const Caterory = () => {
         style={{
           width: "250px",
           backgroundColor: `${COLOR.primaryColor}`,
-          border: 'none'
+          border: "none",
         }}
         expandIcon={({ isActive }) =>
           isActive ? (

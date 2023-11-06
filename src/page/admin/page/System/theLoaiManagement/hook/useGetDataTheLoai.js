@@ -1,39 +1,24 @@
 import apiServices from "api";
 import { useQuery } from "react-query";
 
-const getApiData = async (
-  pageIndex = 0,
-  pageSize = 0,
-) => {
-
+const getApiData = async (pageIndex = 0, pageSize = 0) => {
   const params = {
     skip: pageIndex * pageSize,
     take: pageSize,
   };
 
-  const sachs = await apiServices.theLoai.getAllTheLoai({
+  const theLoais = await apiServices.theLoai.getAllTheLoai({
     ...params,
   });
 
-  return sachs;
+  return theLoais;
 };
 
-const useGetDataTheLoai = (
-  pageIndex = 0,
-  pageSize = 0,
-) => {
+const useGetDataTheLoai = (pageIndex = 0, pageSize = 0) => {
   const query = useQuery(
-    [
-      "get-data-TheLoai",
-      pageIndex,
-      pageSize,
-    ],
+    ["get-data-TheLoai", pageIndex, pageSize],
 
-    () =>
-      getApiData(
-        pageIndex,
-        pageSize,
-      ),
+    () => getApiData(pageIndex, pageSize),
 
     {
       keepPreviousData: true,
