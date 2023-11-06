@@ -387,4 +387,22 @@ html {
 
 .ant-drawer-mobile .ant-drawer-wrapper-body .ant-drawer-body {
   padding: 10px !important;
+}
+
+.book__heading:hover > .book__heading-option {
+  display: block;
+}
+.book__heading-option {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: none;
+  background-color: rgba(0, 0, 0, 0.3);
+  color: #fff;
+  transition: all 0.5s;
+}
+.book__heading-option-button:hover svg {
+  color: #498374 !important;
 }/*# sourceMappingURL=index.css.map */

@@ -15,30 +15,19 @@ const SliderBook = (props) => {
     }
     return (
         <Swiper
-            slidesPerView={3}
+            slidesPerView={5}
             grid={{
                 rows: 1,
             }}
             spaceBetween={20}
-            pagination={{
-                clickable: true,
-            }}
-            modules={[Grid, Pagination]}
+            // pagination={{
+            //     clickable: true,
+            // }}
+            modules={[Grid]}
             className="mySwiper"
-            style={{ height: '100px' }}
+            style={{padding: '10px 0'}}
         >
             {renderSlide()}
-            // <SwiperSlide>
-            //     <Book data={{}} />
-            // </SwiperSlide>
-            // <SwiperSlide><div className="bg-[green] h-[50px]">Slide 2</div></SwiperSlide>
-            // <SwiperSlide><div className="bg-[blue] h-[50px]">Slide 3</div></SwiperSlide>
-            // <SwiperSlide><div className="bg-[yellow] h-[50px]">Slide 4</div></SwiperSlide>
-            // <SwiperSlide><div className="bg-[violet] h-[50px]">Slide 5</div></SwiperSlide>
-            // <SwiperSlide><div className="bg-[red] h-[50px]">Slide 6</div></SwiperSlide>
-            // <SwiperSlide><div className="bg-[red] h-[50px]">Slide 7</div></SwiperSlide>
-            // <SwiperSlide><div className="bg-[red] h-[50px]">Slide 8</div></SwiperSlide>
-            // <SwiperSlide><div className="bg-[red] h-[50px]">Slide 9</div></SwiperSlide>
         </Swiper>
     )
 }
