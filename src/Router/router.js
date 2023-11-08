@@ -23,6 +23,7 @@ import TheLoaiManagement from "page/admin/page/System/theLoaiManagement/TheLoaiM
 import TacGiaManagement from "page/admin/page/System/tacGiaManagement/TacGiaManagement";
 import NhaCungCapManagement from "page/admin/page/System/nhaCungCapManagement/NhaCungCapManagement";
 import NhaXuatBanManagement from "page/admin/page/System/nhaXuatBanManagement/NhaXuatBanManagement";
+import Cart from "page/user/page/cart/Cart";
 // import { Contact } from '../page/user/page/contact/Contact';
 
 export const MainRoutes = () => {
@@ -42,6 +43,7 @@ export const MainRoutes = () => {
           <Route path="service" element={<Service />} />
           <Route path="introduce" element={<Introduce />} />
           <Route path="contact" element={<Contact />} />
+          <Route path="cart/:id" element={<Cart />} />
         </Route>
         <Route path="/:id/verify/:token" element={<VerifyEmail />} />
         <Route path="/admin" element={<Layout1Admin />}>
