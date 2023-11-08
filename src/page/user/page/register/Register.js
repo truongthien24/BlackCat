@@ -7,6 +7,7 @@ import axios from "axios";
 import useRegister from "./hook/useRegister";
 import { toast } from "react-hot-toast";
 import useLoadingEffect from "fuse/hook/useLoadingEffect";
+import { message } from "antd";
 
 export const Register = () => {
   const navigate = useNavigate();
@@ -78,16 +79,15 @@ export const Register = () => {
 
   const registerUserTest = async (data) => {
     // axios.post("http://localhost:3001/create-TaiKhoan", data?.data).then(result=>
-    // await mutate({
-    //   Data: { ...data?.data, loaiTaiKhoan: "user" },
-    //   onSuccess: async (msg) => {
-    //     toast.success(msg.data.message);
-    //   },
-    //   onError: async (err) => {
-    //     toast.error(err.error);
-    //   },
-    // });
-    console.log(data);
+    await mutate({
+      Data: { ...data?.data, loaiTaiKhoan: "user" },
+      onSuccess: async (msg) => {
+        toast.success(msg.data.message);
+      },
+      onError: async (err) => {
+        toast.error(err.error.message);
+      },
+    });
   };
   useLoadingEffect(isSubmitting);
   return (
