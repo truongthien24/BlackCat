@@ -3,12 +3,14 @@ import { COLOR } from 'page/user/shareComponent/constant'
 import React from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-hot-toast'
+import ReviewContent from './components/ReviewContent'
+import ReviewHeading from './components/ReviewHeading'
 
 const ModalReviewSach = ({ data, open = false, onReview, title }) => {
 
     const { handleSubmit, register, setValue, getValues } = useForm({
         mode: 'onSubmit',
-        defaultValue: {
+        defaultValues: {
             quantity: 1,
         }
     })
@@ -36,14 +38,23 @@ const ModalReviewSach = ({ data, open = false, onReview, title }) => {
                     <img src={data?.hinhAnh} className="w-full h-full" />
                 </div>
                 <div className="w-full bg-[#f3f3f3] p-[15px] flex flex-col justify-between h-full">
-                    <h3 className="text-[22px] font-[400] mb-[10px]">{data?.tenSach}</h3>
+                    <ReviewContent data={data}/>
                     <div>
-                        <div className="flex items-center">
-                            <h5 style={{ color: `${COLOR.primaryColor}` }}>Số lượng</h5>
+                        <div className="flex items-center my-[7px]">
+                            <h5 style={{ color: `${COLOR.primaryColor}`, marginRight: '10px' }}>Số lượng</h5>
                             <div className="flex items-center">
-                                <button type="button" className="bg-[#dcdbdb]" onClick={() => handleChangeQuantity("minas")}>-</button>
-                                <input {...register('quantity')} />
-                                <button type="button" className="bg-[#dcdbdb]" onClick={() => handleChangeQuantity("plus")}>+</button>
+                                <button type="button" className="bg-[#dcdbdb] w-[35px] h-[35px] flex items-center justify-center" onClick={() => handleChangeQuantity("minas")}>
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M18 12H6" />
+                                    </svg>
+                                </button>
+                                <input className="bg-[white] w-[35px] h-[35px] text-center" {...register('quantity')} />
+                                <button type="button" className="bg-[#dcdbdb] w-[35px] h-[35px] flex items-center justify-center" onClick={() => handleChangeQuantity("plus")}>
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v12m6-6H6" />
+                                    </svg>
+
+                                </button>
                             </div>
                         </div>
                         <button className='text-[#fff] w-full p-[10px] rounded-[5px] flex items-center justify-center' style={{ backgroundColor: `${COLOR.primaryColor}` }}>Thêm vào giỏ hàng</button>
