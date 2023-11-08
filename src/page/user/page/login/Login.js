@@ -22,12 +22,12 @@ export const Login = () => {
     {
       name: "tenDangNhap",
       type: "string",
-      label: 'Tài khoản'
+      label: "Tài khoản",
     },
     {
       name: "matKhau",
       type: "password",
-      label: 'Mật khẩu'
+      label: "Mật khẩu",
     },
   ];
 
@@ -58,7 +58,6 @@ export const Login = () => {
       },
     });
   };
-
 
   useLoadingEffect(isSubmitting);
 
