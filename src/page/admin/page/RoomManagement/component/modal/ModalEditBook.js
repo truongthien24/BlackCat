@@ -53,12 +53,12 @@ export const ModalEditBook = (props) => {
   const { t } = useTranslation();
 
   // Effect
-  useEffect(() => {
-    setIsSkeleton(true);
-    setTimeout(() => {
-      setIsSkeleton(false);
-    }, 500);
-  }, [dataEdit]);
+  // useEffect(() => {
+  //   setIsSkeleton(true);
+  //   setTimeout(() => {
+  //     setIsSkeleton(false);
+  //   }, 500);
+  // }, [dataEdit]);
 
   // useLoadingEffect(isSubmitting);
 
