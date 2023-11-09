@@ -43,15 +43,15 @@ export const ModalCreateRoom = (props) => {
   );
 
   // Effect
-  useEffect(() => {
-    setIsSkeleton(true);
-    setTimeout(() => {
-      setImage(
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSDF9695aEHL20tZNMzJ26nIGr5AYMKr_eaoxXWtDkngU8M8KXhqPQXkhyamMWJ1mvbeYU&usqp=CAU"
-      );
-      setIsSkeleton(false);
-    }, 500);
-  }, [isOpen]);
+  // useEffect(() => {
+  //   setIsSkeleton(true);
+  //   setTimeout(() => {
+  //     setImage(
+  //       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSDF9695aEHL20tZNMzJ26nIGr5AYMKr_eaoxXWtDkngU8M8KXhqPQXkhyamMWJ1mvbeYU&usqp=CAU"
+  //     );
+  //     setIsSkeleton(false);
+  //   }, 500);
+  // }, [isOpen]);
 
   useLoadingEffect(isSubmitting);
 
