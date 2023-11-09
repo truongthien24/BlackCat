@@ -72,10 +72,6 @@ export const Register = () => {
   //   }
   // })
 
-  useEffect(() => {
-    axios.get("http://localhost:3003/getAll-TaiKhoan");
-  }, []);
-
   const registerUserTest = async (data) => {
     // axios.post("http://localhost:3001/create-TaiKhoan", data?.data).then(result=>
     await mutate({
@@ -84,7 +80,7 @@ export const Register = () => {
         toast.success(msg.data.message);
       },
       onError: async (err) => {
-        toast.error(err.error);
+        toast.error(err.error.message);
       },
     });
   };
