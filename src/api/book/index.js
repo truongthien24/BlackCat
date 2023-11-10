@@ -25,6 +25,13 @@ export default {
     });
   },
 
+  deleteSach: (params) => {
+    console.log('params', params)
+    return axiosWrapper.delete(`/deleteSach/${params?._id}`, {
+      ...params,
+    });
+  }
+
   //   getDataProduction: (params: object) => {
   //     return axiosWrapper.post(`/Production/DataService/GetData`, {
   //       ...params,

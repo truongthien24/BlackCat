@@ -8,8 +8,8 @@ export const columns = (onClickFuncc) => {
     },
     {
       title: "Thể loại",
-      dataIndex: "theLoai",
-      key: "theLoai",
+      dataIndex: "tenTheLoai",
+      key: "tenTheLoai",
       width: "15%",
     },
     {
@@ -20,20 +20,20 @@ export const columns = (onClickFuncc) => {
     },
     {
       title: "Tác giả",
-      dataIndex: "tacGia",
-      key: "tacGia",
+      dataIndex: "tenTacGia",
+      key: "tenTacGia",
       width: "20%",
     },
     {
       title: "Nhà xuất bản",
-      dataIndex: "nhaXuatBan",
-      key: "nhaXuatBan",
+      dataIndex: "tenNhaXuatBan",
+      key: "tenNhaXuatBan",
       width: "15%",
     },
     {
       title: "Nhà cung cấp",
-      dataIndex: "nhaCungCap",
-      key: "nhaCungCap",
+      dataIndex: "tenNhaCungCap",
+      key: "tenNhaCungCap",
       width: "25%",
     },
     {
