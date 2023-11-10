@@ -7,8 +7,17 @@ import ReviewContent from "./components/ReviewContent";
 import ReviewHeading from "./components/ReviewHeading";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import useGetDetailBook from "page/admin/page/RoomManagement/hook/useGetDetailBook";
+import useLoadingEffect from "fuse/hook/useLoadingEffect";
+import { useNavigate } from "react-router-dom";
 
 const ModalReviewSach = ({ data, open = false, onReview, title }) => {
+
+  const navigate = useNavigate();
+  
+  const { sachDataDetail, isDataDetailLoading, fetchData, isFetching } =
+    useGetDetailBook("0", "0", data?._id);
+
   const {
     handleSubmit,
     register,
@@ -18,11 +27,11 @@ const ModalReviewSach = ({ data, open = false, onReview, title }) => {
   } = useForm({
     mode: "onSubmit",
     defaultValues: {
-      quantity: 1,
+      soLuong: 1,
     },
     resolver: yupResolver(
       yup.object().shape({
-        quantity: yup
+        soLuong: yup
           .number()
           .required("Please input")
           .typeError("Number")
@@ -33,16 +42,23 @@ const ModalReviewSach = ({ data, open = false, onReview, title }) => {
   });
 
   const addToCart = (data) => {
-    toast.error("Chức năng đang phát triển");
+    if (data?.soLuong > sachDataDetail.soLuong) {
+      toast.error(
+        `Số lượng không đủ. Chỉ còn ${sachDataDetail.soLuong} quyển :((`
+      );
+    } else {
+      // toast.error("Chức năng đang phát triển");
+      navigate('/cart/123213123')
+    }
   };
 
   const handleChangeQuantity = (type) => {
-    let quantity = getValues("quantity");
+    let soLuong = getValues("soLuong");
     switch (type) {
       case "plus":
-        return setValue("quantity", ++quantity);
+        return setValue("soLuong", ++soLuong);
       case "minas":
-        return setValue("quantity", --quantity);
+        return setValue("soLuong", --soLuong);
       default:
         return;
     }
@@ -53,23 +69,26 @@ const ModalReviewSach = ({ data, open = false, onReview, title }) => {
       return { open: false, data: null };
     });
   };
+
+  useLoadingEffect(isDataDetailLoading);
+
   return (
     <Modal
-      className="!w-[90%] md:!w-[80%] xl:!w-[70%] 2xl:!w-[50%]"
+      className="!w-[90%] md:!w-[80%] lg:!w-[80%] xl:!w-[70%] 2xl:!w-[50%]"
       open={open}
       onCancel={onCancel}
       footer={null}
       title={title}
     >
       <form
-        className="grid grid-cols-2 gap-[20px]"
+        className="grid grid-cols-1 md:grid-cols-2 gap-[20px]"
         onSubmit={handleSubmit(addToCart)}
       >
         <div className="w-full">
-          <img src={data?.hinhAnh} className="w-full h-full" />
+          <img src={sachDataDetail?.hinhAnh?.url} className="w-full h-full" />
         </div>
         <div className="w-full bg-[#f3f3f3] p-[15px] flex flex-col justify-between h-full">
-          <ReviewContent data={data} />
+          <ReviewContent data={sachDataDetail} />
           <div>
             <div className="flex items-center my-[10px]">
               <h5
@@ -103,8 +122,8 @@ const ModalReviewSach = ({ data, open = false, onReview, title }) => {
                 </button>
                 <input
                   className="bg-[white] w-[35px] h-[35px] text-center"
-                  {...register("quantity")}
-                  onError={errors["quantity"]}
+                  {...register("soLuong")}
+                  onError={errors["soLuong"]}
                 />
                 <button
                   type="button"
@@ -127,15 +146,20 @@ const ModalReviewSach = ({ data, open = false, onReview, title }) => {
                   </svg>
                 </button>
               </div>
-              {errors["quantity"] && (
+              {errors["soLuong"] && (
                 <span className="text-[red] ml-[10px] text-[10px]">
-                  {errors["quantity"].message}
+                  {errors["soLuong"].message}
                 </span>
               )}
             </div>
             <button
+              disabled={sachDataDetail?.soLuong < 1}
               className="text-[#fff] w-full p-[10px] rounded-[5px] flex items-center justify-center"
-              style={{ backgroundColor: `${COLOR.primaryColor}` }}
+              style={{
+                backgroundColor: `${
+                  sachDataDetail?.soLuong > 0 ? COLOR.primaryColor : "gray"
+                }`,
+              }}
             >
               Thêm vào giỏ hàng
             </button>

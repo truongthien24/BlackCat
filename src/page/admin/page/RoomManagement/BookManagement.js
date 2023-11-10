@@ -11,6 +11,9 @@ import { getCommonCode } from "redux/action/getCommonCode";
 import useGetDataBook from "./hook/useGetDataBook";
 import useGetDetailBook from "./hook/useGetDetailBook";
 import useLoadingEffect from "fuse/hook/useLoadingEffect";
+import useDeleteBook from "./hook/useDeleteBook";
+import { setConfirm } from "redux/action/homeAction";
+import toast from "react-hot-toast";
 
 export const BookManagement = () => {
   // State
@@ -43,6 +46,8 @@ export const BookManagement = () => {
     isFetching: isFetchingDetail,
   } = useGetDetailBook("0", "0", dataEdit?._id);
 
+  const { mutate, isLoading: isLoadingDelete } = useDeleteBook();
+
   // Method
   const handleAdd = () => {
     setIsModalOpen({
@@ -63,14 +68,39 @@ export const BookManagement = () => {
     setIsModalEditOpen(true);
   };
 
-  const handleDelete = async (data) => {};
+  const handleDelete = async (data) => {
+    console.log("data", data);
+    await dispatch(
+      setConfirm({
+        status: "open",
+        method: async () => {
+          await mutate({
+            Data: data,
+            onSuccess: async (res) => {
+              toast.success(res.data.message);
+              await fetchData();
+              await dispatch(
+                setConfirm({
+                  status: "close",
+                  method: () => {}
+                })
+              )
+            },
+            onError: (err) => {
+              toast.error(err.error.message);
+            },
+          });
+        },
+      })
+    );
+  };
 
   const handleViewDanhGia = (data) => {
     setDataEdit(data);
     setIsModalEditReaction(true);
   };
 
-  useLoadingEffect(isDataLoading, isDataDetailLoading);
+  useLoadingEffect(isDataLoading || isDataDetailLoading || isLoadingDelete);
 
   return (
     <>
@@ -96,7 +126,10 @@ export const BookManagement = () => {
         />
       </div>
       <ModalEditBook
-        methodCancel={() => setIsModalEditOpen(false)}
+        methodCancel={() => {
+          setDataEdit(null)
+          setIsModalEditOpen(false)
+        }}
         title={t("Sửa sách")}
         isOpen={isModalEditOpen}
         dataEdit={sachDataDetail}
@@ -105,7 +138,10 @@ export const BookManagement = () => {
         childrenForm={<></>}
       />
       <ModalCreateRoom
-        methodCancel={() => setIsModalOpen(false)}
+        methodCancel={() => {
+          setDataEdit(null)
+          setIsModalOpen(false)
+        }}
         title={t("Thêm sách")}
         isOpen={isModalOpen}
         fetcher={fetchDetail}
