@@ -43,15 +43,15 @@ export const ModalCreateRoom = (props) => {
   );
 
   // Effect
-  useEffect(() => {
-    setIsSkeleton(true);
-    setTimeout(() => {
-      setImage(
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSDF9695aEHL20tZNMzJ26nIGr5AYMKr_eaoxXWtDkngU8M8KXhqPQXkhyamMWJ1mvbeYU&usqp=CAU"
-      );
-      setIsSkeleton(false);
-    }, 500);
-  }, [isOpen]);
+  // useEffect(() => {
+  //   setIsSkeleton(true);
+  //   setTimeout(() => {
+  //     setImage(
+  //       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSDF9695aEHL20tZNMzJ26nIGr5AYMKr_eaoxXWtDkngU8M8KXhqPQXkhyamMWJ1mvbeYU&usqp=CAU"
+  //     );
+  //     setIsSkeleton(false);
+  //   }, 500);
+  // }, [isOpen]);
 
   useLoadingEffect(isSubmitting);
 
@@ -156,6 +156,40 @@ export const ModalCreateRoom = (props) => {
         required: true,
         label: "Số lượng",
       },
+      {
+        name: "kichThuoc",
+        type: "string",
+        required: true,
+        label: "Kích thước",
+      },
+      {
+        name: "soTrang",
+        type: "number",
+        required: true,
+        label: "Số trang",
+      },
+      {
+        name: "ngonNgu",
+        type: "select",
+        dataSelect: [
+          { label: "Tiếng Hàn", value: 'iHQ' },
+          { label: "Tiếng Việt", value: 'iVN' },
+          { label: "Tiếng Anh", value: 'iEN' },
+        ],
+        required: true,
+        label: "Ngôn ngữ",
+      },
+      {
+        name: "quocGia",
+        type: "select",
+        dataSelect: [
+          { label: "Hàn Quốc", value: 'HQ' },
+          { label: "Việt Nam", value: 'VN' },
+          { label: "Mỹ", value: 'EN' },
+        ],
+        required: true,
+        label: "Quốc gia",
+      },
     ];
   }, [tacGia, theLoai, nhaXuatBan, nhaCungCap]);
 
@@ -184,7 +218,6 @@ export const ModalCreateRoom = (props) => {
     const file = e.target.files[0];
     const base64 = await convertToBase64(file);
     setImage(base64);
-
     setValue("hinhAnh", base64);
   };
 
@@ -338,7 +371,7 @@ export const ModalCreateRoom = (props) => {
           className="grid grid-cols-5 grid-row-3 gap-[30px]"
           onSubmit={handleSubmit(handleSubmitData)}
         >
-          <div className="col-span-2 w-full row-span-3">
+          <div className="col-span-2 w-full row-span-4">
             <h5 className="mb-[7px] ml-[3px]">
               Photo
               <span className="text-[red]">*</span>
@@ -347,7 +380,7 @@ export const ModalCreateRoom = (props) => {
               <div className="p-[10px] w-full">
                 <img
                   src={watch("hinhAnh")}
-                  className="md:h-[200px] lg:h-[250px] w-full rounded-[5px]"
+                  className="h-full w-full rounded-[5px]"
                 />
                 {/* {renderImage} */}
               </div>

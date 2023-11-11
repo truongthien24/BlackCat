@@ -29,6 +29,7 @@ export const ModalEditBook = (props) => {
     dataEdit,
     fetcher,
     fetch,
+    onShowSlice
   } = props;
 
   // State
@@ -53,12 +54,12 @@ export const ModalEditBook = (props) => {
   const { t } = useTranslation();
 
   // Effect
-  useEffect(() => {
-    setIsSkeleton(true);
-    setTimeout(() => {
-      setIsSkeleton(false);
-    }, 500);
-  }, [dataEdit]);
+  // useEffect(() => {
+  //   setIsSkeleton(true);
+  //   setTimeout(() => {
+  //     setIsSkeleton(false);
+  //   }, 500);
+  // }, [dataEdit]);
 
   // useLoadingEffect(isSubmitting);
 
@@ -81,7 +82,7 @@ export const ModalEditBook = (props) => {
         disable: true,
       },
       {
-        name: "theLoai",
+        name: "maTheLoai",
         type: "select",
         dataSelect: theLoai?.map((tg) => {
           return {
@@ -93,7 +94,7 @@ export const ModalEditBook = (props) => {
         label: "Thể loại",
       },
       {
-        name: "nhaXuatBan",
+        name: "maNhaXuatBan",
         type: "select",
         dataSelect: nhaXuatBan?.map((tg) => {
           return {
@@ -105,7 +106,7 @@ export const ModalEditBook = (props) => {
         label: "Nhà xuất bản",
       },
       {
-        name: "tacGia",
+        name: "maTacGia",
         type: "string",
         type: "select",
         dataSelect: tacGia?.map((tg) => {
@@ -124,7 +125,7 @@ export const ModalEditBook = (props) => {
         label: "Năm xuất bản",
       },
       {
-        name: "nhaCungCap",
+        name: "maNhaCungCap",
         type: "select",
         dataSelect: nhaCungCap?.map((tg) => {
           return {
@@ -164,6 +165,7 @@ export const ModalEditBook = (props) => {
         required: true,
         label: "Số lượng",
       },
+      
     ];
   }, [tacGia, theLoai, nhaXuatBan, nhaCungCap]);
 
@@ -185,7 +187,7 @@ export const ModalEditBook = (props) => {
   useEffect(() => {
     if (dataEdit) {
       // APIEdit.forEach(data => setValue(`${data.name}`, dataEdit?.[data.name]));
-      reset({ ...dataEdit });
+      reset({ ...dataEdit, hinhAnh: dataEdit?.hinhAnh });
     }
   }, [dataEdit]);
 
@@ -194,7 +196,10 @@ export const ModalEditBook = (props) => {
     const file = e.target.files[0];
     const base64 = await convertToBase64(file);
     setImage(base64);
-    setValue("hinhAnh", base64);
+    setValue("hinhAnh", {
+      url: base64,
+      public_id: null
+    });
   };
 
   const submitForm = async (data) => {
@@ -381,8 +386,8 @@ export const ModalEditBook = (props) => {
             <div className="rounded-[10px] border-solid border-[1px] border-[#cdcdcd] shadow-lg shadow-gray-400">
               <div className="p-[10px] w-full">
                 <img
-                  src={watch("hinhAnh")}
-                  className="md:h-[200px] lg:h-[250px] w-full rounded-[5px]"
+                  src={watch("hinhAnh")?.url}
+                  className="h-full w-full rounded-[5px]"
                 />
                 {/* {renderImage} */}
               </div>
