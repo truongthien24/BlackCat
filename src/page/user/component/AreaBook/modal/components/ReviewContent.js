@@ -37,8 +37,9 @@ const ReviewContent = ({ data }) => {
         </span>
       </div>
       <div className="flex flex-col">
+        <ReviewInfoItem title="Nhà cung cấp" data={data?.tenNhaCungCap} />
         <ReviewInfoItem title="Thể loại" data={data?.tenTheLoai} />
-        <ReviewInfoItem title="Ngôn ngữ" data={data?.ngonNgu} />
+        <ReviewInfoItem title="Ngôn ngữ" data={data?.tenNgonNgu} />
         <ReviewInfoItem title="Nhà xuất bản" data={data?.tenNhaXuatBan} />
         <ReviewInfoItem title="Năm xuất bản" data={data?.namXuatBan} />
         <ReviewInfoItem title="Số trang" data={data?.soTrang} />

@@ -29,7 +29,6 @@ export const HomeUser = () => {
     dispatch(layDuLieuPhong());
   }, []);
 
-
   const { sachData, isDataLoading, fetchData, isFetching } = useGetDataBook(
     "0",
     "0"
@@ -43,8 +42,24 @@ export const HomeUser = () => {
       {/* <SearchArea/> */}
       {/* <ListRoomArea /> */}
       <div className="w-[90%] lg:w-[80%] py-[20px]">
-        <AreaBook data={{ title: 'New arrival', data: sachData?.filter((sach)=> sach.tinhTrang === "0") }} />
-        <AreaBook data={{ title: 'Hot', data: sachData?.filter((sach)=> sach.tinhTrang === "1") }} />
+        <AreaBook
+          data={{
+            title: "New arrival",
+            data: sachData?.filter((sach) => sach.tinhTrang === "0"),
+          }}
+        />
+        <AreaBook
+          data={{
+            title: "Hot",
+            data: sachData?.filter((sach) => sach.tinhTrang === "1"),
+          }}
+        />
+        <AreaBook
+          data={{
+            title: "Old",
+            data: sachData?.filter((sach) => sach.tinhTrang === "2"),
+          }}
+        />
       </div>
       {/* <Reason /> */}
     </div>

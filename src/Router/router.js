@@ -24,6 +24,7 @@ import TacGiaManagement from "page/admin/page/System/tacGiaManagement/TacGiaMana
 import NhaCungCapManagement from "page/admin/page/System/nhaCungCapManagement/NhaCungCapManagement";
 import NhaXuatBanManagement from "page/admin/page/System/nhaXuatBanManagement/NhaXuatBanManagement";
 import Cart from "page/user/page/cart/Cart";
+import NgonNguManagement from "page/admin/page/System/ngonNguManagement/NgonNguManagement";
 // import { Contact } from '../page/user/page/contact/Contact';
 
 export const MainRoutes = () => {
@@ -55,6 +56,7 @@ export const MainRoutes = () => {
           <Route path="serviceManagement" element={<ServiceManagement />} />
           <Route path="theLoaiManagement" element={<TheLoaiManagement />} />
           <Route path="tacGiaManagement" element={<TacGiaManagement />} />
+          <Route path="ngonNguManagement" element={<NgonNguManagement />} />
           <Route
             path="nhaCungCapManagement"
             element={<NhaCungCapManagement />}

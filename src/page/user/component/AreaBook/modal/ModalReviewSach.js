@@ -12,9 +12,8 @@ import useLoadingEffect from "fuse/hook/useLoadingEffect";
 import { useNavigate } from "react-router-dom";
 
 const ModalReviewSach = ({ data, open = false, onReview, title }) => {
-
   const navigate = useNavigate();
-  
+
   const { sachDataDetail, isDataDetailLoading, fetchData, isFetching } =
     useGetDetailBook("0", "0", data?._id);
 
@@ -34,9 +33,11 @@ const ModalReviewSach = ({ data, open = false, onReview, title }) => {
         soLuong: yup
           .number()
           .required("Please input")
-          .typeError("Number")
-          .min(1)
-          .max(99),
+          .min(1, "Số lượng phải lớn hơn 0")
+          .max(
+            10,
+            "Không được thuê quá 10 cuốn sách. Liên hệ:xxx để được tư vấn "
+          ),
       })
     ),
   });
@@ -48,7 +49,7 @@ const ModalReviewSach = ({ data, open = false, onReview, title }) => {
       );
     } else {
       // toast.error("Chức năng đang phát triển");
-      navigate('/cart/123213123')
+      navigate("/cart/123213123");
     }
   };
 
@@ -74,7 +75,7 @@ const ModalReviewSach = ({ data, open = false, onReview, title }) => {
 
   return (
     <Modal
-      className="!w-[90%] md:!w-[80%] lg:!w-[80%] xl:!w-[70%] 2xl:!w-[50%]"
+      className="!w-[90%] md:!w-[80%] lg:!w-[80%] xl:!w-[70%] 2xl:!w-[60%]"
       open={open}
       onCancel={onCancel}
       footer={null}

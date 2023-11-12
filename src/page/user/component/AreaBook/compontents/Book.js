@@ -8,10 +8,10 @@ import ModalReviewSach from "../modal/ModalReviewSach";
 const Book = (props) => {
   const { data } = props;
 
-    const [review, onReview] = useState({
-        open: false,
-        data: null
-    })
+  const [review, onReview] = useState({
+    open: false,
+    data: null,
+  });
 
   const addToCart = () => {
     // Check login
@@ -20,7 +20,7 @@ const Book = (props) => {
         icon: "👏",
       });
     } else {
-      toast.error("Ban chua dang nhap");
+      toast.error("Bạn chưa đăng nhập");
     }
   };
 
@@ -31,31 +31,51 @@ const Book = (props) => {
     });
   };
 
-    return (
-        <>
-            <div className='rounded-[5px] bg-[white] book'>
-                <div className="relative w-full book__heading">
-                    <img src={data?.hinhAnh} className="w-full h-[220px] md:h-[260px] 2xl:h-[300px] rounded-[5px] book__heading-img" />
-                    <div className="book__heading-option">
-                        <div className="flex items-center justify-center h-full w-ful">
-                            <button className="bg-[#fff] book__heading-option-button rounded-[10px] w-[40px] h-[40px] flex items-center justify-center mx-[5px]" onClick={()=> {handleReview(data)}}>
-                                <Icon name="eye" color="#000" />
-                            </button>
-                            <button className="bg-[#fff] book__heading-option-button rounded-[10px] w-[40px] h-[40px] flex items-center justify-center mx-[5px]" onClick={addToCart}>
-                                <Icon name="cart" color="#000" />
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <div className='flex flex-col items-center mt-[5px]'>
-                    <h5>{data?.tenSach}</h5>
-                    <span style={{ color: `${COLOR.primaryColor}` }} className="my-[7px]">{(data?.gia)?.toLocaleString()} VND</span>
-                    <span className="text-[13px] text-[#f7941d]">{data?.soLuong > 0 ? 'In Stock' : 'Sold out'}</span>
-                </div>
+  return (
+    <>
+      <div className="rounded-[5px] bg-[white] book">
+        <div className="relative w-full book__heading">
+          <img
+            src={data?.hinhAnh?.url}
+            className="w-full h-[220px] md:h-[260px] 2xl:h-[300px] rounded-[5px] book__heading-img"
+          />
+          <div className="book__heading-option">
+            <div className="flex items-center justify-center h-full w-ful">
+              <button
+                className="bg-[#fff] book__heading-option-button rounded-[10px] w-[40px] h-[40px] flex items-center justify-center mx-[5px]"
+                onClick={() => {
+                  handleReview(data);
+                }}
+              >
+                <Icon name="eye" color="#000" />
+              </button>
+              <button
+                className="bg-[#fff] book__heading-option-button rounded-[10px] w-[40px] h-[40px] flex items-center justify-center mx-[5px]"
+                onClick={addToCart}
+              >
+                <Icon name="cart" color="#000" />
+              </button>
             </div>
-            <ModalReviewSach open={review?.open} data={review?.data} title="" onReview={onReview}/>
-        </>
-    )
-}
+          </div>
+        </div>
+        <div className="flex flex-col items-center mt-[5px]">
+          <h5>{data?.tenSach}</h5>
+          <span style={{ color: `${COLOR.primaryColor}` }} className="my-[7px]">
+            {data?.gia?.toLocaleString()} VND
+          </span>
+          <span className="text-[13px] text-[#f7941d]">
+            {data?.soLuong > 0 ? "In Stock" : "Sold out"}
+          </span>
+        </div>
+      </div>
+      <ModalReviewSach
+        open={review?.open}
+        data={review?.data}
+        title=""
+        onReview={onReview}
+      />
+    </>
+  );
+};
 
 export default Book;
