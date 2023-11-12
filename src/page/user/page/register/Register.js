@@ -7,6 +7,7 @@ import axios from "axios";
 import useRegister from "./hook/useRegister";
 import { toast } from "react-hot-toast";
 import useLoadingEffect from "fuse/hook/useLoadingEffect";
+import { message } from "antd";
 
 export const Register = () => {
   const navigate = useNavigate();

@@ -47,8 +47,10 @@ export const Navigation = () => {
         onClick={() => {
           navigate("/admin/accountManagement");
         }}
+        Quản
+        lý
       >
-        Account Management
+        Account
       </div>,
       "2",
       <DesktopOutlined />
@@ -59,7 +61,7 @@ export const Navigation = () => {
           navigate("/admin/bookManagement");
         }}
       >
-        Sách Management
+        Quản lý Sách
       </div>,
       "3",
       <ContainerOutlined />
@@ -71,7 +73,7 @@ export const Navigation = () => {
             navigate("/admin/theLoaiManagement");
           }}
         >
-          Thể loại Management
+          Quản lý Thể loại
         </div>,
         "4"
       ),
@@ -81,7 +83,7 @@ export const Navigation = () => {
             navigate("/admin/tacGiaManagement");
           }}
         >
-          Tác giả Management
+          Quản lý Tác giả
         </div>,
         "5"
       ),
@@ -91,7 +93,7 @@ export const Navigation = () => {
             navigate("/admin/nhaCungCapManagement");
           }}
         >
-          Nhà cung cấp Management
+          Quản lý Nhà cung cấp
         </div>,
         "6"
       ),
@@ -101,9 +103,19 @@ export const Navigation = () => {
             navigate("/admin/nhaXuatBanManagement");
           }}
         >
-          Nhà Xuất bản Management
+          Quản lý Nhà Xuất bản
         </div>,
         "7"
+      ),
+      getItem(
+        <div
+          onClick={() => {
+            navigate("/admin/ngonNguManagement");
+          }}
+        >
+          Quản lý ngôn ngữ
+        </div>,
+        "8"
       ),
     ]),
     getItem("Booking", "sub2", <MailOutlined />, [
@@ -115,7 +127,7 @@ export const Navigation = () => {
         >
           Checking Management
         </div>,
-        "8"
+        "9"
       ),
       getItem(
         <div
@@ -125,7 +137,7 @@ export const Navigation = () => {
         >
           Booking Service
         </div>,
-        "9"
+        "10"
       ),
     ]),
     getItem(
@@ -136,7 +148,7 @@ export const Navigation = () => {
       >
         Service Management
       </div>,
-      "10",
+      "11",
       <ContainerOutlined />
     ),
     getItem(
@@ -147,7 +159,7 @@ export const Navigation = () => {
       >
         Bai Viet
       </div>,
-      "11",
+      "12",
       <ContainerOutlined />
     ),
   ];

@@ -13,8 +13,6 @@ const Book = (props) => {
     data: null,
   });
 
-
-
   const addToCart = () => {
     // Check login
     if (checkLogin()) {
@@ -22,7 +20,7 @@ const Book = (props) => {
         icon: "👏",
       });
     } else {
-      toast.error("Ban chua dang nhap");
+      toast.error("Bạn chưa đăng nhập");
     }
   };
 

@@ -29,7 +29,7 @@ export const ModalEditBook = (props) => {
     dataEdit,
     fetcher,
     fetch,
-    onShowSlice
+    onShowSlice,
   } = props;
 
   // State
@@ -43,7 +43,7 @@ export const ModalEditBook = (props) => {
 
   const [isChangeImage, setIsChangeImage] = useState(false);
 
-  const { tacGia, theLoai, nhaXuatBan, nhaCungCap } = useSelector(
+  const { tacGia, theLoai, nhaXuatBan, nhaCungCap, ngonNgu } = useSelector(
     (state) => state.commonCode
   );
 
@@ -165,9 +165,43 @@ export const ModalEditBook = (props) => {
         required: true,
         label: "Số lượng",
       },
-      
+      {
+        name: "kichThuoc",
+        type: "string",
+        required: true,
+        label: "Kích thước",
+      },
+      {
+        name: "soTrang",
+        type: "number",
+        required: true,
+        label: "Số trang",
+      },
+      {
+        name: "maNgonNgu",
+        type: "select",
+        dataSelect: ngonNgu?.map((tg) => {
+          return {
+            label: tg?.tenNgonNgu,
+            value: tg?._id,
+          };
+        }),
+        required: true,
+        label: "Ngôn ngữ",
+      },
+      {
+        name: "quocGia",
+        type: "select",
+        dataSelect: [
+          { label: "Hàn Quốc", value: "HQ" },
+          { label: "Việt Nam", value: "VN" },
+          { label: "Mỹ", value: "EN" },
+        ],
+        required: true,
+        label: "Quốc gia",
+      },
     ];
-  }, [tacGia, theLoai, nhaXuatBan, nhaCungCap]);
+  }, [tacGia, theLoai, nhaXuatBan, nhaCungCap, ngonNgu]);
 
   const validationSchema = yup.object().shape({});
 
@@ -198,7 +232,7 @@ export const ModalEditBook = (props) => {
     setImage(base64);
     setValue("hinhAnh", {
       url: base64,
-      public_id: null
+      public_id: null,
     });
   };
 
@@ -212,7 +246,7 @@ export const ModalEditBook = (props) => {
     //     });
     // }
     await mutate({
-      Data: { ...data },
+      Data: { ...data, nhaXuatBan: data?.maNhaXuatBan, theLoai: data?.maTheLoai, nhaCungCap: data?.maNhaCungCap, tacGia: data?.maTacGia, ngonNgu: data?.maNgonNgu},
       onSuccess: async (msg) => {
         toast.success(msg?.data?.message);
         await fetcher();
@@ -250,9 +284,8 @@ export const ModalEditBook = (props) => {
     if (item.type === "select") {
       return (
         <div
-          className={`border-[1px] border-solid border-[#b4b4b4] rounded-[5px] px-[15px] py-[7px] relative ${
-            errors?.[item.name]?.message ? "border-orange-400" : ""
-          }`}
+          className={`border-[1px] border-solid border-[#b4b4b4] rounded-[5px] px-[15px] py-[7px] relative ${errors?.[item.name]?.message ? "border-orange-400" : ""
+            }`}
         >
           <select className="w-full outline-none" {...register(`${item.name}`)}>
             {item.dataSelect?.map((op, index) => {
@@ -279,11 +312,10 @@ export const ModalEditBook = (props) => {
               >
                 <button
                   type="button"
-                  className={`w-full p-[10px] bg-[white] shadow-md shadow-gray-300 rounded-[5px] duration-200 hover:translate-x-[-3px] ${
-                    btn?.tinhTrang
+                  className={`w-full p-[10px] bg-[white] shadow-md shadow-gray-300 rounded-[5px] duration-200 hover:translate-x-[-3px] ${btn?.tinhTrang
                       ? "hover:shadow-orange-400"
                       : "hover:shadow-green-400"
-                  }`}
+                    }`}
                 >
                   {btn?.[item.dataItemName]}
                 </button>
@@ -329,9 +361,8 @@ export const ModalEditBook = (props) => {
     } else {
       return (
         <div
-          className={`border-[1px] border-solid border-[#b4b4b4] rounded-[5px] px-[15px] py-[7px] relative ${
-            item?.disable ? "bg-[#cfcece]" : ""
-          } ${errors?.[item.name]?.message ? "border-orange-400" : ""}`}
+          className={`border-[1px] border-solid border-[#b4b4b4] rounded-[5px] px-[15px] py-[7px] relative ${item?.disable ? "bg-[#cfcece]" : ""
+            } ${errors?.[item.name]?.message ? "border-orange-400" : ""}`}
         >
           <input
             // key={index}
@@ -339,9 +370,8 @@ export const ModalEditBook = (props) => {
             readOnly={item.disable}
             name={item.name}
             placeholder={`Điền vào ${item.label}...`}
-            className={`w-[92%] outline-none ${
-              item?.disable ? "bg-[#cfcece]" : ""
-            }`}
+            className={`w-[92%] outline-none ${item?.disable ? "bg-[#cfcece]" : ""
+              }`}
             {...register(`${item.name}`)}
           />
           {errors?.[item.name] && (
@@ -350,7 +380,7 @@ export const ModalEditBook = (props) => {
                 <Icon color="#c80000" name="warning" />
               </span>
               <span className="absolute right-[110%] top-0 bg-[white] w-[max-content] rounded-[20px] border-[1.5px] border-solid border-orange-400 text-orange-400 px-[10px] z-[2] hidden">
-                {errors?.[item.name].message}
+                {errors?.[item.name]?.message}
               </span>
             </div>
           )}

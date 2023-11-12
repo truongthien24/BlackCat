@@ -4,18 +4,18 @@ import { Confirm } from "../../../../component/Confirm/Confirm";
 import { TableMain } from "../../shareComponent/table/TableMain";
 import { useDispatch } from "react-redux";
 import { columns } from "./helper";
-import { ModalEditBook } from "./component/modal/ModalEditBook";
-import { ModalCreateRoom } from "./component/modal/ModalCreateRoom";
+import { ModalEditBaiViet } from "./component/modal/ModalEditBaiViet";
+import { ModalCreateBaiViet } from "./component/modal/ModalCreateBaiViet";
 import { ModalEditReaction } from "./component/modal/ModalEditReaction";
 import { getCommonCode } from "redux/action/getCommonCode";
-import useGetDataBook from "./hook/useGetDataBook";
-import useGetDetailBook from "./hook/useGetDetailBook";
 import useLoadingEffect from "fuse/hook/useLoadingEffect";
-import useDeleteBook from "./hook/useDeleteBook";
 import { setConfirm } from "redux/action/homeAction";
 import toast from "react-hot-toast";
+import useGetDetailBaiViet from "./hook/useGetDetailBaiViet";
+import useGetDataBaiViet from "./hook/useGetDataBaiViet";
+import useDeleteBaiViet from "./hook/useDeleteBaiViet";
 
-export const BookManagement = () => {
+export const BaiVietManagement = () => {
   // State
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalEditOpen, setIsModalEditOpen] = useState(false);
@@ -27,27 +27,25 @@ export const BookManagement = () => {
   const dispatch = useDispatch();
 
   // Effect
-  useEffect(async () => {
-    await dispatch(getCommonCode("tacGia"));
-    await dispatch(getCommonCode("theLoai"));
-    await dispatch(getCommonCode("nhaXuatBan"));
-    await dispatch(getCommonCode("nhaCungCap"));
-    await dispatch(getCommonCode("ngonNgu"));
-  }, []);
+  // useEffect(async () => {
+  //   await dispatch(getCommonCode("tacGia"));
+  //   await dispatch(getCommonCode("theLoai"));
+  //   await dispatch(getCommonCode("nhaXuatBan"));
+  //   await dispatch(getCommonCode("nhaCungCap"));
+  //   await dispatch(getCommonCode("ngonNgu"));
+  // }, []);
 
-  const { sachData, isDataLoading, fetchData, isFetching } = useGetDataBook(
-    "0",
-    "0"
-  );
+  const { baiVietData, isDataLoading, fetchData, isFetching } =
+    useGetDataBaiViet("0", "0");
 
   const {
-    sachDataDetail,
+    baiVietDataDetail,
     isDataDetailLoading,
     fetchData: fetchDetail,
     isFetching: isFetchingDetail,
-  } = useGetDetailBook("0", "0", dataEdit?._id);
+  } = useGetDetailBaiViet("0", "0", dataEdit?._id);
 
-  const { mutate, isLoading: isLoadingDelete } = useDeleteBook();
+  const { mutate, isLoading: isLoadingDelete } = useDeleteBaiViet();
 
   // Method
   const handleAdd = () => {
@@ -107,7 +105,7 @@ export const BookManagement = () => {
     <>
       <div className="h-[12%] flex justify-between items-center">
         <h3 className="text-[20px] text-[#3790c7] font-bold">
-          {t("Quản lý sách")}
+          {t("Quản lý bài viết")}
         </h3>
         <button
           className="flex items-center justify-center bg-[#3790c7] text-white py-[10px] px-[20px] rounded-[7px] duration-300 hover:shadow-[#3790c7a6] hover:shadow-lg hover:translate-y-[-3px]"
@@ -119,31 +117,31 @@ export const BookManagement = () => {
       </div>
       <div className="h-[88%]">
         <TableMain
-          data={sachData}
+          data={baiVietData}
           columns={columns(handleViewDanhGia)}
           handleEdit={handleEdit}
           handleDelete={handleDelete}
           setIsModalOpen={setIsModalOpen}
         />
       </div>
-      <ModalEditBook
+      <ModalEditBaiViet
         methodCancel={() => {
           setDataEdit(null);
           setIsModalEditOpen(false);
         }}
-        title={t("Sửa sách")}
+        title={t("Sửa bài viết")}
         isOpen={isModalEditOpen}
-        dataEdit={sachDataDetail}
+        dataEdit={baiVietDataDetail}
         fetcher={fetchDetail}
         fetch={fetchData}
         childrenForm={<></>}
       />
-      <ModalCreateRoom
+      <ModalCreateBaiViet
         methodCancel={() => {
           setDataEdit(null);
           setIsModalOpen(false);
         }}
-        title={t("Thêm sách")}
+        title={t("Thêm bài viết")}
         isOpen={isModalOpen}
         fetcher={fetchDetail}
         fetch={fetchData}

@@ -7,6 +7,7 @@ import tacGia from "./tacGia";
 import nhaCungCap from "./nhaCungCap";
 import nhaXuatBan from "./nhaXuatBan";
 import baiViet from "./baiViet";
+import ngonNgu from "./ngonNgu";
 
 const apiService = {
   taiKhoan,
@@ -18,6 +19,7 @@ const apiService = {
   nhaCungCap,
   nhaXuatBan,
   baiViet,
+  ngonNgu,
 };
 
 export default apiService;
