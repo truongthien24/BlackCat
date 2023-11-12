@@ -25,6 +25,7 @@ import NhaCungCapManagement from "page/admin/page/System/nhaCungCapManagement/Nh
 import NhaXuatBanManagement from "page/admin/page/System/nhaXuatBanManagement/NhaXuatBanManagement";
 import Cart from "page/user/page/cart/Cart";
 import NgonNguManagement from "page/admin/page/System/ngonNguManagement/NgonNguManagement";
+import { BaiVietManagement } from "page/admin/page/baiVietManagement/BaiVietManagement";
 // import { Contact } from '../page/user/page/contact/Contact';
 
 export const MainRoutes = () => {
@@ -57,6 +58,7 @@ export const MainRoutes = () => {
           <Route path="theLoaiManagement" element={<TheLoaiManagement />} />
           <Route path="tacGiaManagement" element={<TacGiaManagement />} />
           <Route path="ngonNguManagement" element={<NgonNguManagement />} />
+          <Route path="baiVietManagement" element={<BaiVietManagement />} />
           <Route
             path="nhaCungCapManagement"
             element={<NhaCungCapManagement />}

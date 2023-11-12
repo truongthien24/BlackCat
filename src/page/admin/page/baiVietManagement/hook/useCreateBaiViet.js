@@ -1,16 +1,16 @@
 import apiService from "api";
 import { useMutation } from "react-query";
 
-const createBook = async (params = {}) => {
-  const accounts = await apiService.book.createSach({
+const createBaiViet = async (params = {}) => {
+  const baiViet = await apiService.baiViet.createBaiViet({
     ...params?.Data,
   });
 
-  return accounts;
+  return baiViet;
 };
 
-const useCreateBook = () => {
-  return useMutation(createBook, {
+const useCreateBaiViet = () => {
+  return useMutation(createBaiViet, {
     onSuccess: (_, { onSuccess, status }) => {
       onSuccess(_);
     },
@@ -20,4 +20,4 @@ const useCreateBook = () => {
   });
 };
 
-export default useCreateBook;
+export default useCreateBaiViet;

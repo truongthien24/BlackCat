@@ -15,13 +15,14 @@ import * as yup from "yup";
 import { useTranslation } from "react-i18next";
 import { setGridColumn } from "../../helper";
 import { FormAddRoom } from "../form/FormAddRoom";
-import useCreateBook from "../../hook/useCreateBook";
+import useCreateBook from "../../hook/useCreateBaiViet";
 import useLoadingEffect from "fuse/hook/useLoadingEffect";
 import { toast } from "react-hot-toast";
 import useUploadFile from "util/hook/useUploadFile";
 import { convertToBase64 } from "page/user/shareComponent/Function/convertBase64";
+import useCreateBaiViet from "../../hook/useCreateBaiViet";
 
-export const ModalCreateRoom = (props) => {
+export const ModalCreateBaiViet = (props) => {
   // Props
   const { title, isOpen, childrenForm, methodCancel, fetcher, fetch } = props;
 
@@ -30,7 +31,7 @@ export const ModalCreateRoom = (props) => {
 
   const [isSkeleton, setIsSkeleton] = useState(false);
 
-  const { mutate, isLoading: isSubmitting } = useCreateBook();
+  const { mutate, isLoading: isSubmitting } = useCreateBaiViet();
 
   const [open, setOpen] = useState(false);
 
@@ -38,9 +39,9 @@ export const ModalCreateRoom = (props) => {
 
   const { t } = useTranslation();
 
-  const { tacGia, theLoai, nhaXuatBan, nhaCungCap, ngonNgu } = useSelector(
-    (state) => state.commonCode
-  );
+  // const { tacGia, theLoai, nhaXuatBan, nhaCungCap, ngonNgu } = useSelector(
+  //   (state) => state.commonCode
+  // );
 
   useEffect(() => {
     if (isOpen) {
@@ -54,140 +55,14 @@ export const ModalCreateRoom = (props) => {
   const APIEdit = useMemo(() => {
     return [
       {
-        name: "tenSach",
+        name: "tenBaiViet",
         type: "string",
         required: true,
         size: "1",
-        label: "Tên sách",
-      },
-      {
-        name: "maSach",
-        type: "string",
-        required: true,
-        size: "1",
-        label: "Mã sách",
-      },
-      {
-        name: "theLoai",
-        type: "select",
-        dataSelect: theLoai?.map((tg) => {
-          return {
-            label: tg?.tenTheLoai,
-            value: tg?._id,
-          };
-        }),
-        required: true,
-        label: "Thể loại",
-      },
-      {
-        name: "nhaXuatBan",
-        type: "select",
-        dataSelect: nhaXuatBan?.map((tg) => {
-          return {
-            label: tg?.tenNXB,
-            value: tg?._id,
-          };
-        }),
-        required: true,
-        label: "Nhà xuất bản",
-      },
-      {
-        name: "tacGia",
-        type: "string",
-        type: "select",
-        dataSelect: tacGia?.map((tg) => {
-          return {
-            label: tg?.tenTacGia,
-            value: tg?._id,
-          };
-        }),
-        required: true,
-        label: "Tác giả",
-      },
-      {
-        name: "namXuatBan",
-        type: "number",
-        required: true,
-        label: "Năm xuất bản",
-      },
-      {
-        name: "nhaCungCap",
-        type: "select",
-        dataSelect: nhaCungCap?.map((tg) => {
-          return {
-            label: tg?.tenNhaCungCap,
-            value: tg?._id,
-          };
-        }),
-        required: true,
-        label: "Nhà cung cấp",
-      },
-      {
-        name: "tinhTrang",
-        type: "select",
-        dataSelect: [
-          { label: "New Arrival", value: 0 },
-          { label: "Hot", value: 1 },
-          { label: "Old", value: 2 },
-        ],
-        required: true,
-        label: "Tình trạng",
-      },
-      {
-        name: "gia",
-        type: "number",
-        required: true,
-        label: "Giá",
-      },
-      {
-        name: "tienCoc",
-        type: "number",
-        required: true,
-        label: "Tiền cọc",
-      },
-      {
-        name: "soLuong",
-        type: "number",
-        required: true,
-        label: "Số lượng",
-      },
-      {
-        name: "kichThuoc",
-        type: "string",
-        required: true,
-        label: "Kích thước",
-      },
-      {
-        name: "soTrang",
-        type: "number",
-        required: true,
-        label: "Số trang",
-      },
-      {
-        name: "ngonNgu",
-        type: "select",
-        dataSelect: ngonNgu?.map((tg) => {
-          return {
-            label: tg?.tenNgonNgu,
-            value: tg?._id,
-          };
-        }),
-        required: true,
-        label: "Ngôn ngữ",
-      },
-      {
-        name: "quocGia",
-        type: "select",
-        dataSelect: [
-          { label: "Hàn Quốc", value: "HQ" },
-          { label: "Việt Nam", value: "VN" },
-          { label: "Mỹ", value: "EN" },
-        ],
-        required: true,
-        label: "Quốc gia",
+        label: "Tên bài viết",
       },
     ];
-  }, [tacGia, theLoai, nhaXuatBan, nhaCungCap, ngonNgu]);
+  });
 
   const validationSchema = yup.object().shape({});
 
@@ -203,7 +78,7 @@ export const ModalCreateRoom = (props) => {
     method: "onChange",
     resolver: yupResolver(validationSchema),
     defaultValues: {
-      tenSach: "",
+      tenBaiViet: "",
       hinhAnh:
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSDF9695aEHL20tZNMzJ26nIGr5AYMKr_eaoxXWtDkngU8M8KXhqPQXkhyamMWJ1mvbeYU&usqp=CAU",
     },
@@ -263,53 +138,6 @@ export const ModalCreateRoom = (props) => {
           {...register(item.name)}
           className="border-[1px] border-solid border-[#b4b4b4] rounded-[5px] px-[15px] py-[7px] min-h-[120px] max-h-[120px] w-full"
         />
-      );
-    } else if (item.type === "array") {
-      return (
-        <div className="grid grid-cols-5 gap-[20px]">
-          {getValues("soLuongPhong")?.map((btn, index) => {
-            return (
-              <Badge.Ribbon
-                color={`${btn?.tinhTrang ? "orange" : "green"}`}
-                key={index}
-              >
-                <button
-                  type="button"
-                  className={`w-full p-[10px] bg-[white] shadow-md shadow-gray-300 rounded-[5px] duration-200 hover:translate-x-[-3px] ${
-                    btn?.tinhTrang
-                      ? "hover:shadow-orange-400"
-                      : "hover:shadow-green-400"
-                  }`}
-                >
-                  {btn?.[item.dataItemName]}
-                </button>
-              </Badge.Ribbon>
-            );
-          })}
-          {(getValues("soLuongPhong")?.length < 5 ||
-            !getValues("soLuongPhong")?.length) && (
-            <Popover
-              content={
-                <FormAddRoom
-                  arrRoom={getValues("soLuongPhong")}
-                  setValue={setValue}
-                  handleOpenChange={handleOpenChange}
-                />
-              }
-              title="Title"
-              trigger="click"
-              open={open}
-              onOpenChange={handleOpenChange}
-            >
-              <button
-                type="button"
-                className={`w-full p-[10px] bg-[white] shadow-md shadow-gray-300 rounded-[5px] duration-200 hover:shadow-gray-400`}
-              >
-                +
-              </button>
-            </Popover>
-          )}
-        </div>
       );
     } else if (item.type === "string-readOnly") {
       return (

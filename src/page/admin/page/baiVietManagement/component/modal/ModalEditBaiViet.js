@@ -14,11 +14,12 @@ import { setGridColumn } from "../../helper";
 import { FormAddRoom } from "../form/FormAddRoom";
 import { updateRoom } from "../../../../../../redux/action/phongAction";
 import useLoadingEffect from "fuse/hook/useLoadingEffect";
-import useUpdateBook from "../../hook/useUpdateBook";
+import useUpdateBook from "../../hook/useUpdateBaiViet";
 import { toast } from "react-hot-toast";
 import { convertToBase64 } from "page/user/shareComponent/Function/convertBase64";
+import useUpdateBaiViet from "../../hook/useUpdateBaiViet";
 
-export const ModalEditBook = (props) => {
+export const ModalEditBaiViet = (props) => {
   // Props
   const {
     title,
@@ -43,11 +44,11 @@ export const ModalEditBook = (props) => {
 
   const [isChangeImage, setIsChangeImage] = useState(false);
 
-  const { tacGia, theLoai, nhaXuatBan, nhaCungCap, ngonNgu } = useSelector(
-    (state) => state.commonCode
-  );
+  // const { tacGia, theLoai, nhaXuatBan, nhaCungCap, ngonNgu } = useSelector(
+  //   (state) => state.commonCode
+  // );
 
-  const { mutate, isLoading: isSubmitting } = useUpdateBook();
+  const { mutate, isLoading: isSubmitting } = useUpdateBaiViet();
 
   const dispatch = useDispatch();
 
@@ -67,141 +68,14 @@ export const ModalEditBook = (props) => {
   const APIEdit = useMemo(() => {
     return [
       {
-        name: "tenSach",
+        name: "tenBaiViet",
         type: "string",
         required: true,
         size: "1",
-        label: "Tên sách",
-      },
-      {
-        name: "maSach",
-        type: "string",
-        required: true,
-        size: "1",
-        label: "Mã sách",
-        disable: true,
-      },
-      {
-        name: "maTheLoai",
-        type: "select",
-        dataSelect: theLoai?.map((tg) => {
-          return {
-            label: tg?.tenTheLoai,
-            value: tg?._id,
-          };
-        }),
-        required: true,
-        label: "Thể loại",
-      },
-      {
-        name: "maNhaXuatBan",
-        type: "select",
-        dataSelect: nhaXuatBan?.map((tg) => {
-          return {
-            label: tg?.tenNXB,
-            value: tg?._id,
-          };
-        }),
-        required: true,
-        label: "Nhà xuất bản",
-      },
-      {
-        name: "maTacGia",
-        type: "string",
-        type: "select",
-        dataSelect: tacGia?.map((tg) => {
-          return {
-            label: tg?.tenTacGia,
-            value: tg?._id,
-          };
-        }),
-        required: true,
-        label: "Tác giả",
-      },
-      {
-        name: "namXuatBan",
-        type: "number",
-        required: true,
-        label: "Năm xuất bản",
-      },
-      {
-        name: "maNhaCungCap",
-        type: "select",
-        dataSelect: nhaCungCap?.map((tg) => {
-          return {
-            label: tg?.tenNhaCungCap,
-            value: tg?._id,
-          };
-        }),
-        required: true,
-        label: "Nhà cung cấp",
-      },
-      {
-        name: "tinhTrang",
-        type: "select",
-        dataSelect: [
-          { label: "New Arrival", value: 0 },
-          { label: "Hot", value: 1 },
-          { label: "Old", value: 2 },
-        ],
-        required: true,
-        label: "Tình trạng",
-      },
-      {
-        name: "gia",
-        type: "number",
-        required: true,
-        label: "Giá",
-      },
-      {
-        name: "tienCoc",
-        type: "number",
-        required: true,
-        label: "Tiền cọc",
-      },
-      {
-        name: "soLuong",
-        type: "number",
-        required: true,
-        label: "Số lượng",
-      },
-      {
-        name: "kichThuoc",
-        type: "string",
-        required: true,
-        label: "Kích thước",
-      },
-      {
-        name: "soTrang",
-        type: "number",
-        required: true,
-        label: "Số trang",
-      },
-      {
-        name: "maNgonNgu",
-        type: "select",
-        dataSelect: ngonNgu?.map((tg) => {
-          return {
-            label: tg?.tenNgonNgu,
-            value: tg?._id,
-          };
-        }),
-        required: true,
-        label: "Ngôn ngữ",
-      },
-      {
-        name: "quocGia",
-        type: "select",
-        dataSelect: [
-          { label: "Hàn Quốc", value: "HQ" },
-          { label: "Việt Nam", value: "VN" },
-          { label: "Mỹ", value: "EN" },
-        ],
-        required: true,
-        label: "Quốc gia",
+        label: "Tên bài viết",
       },
     ];
-  }, [tacGia, theLoai, nhaXuatBan, nhaCungCap, ngonNgu]);
+  });
 
   const validationSchema = yup.object().shape({});
 
@@ -253,7 +127,7 @@ export const ModalEditBook = (props) => {
         await fetch();
       },
       onError: async (err) => {
-        toast.error(err?.error);
+        toast.error(err?.error.message);
       },
     });
     await dispatch(

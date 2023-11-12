@@ -1,17 +1,16 @@
 import apiService from "api";
 import { useMutation } from "react-query";
 
-const deleteBook = async (params = {}) => {
-  console.log('params', params)
-  const accounts = await apiService.book.deleteSach({
+const updateBaiViet = async (params = {}) => {
+  const baiViet = await apiService.baiViet.updateBaiViet({
     ...params?.Data,
   });
 
-  return accounts;
+  return baiViet;
 };
 
-const useDeleteBook = () => {
-  return useMutation(deleteBook, {
+const useUpdateBaiViet = () => {
+  return useMutation(updateBaiViet, {
     onSuccess: (_, { onSuccess, status }) => {
       onSuccess(_);
     },
@@ -21,4 +20,4 @@ const useDeleteBook = () => {
   });
 };
 
-export default useDeleteBook;
+export default useUpdateBaiViet;
