@@ -26,6 +26,7 @@ import NhaXuatBanManagement from "page/admin/page/System/nhaXuatBanManagement/Nh
 import Cart from "page/user/page/cart/Cart";
 import NgonNguManagement from "page/admin/page/System/ngonNguManagement/NgonNguManagement";
 import { BaiVietManagement } from "page/admin/page/baiVietManagement/BaiVietManagement";
+import Payment from "page/user/page/payment/Payment";
 // import { Contact } from '../page/user/page/contact/Contact';
 
 export const MainRoutes = () => {
@@ -46,6 +47,7 @@ export const MainRoutes = () => {
           <Route path="introduce" element={<Introduce />} />
           <Route path="contact" element={<Contact />} />
           <Route path="cart/:id" element={<Cart />} />
+          <Route path="payment/:id" element={<Payment />} />
         </Route>
         <Route path="/:id/verify/:token" element={<VerifyEmail />} />
         <Route path="/admin" element={<Layout1Admin />}>

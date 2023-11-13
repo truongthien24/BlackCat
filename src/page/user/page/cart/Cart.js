@@ -5,12 +5,17 @@ import * as yup from "yup";
 import CartItem from "./components/CartItem";
 import CardHead from "./components/CardHead";
 import { columns } from "./helper";
+import { COLOR } from "page/user/shareComponent/constant";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
+
+  const navigate = useNavigate();
+
   const method = useForm({
     mode: "onSubmit",
     defaultValues: {},
-    resolver: yupResolver(),
     // yup.object().shape({
     //   soLuong: yup
     //     .number()
@@ -23,11 +28,6 @@ const Cart = () => {
 
   const {
     handleSubmit,
-    watch,
-    reset,
-    getValues,
-    setValue,
-    formState: { errors },
   } = method;
 
   const renderCartItem = () => {
@@ -58,12 +58,13 @@ const Cart = () => {
       },
     ];
     return a?.map((cart, index) => {
-      return <CartItem data={cart} key={index} columns={columns}/>;
+      return <CartItem data={cart} key={index} columns={columns} />;
     });
   };
 
   const handleSubmitCart = (data) => {
     console.log("data", data);
+    navigate(`/payment/${123}`)
   };
 
   return (
@@ -77,8 +78,32 @@ const Cart = () => {
             className="border-solid border-[#498374] border-[1px] w-full px-[25px] py-[15px] grid grid-cols-1 gap-[15px]"
             onSubmit={handleSubmit(handleSubmitCart)}
           >
-            <CardHead columns={columns}/>
-            <div className="grid grid-cols-1 gap-[15px]">{renderCartItem()}</div>
+            <CardHead columns={columns} />
+            <div className="grid grid-cols-1 gap-[15px]">
+              {renderCartItem()}
+            </div>
+            <div className="flex justify-end">
+              <p className="w-[15%] flex justify-center">300.000</p>
+              <div className="w-[10%] flex justify-center">
+                <button
+                  className="text-[#fff] p-[10px] rounded-[5px] flex items-center justify-center"
+                  type="submit"
+                  style={{
+                    backgroundColor: `${COLOR.primaryColor}`,
+                  }}
+                  // type="button"
+                  // onClick={async () => {
+                  //   console.log("thanh toán");
+                  //   const thanhToan = await axios.post(
+                  //     "http://localhost:3001/api/thanhToan",
+                  //     { tongTien: 300000 }
+                  //   );
+                  // }}
+                >
+                  Thanh toán
+                </button>
+              </div>
+            </div>
           </form>
         </FormProvider>
       </div>

@@ -4,7 +4,7 @@ import { useFormContext } from "react-hook-form";
 
 const CartItem = ({ data, columns }) => {
   const {
-    formState: { errors },
+    formState: {errors},
     register,
   } = useFormContext();
   const handleChangeQuantity = () => {};
@@ -61,7 +61,7 @@ const CartItem = ({ data, columns }) => {
                   <input
                     className="bg-[white] w-[35px] h-[35px] text-center"
                     {...register("soLuong")}
-                    onError={errors["soLuong"]}
+                    // onError={errors["soLuong"]}
                   />
                   <button
                     type="button"
@@ -84,11 +84,6 @@ const CartItem = ({ data, columns }) => {
                     </svg>
                   </button>
                 </div>
-                {/* {errors["soLuong"] && (
-                  <span className="text-[red] ml-[10px] text-[10px]">
-                    {errors["soLuong"]?.message}
-                  </span>
-                )} */}
               </div>
             );
           }
@@ -104,7 +99,7 @@ const CartItem = ({ data, columns }) => {
           }
           case "thanhTien": {
             return (<div className="flex justify-center" style={{ width: `${item.width}` }}>
-                Thành tiền
+                100000
             </div>)
           }
         }
