@@ -27,6 +27,7 @@ import Cart from "page/user/page/cart/Cart";
 import NgonNguManagement from "page/admin/page/System/ngonNguManagement/NgonNguManagement";
 import { BaiVietManagement } from "page/admin/page/baiVietManagement/BaiVietManagement";
 import Payment from "page/user/page/payment/Payment";
+import InfoBook from "page/user/page/infoBook/InfoBook";
 // import { Contact } from '../page/user/page/contact/Contact';
 
 export const MainRoutes = () => {
@@ -39,7 +40,7 @@ export const MainRoutes = () => {
           <Route index element={<HomeUser />} />
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
-          <Route path="infoRoom/:id" element={<InfoRoom />} />
+          <Route path="infoBook/:id" element={<InfoBook />} />
           <Route path="bookingSchedule" element={<BookingSchedule />} />
           <Route path="searchRoom" element={<MoreRoom />} />
           <Route path="profile" element={<Profile />} />
