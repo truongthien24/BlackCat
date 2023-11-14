@@ -35,7 +35,15 @@ const Details = ({
         diaChiNhaCungCap: yup
           .string()
           .required("Nhập địa chỉ nhà cung cấp vào đi"),
-        soDienThoai: yup.number().required("Nhập số điện thoại vào đi"),
+        soDienThoai: yup
+          .number()
+          .required({ message: "Nhập số điện thoại vào đi" })
+          .test("len", "Số điện thoại 10 hoặc 11 số thui!", (data) => {
+            if (data.toString().length >= 10 && data.toString().length <= 11) {
+              return true;
+            }
+            return false;
+          }),
       })
     ),
   });
