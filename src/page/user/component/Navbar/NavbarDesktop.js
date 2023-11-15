@@ -23,11 +23,10 @@ const NavbarDesktop = (props) => {
     <div className="absolute top-0 left-0 z-[99] w-full bg-transparent px-[10px] md:px-[20px] flex items-center flex-col">
       <div className="w-full xl:w-[90%] 2xl:w-[70%] flex items-center justify-between">
         <div className="flex items-center w-[70%]">
-          <div className="flex items-center mr-[30px]">
+          <div className="flex items-center mr-[30px] cursor-pointer"  onClick={returnHome}>
             <img
               src="/images/logo.png"
-              className="w-[40px] md:w-[70px] lg:w-[80px] cursor-pointer"
-              onClick={returnHome}
+              className="w-[40px] md:w-[70px] lg:w-[80px]"
             />
             <h1 className="text-[20px]">Black&Cat</h1>
           </div>

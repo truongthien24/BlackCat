@@ -1,5 +1,5 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import React from "react";
+import React, { useContext } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import * as yup from "yup";
 import CartItem from "./components/CartItem";
@@ -8,10 +8,13 @@ import { columns } from "./helper";
 import { COLOR } from "page/user/shareComponent/constant";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { LayoutContext } from "page/user/layout/Layout1";
 
 const Cart = () => {
 
   const navigate = useNavigate();
+
+  const isMobile = useContext(LayoutContext);
 
   const method = useForm({
     mode: "onSubmit",
@@ -31,7 +34,7 @@ const Cart = () => {
   } = method;
 
   const renderCartItem = () => {
-    const a = [
+    const data = [
       {
         hinhAnh: {
           url: "https://res.cloudinary.com/dsbvqrhhk/image/upload/v1699591908/v6f5du557mnnqv9zlg4u.jpg",
@@ -57,8 +60,8 @@ const Cart = () => {
         gia: 300000,
       },
     ];
-    return a?.map((cart, index) => {
-      return <CartItem data={cart} key={index} columns={columns} />;
+    return data?.map((cart, index) => {
+      return <CartItem data={cart} key={index} columns={columns(isMobile)} />;
     });
   };
 
@@ -68,25 +71,25 @@ const Cart = () => {
   };
 
   return (
-    <div className="pt-[150px] pb-[20px] min-h-[calc(100vh_-_300px)] flex justify-center">
-      <div className="bg-[#eaeaea] min-h-[calc(100%_-_150px)] px-[25px] py-[20px] w-full xl:w-[90%] 2xl:w-[70%]">
-        <h2 className="font-[500] md:text-[22px] mb-[20px]">
+    <div className="md:pt-[150px] pb-[20px] min-h-[calc(100vh_-_300px)] flex justify-center">
+      <div className="bg-[#eaeaea] min-h-[calc(100%_-_150px)] px-[10px] py-[10px] md:px-[25px] md:py-[20px] w-full xl:w-[90%] 2xl:w-[70%]">
+        <h2 className="font-[500] md:text-[22px] mb-[10px] md:mb-[20px]">
           Giỏ hàng của bạn
         </h2>
         <FormProvider {...method}>
           <form
-            className="border-solid border-[#498374] border-[1px] w-full px-[25px] py-[15px] grid grid-cols-1 gap-[15px]"
+            className="border-solid border-[#498374] border-[1px] w-full px-[10px] py-[10px] md:px-[25px] md:py-[15px] grid grid-cols-1 gap-[15px]"
             onSubmit={handleSubmit(handleSubmitCart)}
           >
-            <CardHead columns={columns} />
-            <div className="grid grid-cols-1 gap-[15px]">
+            <CardHead columns={columns(isMobile)} />
+            <div className="grid grid-cols-1 gap-[10px] md:gap-[15px]">
               {renderCartItem()}
             </div>
-            <div className="flex justify-end">
-              <p className="w-[15%] flex justify-center">300.000</p>
-              <div className="w-[10%] flex justify-center">
+            <div className="flex justify-end items-center">
+              <p className="w-[15%] text-[13px] md:text-[15px] flex justify-center mr-[20px]">300.000</p>
+              <div className="flex justify-center">
                 <button
-                  className="text-[#fff] p-[10px] rounded-[5px] flex items-center justify-center"
+                  className="text-[#fff] text-[11px] md:text-[15px] p-[10px] rounded-[5px] flex items-center justify-center"
                   type="submit"
                   style={{
                     backgroundColor: `${COLOR.primaryColor}`,

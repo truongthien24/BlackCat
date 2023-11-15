@@ -20,11 +20,11 @@ const CartItem = ({ data, columns }) => {
               >
                 <img
                   src={data?.hinhAnh?.url}
-                  className="h-full w-[100px] mr-[25px]"
+                  className="h-full w-[50px] md:w-[100px] mr-[10px] md:mr-[25px]"
                 />
                 <div>
-                  <h4 className="max-w-[300px]">{data?.tenSach}</h4>
-                  <span className="text-[#797979] text-[14px]">
+                  <h4 className="max-w-[300px] text-[12.5px] md:text-[15px]">{data?.tenSach}</h4>
+                  <span className="text-[#797979] text-[12px] md:text-[14px]">
                     {data?.tenTheLoai}
                   </span>
                 </div>
@@ -40,7 +40,7 @@ const CartItem = ({ data, columns }) => {
                 <div className="flex items-center justify-center">
                   <button
                     type="button"
-                    className="bg-[#dcdbdb] w-[35px] h-[35px] flex items-center justify-center"
+                    className="bg-[#dcdbdb] w-[20px] h-[20px] md:w-[35px] md:h-[35px] flex items-center justify-center"
                     onClick={() => handleChangeQuantity("minas")}
                   >
                     <svg
@@ -59,13 +59,12 @@ const CartItem = ({ data, columns }) => {
                     </svg>
                   </button>
                   <input
-                    className="bg-[white] w-[35px] h-[35px] text-center"
+                    className="bg-[white] text-[11px] md:text-[13px] w-[20px] h-[20px] md:w-[35px] md:h-[35px] text-center"
                     {...register("soLuong")}
-                    // onError={errors["soLuong"]}
                   />
                   <button
                     type="button"
-                    className="bg-[#dcdbdb] w-[35px] h-[35px] flex items-center justify-center"
+                    className="bg-[#dcdbdb] w-[20px] h-[20px] md:w-[35px] md:h-[35px] flex items-center justify-center"
                     onClick={() => handleChangeQuantity("plus")}
                   >
                     <svg
@@ -88,18 +87,18 @@ const CartItem = ({ data, columns }) => {
             );
           }
           case "gia": {
-            return (<div className="flex justify-center" style={{ width: `${item.width}` }}>
+            return (<div className="flex justify-center text-[11px] md:text-[13px]" style={{ width: `${item.width}` }}>
                 Giá
             </div>)
           }
           case "action": {
-            return (<div className="flex justify-center" style={{ width: `${item.width}` }}>
+            return (<div className="flex justify-center text-[11px] md:text-[13px]" style={{ width: `${item.width}` }}>
                 x
             </div>)
           }
           case "thanhTien": {
-            return (<div className="flex justify-center" style={{ width: `${item.width}` }}>
-                100000
+            return (<div className="flex justify-center text-[11px] md:text-[13px]" style={{ width: `${item.width}` }}>
+              100.000
             </div>)
           }
         }
