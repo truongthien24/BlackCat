@@ -97,7 +97,7 @@ const InfoBook = () => {
     <div className="md:pt-[150px] pb-[20px] min-h-[calc(100vh_-_300px)] flex justify-center">
       <div className="flex flex-col bg-[#eaeaea] w-[95%] xl:w-[90%] 2xl:w-[70%] px-[25px] py-[20px]">
         <form className="grid md:grid-cols-2 lg:grid-cols-5 2xl:grid-cols-3 gap-[30px]" onSubmit={handleSubmit(addToCart)}>
-          <img src={sachDataDetail?.hinhAnh?.url} className="lg:col-span-2 xl:col-span-1 h-full" />
+          <img src={sachDataDetail?.hinhAnh?.url} className="lg:col-span-2 h-full" />
           <div className="lg:col-span-3 2xl:col-span-2 flex flex-col">
             <h2 className="">{sachDataDetail?.tenSach}</h2>
             <div className="flex items-center">

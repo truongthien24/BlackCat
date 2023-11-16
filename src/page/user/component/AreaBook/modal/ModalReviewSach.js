@@ -49,7 +49,7 @@ const ModalReviewSach = ({ data, open = false, onReview, title }) => {
       );
     } else {
       // toast.error("Chức năng đang phát triển");
-      navigate("/cart/123213123");
+      navigate(`/cart/123`);
     }
   };
 

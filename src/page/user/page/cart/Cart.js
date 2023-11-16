@@ -1,20 +1,35 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import React, { useContext } from "react";
+import React, { useContext, useMemo } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import * as yup from "yup";
 import CartItem from "./components/CartItem";
 import CardHead from "./components/CardHead";
 import { columns } from "./helper";
 import { COLOR } from "page/user/shareComponent/constant";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { LayoutContext } from "page/user/layout/Layout1";
+import { jwtDecode } from "jwt-decode";
+import useGetDetailGioHang from "page/admin/page/GioHangManagement/hook/userGetDetailGioHang";
+import { Empty } from "antd";
 
 const Cart = () => {
 
   const navigate = useNavigate();
 
   const isMobile = useContext(LayoutContext);
+
+  const jwt = localStorage.getItem('jwt');
+
+  const userInfo = useMemo(() => {
+    if (jwt) {
+      const userJwt = jwtDecode(jwt);
+      return userJwt?.users;
+    } else {
+      return {}
+    }
+  }, [jwt])
+
+  const { gioHangDataDetail, isDataDetailLoading, fetchData, isFetching } = useGetDetailGioHang("0", "0", userInfo?.gioHang);
 
   const method = useForm({
     mode: "onSubmit",
@@ -60,14 +75,17 @@ const Cart = () => {
         gia: 300000,
       },
     ];
-    return data?.map((cart, index) => {
-      return <CartItem data={cart} key={index} columns={columns(isMobile)} />;
-    });
+    if (gioHangDataDetail?.danhSach?.length > 0) {
+      return data?.map((cart, index) => {
+        return <CartItem data={cart} key={index} columns={columns(isMobile)} />;
+      });
+    } else {
+      return <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="Chưa có sản phẩm nào" />
+    }
   };
 
   const handleSubmitCart = (data) => {
-    console.log("data", data);
-    navigate(`/payment/${123}`)
+    navigate(`/payment/${userInfo?._id}`)
   };
 
   return (
@@ -86,22 +104,23 @@ const Cart = () => {
               {renderCartItem()}
             </div>
             <div className="flex justify-end items-center">
-              <p className="w-[15%] text-[13px] md:text-[15px] flex justify-center mr-[20px]">300.000</p>
+              {/* <p className="w-[15%] text-[13px] md:text-[15px] flex justify-center mr-[20px]">300.000</p> */}
               <div className="flex justify-center">
                 <button
                   className="text-[#fff] text-[11px] md:text-[15px] p-[10px] rounded-[5px] flex items-center justify-center"
                   type="submit"
+                  disabled={!gioHangDataDetail?.danhSach?.length > 0}
                   style={{
-                    backgroundColor: `${COLOR.primaryColor}`,
+                    backgroundColor: `${gioHangDataDetail?.danhSach?.length > 0 ? COLOR.primaryColor : 'gray'}`,
                   }}
-                  // type="button"
-                  // onClick={async () => {
-                  //   console.log("thanh toán");
-                  //   const thanhToan = await axios.post(
-                  //     "http://localhost:3001/api/thanhToan",
-                  //     { tongTien: 300000 }
-                  //   );
-                  // }}
+                // type="button"
+                // onClick={async () => {
+                //   console.log("thanh toán");
+                //   const thanhToan = await axios.post(
+                //     "http://localhost:3001/api/thanhToan",
+                //     { tongTien: 300000 }
+                //   );
+                // }}
                 >
                   Thanh toán
                 </button>
