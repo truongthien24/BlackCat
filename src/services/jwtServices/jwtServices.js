@@ -6,10 +6,10 @@ const axiosWrapper = axios.create({
 });
 
 axiosWrapper.interceptors.request.use((config) => {
-  const access_token = localStorage.getItem("jwt");
+  const access_token = JSON.parse(localStorage.getItem("jwt"));
 
   if (access_token) {
-    // config.headers!.Authorization = `Bearer ${access_token}`;
+    config.headers.Authorization = `Bearer ${access_token}`;
     config.headers["Content-Type"] = "application/json";
   }
 
