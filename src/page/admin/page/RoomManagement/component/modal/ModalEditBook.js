@@ -246,7 +246,14 @@ export const ModalEditBook = (props) => {
     //     });
     // }
     await mutate({
-      Data: { ...data, nhaXuatBan: data?.maNhaXuatBan, theLoai: data?.maTheLoai, nhaCungCap: data?.maNhaCungCap, tacGia: data?.maTacGia, ngonNgu: data?.maNgonNgu},
+      Data: {
+        ...data,
+        nhaXuatBan: data?.maNhaXuatBan,
+        theLoai: data?.maTheLoai,
+        nhaCungCap: data?.maNhaCungCap,
+        tacGia: data?.maTacGia,
+        ngonNgu: data?.maNgonNgu,
+      },
       onSuccess: async (msg) => {
         toast.success(msg?.data?.message);
         await fetcher();
@@ -284,8 +291,9 @@ export const ModalEditBook = (props) => {
     if (item.type === "select") {
       return (
         <div
-          className={`border-[1px] border-solid border-[#b4b4b4] rounded-[5px] px-[15px] py-[7px] relative ${errors?.[item.name]?.message ? "border-orange-400" : ""
-            }`}
+          className={`border-[1px] border-solid border-[#b4b4b4] rounded-[5px] px-[15px] py-[7px] relative ${
+            errors?.[item.name]?.message ? "border-orange-400" : ""
+          }`}
         >
           <select className="w-full outline-none" {...register(`${item.name}`)}>
             {item.dataSelect?.map((op, index) => {
@@ -312,10 +320,11 @@ export const ModalEditBook = (props) => {
               >
                 <button
                   type="button"
-                  className={`w-full p-[10px] bg-[white] shadow-md shadow-gray-300 rounded-[5px] duration-200 hover:translate-x-[-3px] ${btn?.tinhTrang
+                  className={`w-full p-[10px] bg-[white] shadow-md shadow-gray-300 rounded-[5px] duration-200 hover:translate-x-[-3px] ${
+                    btn?.tinhTrang
                       ? "hover:shadow-orange-400"
                       : "hover:shadow-green-400"
-                    }`}
+                  }`}
                 >
                   {btn?.[item.dataItemName]}
                 </button>
@@ -361,8 +370,9 @@ export const ModalEditBook = (props) => {
     } else {
       return (
         <div
-          className={`border-[1px] border-solid border-[#b4b4b4] rounded-[5px] px-[15px] py-[7px] relative ${item?.disable ? "bg-[#cfcece]" : ""
-            } ${errors?.[item.name]?.message ? "border-orange-400" : ""}`}
+          className={`border-[1px] border-solid border-[#b4b4b4] rounded-[5px] px-[15px] py-[7px] relative ${
+            item?.disable ? "bg-[#cfcece]" : ""
+          } ${errors?.[item.name]?.message ? "border-orange-400" : ""}`}
         >
           <input
             // key={index}
@@ -370,8 +380,9 @@ export const ModalEditBook = (props) => {
             readOnly={item.disable}
             name={item.name}
             placeholder={`Điền vào ${item.label}...`}
-            className={`w-[92%] outline-none ${item?.disable ? "bg-[#cfcece]" : ""
-              }`}
+            className={`w-[92%] outline-none ${
+              item?.disable ? "bg-[#cfcece]" : ""
+            }`}
             {...register(`${item.name}`)}
           />
           {errors?.[item.name] && (
