@@ -9,6 +9,7 @@ import { toast } from "react-hot-toast";
 import * as yup from "yup";
 import useUpdateNhaCungCap from "../hook/useUpdateNhaCungCap";
 import useCreateNhaCungCap from "../hook/useCreateNhaCungCap";
+import FormNumberPhone from "page/admin/shareComponent/form/FormNumberPhone";
 
 const Details = ({
   data = {},
@@ -139,11 +140,13 @@ const Details = ({
           />
         </div>
         <div className="col-span-3">
-          <FormTextField
+          <FormNumberPhone
             label="Số điện thoại nhà cung cấp"
             name="soDienThoai"
             errors={errors}
             required
+            minLength={9}
+            maxLength={10}
             control={control}
           />
         </div>

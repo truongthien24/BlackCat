@@ -1,6 +1,6 @@
 import { Badge, Modal } from "antd";
 import { COLOR } from "page/user/shareComponent/constant";
-import React from "react";
+import React, { useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import ReviewContent from "./components/ReviewContent";
@@ -10,18 +10,34 @@ import * as yup from "yup";
 import useGetDetailBook from "page/admin/page/RoomManagement/hook/useGetDetailBook";
 import useLoadingEffect from "fuse/hook/useLoadingEffect";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import useUpdateGioHang from "page/admin/page/GioHangManagement/hook/useUpdateGioHang";
+import { jwtDecode } from "jwt-decode";
 
 const ModalReviewSach = ({ data, open = false, onReview, title }) => {
   const navigate = useNavigate();
 
+  // const { userInfo } = useSelector((state) => state.home);
+
+  const jwt = localStorage.getItem("jwt");
+
+  const userInfo = useMemo(() => {
+    if (jwt) {
+      const jwtDC = jwtDecode(jwt);
+      return jwtDC?.users;
+    }
+  }, [jwt]);
   const { sachDataDetail, isDataDetailLoading, fetchData, isFetching } =
     useGetDetailBook("0", "0", data?._id);
+
+  const { mutate, isLoading } = useUpdateGioHang();
 
   const {
     handleSubmit,
     register,
     setValue,
     getValues,
+    reset,
     formState: { errors },
   } = useForm({
     mode: "onSubmit",
@@ -42,14 +58,33 @@ const ModalReviewSach = ({ data, open = false, onReview, title }) => {
     ),
   });
 
-  const addToCart = (data) => {
+  useEffect(() => {
+    if (sachDataDetail) {
+      reset({ ...sachDataDetail, soLuong: 1 });
+    }
+  }, [sachDataDetail]);
+
+  const addToCart = async (data) => {
     if (data?.soLuong > sachDataDetail.soLuong) {
       toast.error(
         `Số lượng không đủ. Chỉ còn ${sachDataDetail.soLuong} quyển :((`
       );
     } else {
       // toast.error("Chức năng đang phát triển");
-      navigate(`/cart/123`);
+      await mutate({
+        Data: {
+          id: userInfo?.gioHang,
+          sach: { idSach: data?._id, soLuong: data?.soLuong },
+          insert: true
+        },
+        onSuccess: (res) => {
+          navigate(`/cart/${userInfo?.gioHang}`)
+        },
+        onError: (err) => {
+          toast.error(err?.error?.message)
+        }
+      });
+      // navigate(`/cart/123`);
     }
   };
 

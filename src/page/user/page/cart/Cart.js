@@ -1,5 +1,5 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import React, { useContext, useMemo } from "react";
+import React, { useContext, useEffect, useMemo } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import * as yup from "yup";
 import CartItem from "./components/CartItem";
@@ -11,81 +11,93 @@ import { LayoutContext } from "page/user/layout/Layout1";
 import { jwtDecode } from "jwt-decode";
 import useGetDetailGioHang from "page/admin/page/GioHangManagement/hook/userGetDetailGioHang";
 import { Empty } from "antd";
+import { useSelector } from "react-redux";
 
 const Cart = () => {
-
   const navigate = useNavigate();
 
   const isMobile = useContext(LayoutContext);
 
-  const jwt = localStorage.getItem('jwt');
+  // const { userInfo } = useSelector((state) => state.home);
+  const jwt = localStorage.getItem("jwt");
 
   const userInfo = useMemo(() => {
     if (jwt) {
-      const userJwt = jwtDecode(jwt);
-      return userJwt?.users;
-    } else {
-      return {}
+      const jwtDC = jwtDecode(jwt);
+      return jwtDC?.users;
     }
-  }, [jwt])
+  }, [jwt]);
 
-  const { gioHangDataDetail, isDataDetailLoading, fetchData, isFetching } = useGetDetailGioHang("0", "0", userInfo?.gioHang);
+  const { gioHangDataDetail, isDataDetailLoading, fetchData, isFetching } =
+    useGetDetailGioHang("0", "0", userInfo?.gioHang);
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   const method = useForm({
     mode: "onSubmit",
     defaultValues: {},
-    // yup.object().shape({
-    //   soLuong: yup
-    //     .number()
-    //     .required("Please input")
-    //     .typeError("Number")
-    //     .min(1)
-    //     .max(99),
-    // })
+    resolver: yupResolver(
+      yup.object().shape({
+        // sach: yup.object().shape({
+
+        // }),
+        soLuong: yup
+          .number()
+          .required("Please input")
+          .typeError("Number")
+          .min(1)
+          .max(99),
+      })
+    ),
   });
 
-  const {
-    handleSubmit,
-  } = method;
+  const { handleSubmit } = method;
 
   const renderCartItem = () => {
-    const data = [
-      {
-        hinhAnh: {
-          url: "https://res.cloudinary.com/dsbvqrhhk/image/upload/v1699591908/v6f5du557mnnqv9zlg4u.jpg",
-        },
-        tenSach: "Diệu Linh",
-        tenTheLoai: "Tình yêu",
-        gia: 250000,
-      },
-      {
-        hinhAnh: {
-          url: "https://res.cloudinary.com/dsbvqrhhk/image/upload/v1699591908/v6f5du557mnnqv9zlg4u.jpg",
-        },
-        tenSach: "Diệu Linh 2",
-        tenTheLoai: "Tình yêu",
-        gia: 300000,
-      },
-      {
-        hinhAnh: {
-          url: "https://res.cloudinary.com/dsbvqrhhk/image/upload/v1699591908/v6f5du557mnnqv9zlg4u.jpg",
-        },
-        tenSach: "Diệu Linh 3",
-        tenTheLoai: "Tình yêu",
-        gia: 300000,
-      },
-    ];
+    // const data = [
+    //   {
+    //     hinhAnh: {
+    //       url: "https://res.cloudinary.com/dsbvqrhhk/image/upload/v1699591908/v6f5du557mnnqv9zlg4u.jpg",
+    //     },
+    //     tenSach: "Diệu Linh",
+    //     tenTheLoai: "Tình yêu",
+    //     gia: 250000,
+    //   },
+    //   {
+    //     hinhAnh: {
+    //       url: "https://res.cloudinary.com/dsbvqrhhk/image/upload/v1699591908/v6f5du557mnnqv9zlg4u.jpg",
+    //     },
+    //     tenSach: "Diệu Linh 2",
+    //     tenTheLoai: "Tình yêu",
+    //     gia: 300000,
+    //   },
+    //   {
+    //     hinhAnh: {
+    //       url: "https://res.cloudinary.com/dsbvqrhhk/image/upload/v1699591908/v6f5du557mnnqv9zlg4u.jpg",
+    //     },
+    //     tenSach: "Diệu Linh 3",
+    //     tenTheLoai: "Tình yêu",
+    //     gia: 300000,
+    //   },
+    // ];
     if (gioHangDataDetail?.danhSach?.length > 0) {
-      return data?.map((cart, index) => {
+      return gioHangDataDetail?.danhSach?.map((cart, index) => {
         return <CartItem data={cart} key={index} columns={columns(isMobile)} />;
       });
     } else {
-      return <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="Chưa có sản phẩm nào" />
+      return (
+        <Empty
+          image={Empty.PRESENTED_IMAGE_SIMPLE}
+          description="Chưa có sản phẩm nào"
+        />
+      );
     }
   };
 
   const handleSubmitCart = (data) => {
-    navigate(`/payment/${userInfo?._id}`)
+    navigate(`/payment/${userInfo?._id}`);
   };
 
   return (
@@ -111,16 +123,20 @@ const Cart = () => {
                   type="submit"
                   disabled={!gioHangDataDetail?.danhSach?.length > 0}
                   style={{
-                    backgroundColor: `${gioHangDataDetail?.danhSach?.length > 0 ? COLOR.primaryColor : 'gray'}`,
+                    backgroundColor: `${
+                      gioHangDataDetail?.danhSach?.length > 0
+                        ? COLOR.primaryColor
+                        : "gray"
+                    }`,
                   }}
-                // type="button"
-                // onClick={async () => {
-                //   console.log("thanh toán");
-                //   const thanhToan = await axios.post(
-                //     "http://localhost:3001/api/thanhToan",
-                //     { tongTien: 300000 }
-                //   );
-                // }}
+                  // type="button"
+                  // onClick={async () => {
+                  //   console.log("thanh toán");
+                  //   const thanhToan = await axios.post(
+                  //     "http://localhost:3001/api/thanhToan",
+                  //     { tongTien: 300000 }
+                  //   );
+                  // }}
                 >
                   Thanh toán
                 </button>
