@@ -40,7 +40,7 @@ const Details = ({
           .number()
           .required({ message: "Nhập số điện thoại vào đi" })
           .test("len", "Số điện thoại 10 hoặc 11 số thui!", (data) => {
-            if (data.toString().length >= 10 && data.toString().length <= 11) {
+            if (data.toString().length >= 9 && data.toString().length <= 10) {
               return true;
             }
             return false;
@@ -82,6 +82,7 @@ const Details = ({
   }, []);
 
   const submitForm = async (data) => {
+    console.log('data', data)
     if (showSlice?.initData?._id) {
       await mutateUpdate({
         Data: data,

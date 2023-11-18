@@ -131,7 +131,7 @@ const Cart = () => {
               {renderCartItem()}
             </div>
             <div className="flex justify-end items-center">
-              <p className="w-[15%] text-[13px] md:text-[15px] flex justify-center mr-[20px]">{(gioHangDataDetail?.danhSach?.reduce((a, b) => a + (b?.sach?.tienCoc * b?.soLuong), 0)).toLocaleString()}</p>
+              <p className="w-[15%] text-[13px] md:text-[15px] flex justify-center mr-[20px]">{(gioHangDataDetail?.danhSach?.reduce((a, b) => a + (b?.sach?.tienCoc * b?.soLuong), 0))?.toLocaleString()}</p>
               <div className="flex justify-center">
                 <button
                   className="text-[#fff] text-[11px] md:text-[15px] p-[10px] rounded-[5px] flex items-center justify-center"
@@ -143,14 +143,6 @@ const Cart = () => {
                       : "gray"
                       }`,
                   }}
-                // type="button"
-                // onClick={async () => {
-                //   console.log("thanh toán");
-                //   const thanhToan = await axios.post(
-                //     "http://localhost:3001/api/thanhToan",
-                //     { tongTien: 300000 }
-                //   );
-                // }}
                 >
                   Thanh toán
                 </button>

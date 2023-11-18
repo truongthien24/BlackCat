@@ -29,6 +29,7 @@ import { BaiVietManagement } from "page/admin/page/baiVietManagement/BaiVietMana
 import Payment from "page/user/page/payment/Payment";
 import InfoBook from "page/user/page/infoBook/InfoBook";
 // import { Contact } from '../page/user/page/contact/Contact';
+import { Button, Result } from 'antd';
 
 export const MainRoutes = () => {
   return (
@@ -50,6 +51,12 @@ export const MainRoutes = () => {
           <Route path="cart/:id" element={<Cart />} />
           <Route path="payment" element={<Payment />} />
         </Route>
+        <Route path="*" element={<Result
+          status="404"
+          title="404"
+          subTitle="Sorry, the page you visited does not exist."
+          extra={<Button type="primary">Back Home</Button>}
+        />} />
         <Route path="/:id/verify/:token" element={<VerifyEmail />} />
         <Route path="/admin" element={<Layout1Admin />}>
           <Route index element={<Dashboard />} />

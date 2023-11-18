@@ -29,9 +29,8 @@ const FormNumberPhone = ({
             <Input
               addonBefore="+84"
               placeholder={`Điền vào ${label}...`}
-              className={`w-full outline-none border-[1px]border-solid border-[#b4b4b4] rounded-[5px] relative ${
-                disable && "border-[#b4b4b4] bg-[#cfcece]"
-              } ${errors?.[name]?.message ? "border-orange-400" : ""}`}
+              className={`w-full outline-none border-[1px]border-solid border-[#b4b4b4] rounded-[5px] relative ${disable && "border-[#b4b4b4] bg-[#cfcece]"
+                } ${errors?.[name]?.message ? "border-orange-400" : ""}`}
               value={value}
               onChange={onChange}
               minLength={minLength}
