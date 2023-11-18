@@ -12,7 +12,7 @@ const Cart = () => {
 
     const handleClick = () => {
         if (checkLogin()) {
-            navigate('/favouriteBook');
+            navigate('/cart/1231332132');
         } else {
             // Swal.fire({
             //     icon: 'info',
@@ -27,8 +27,9 @@ const Cart = () => {
 
 
     return (
-        <button onClick={handleClick}>
+        <button className='relative' onClick={handleClick}>
             <Icon name="cart" color={COLOR.primaryColor}/>
+            <div className='text-[#fff] p-[2px] min-w-[20px] box-border text-[10px] rounded-[50%] flex items-center justify-center absolute top-0 left-[70%] bg-[#498374]'>1</div>
         </button>
     )
 }

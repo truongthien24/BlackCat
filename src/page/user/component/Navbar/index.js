@@ -1,32 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import NavbarDesktop from "./NavbarDesktop";
 import NavbarMobile from "./NavbarMobile";
+import { LayoutContext } from "page/user/layout/Layout1";
+
 
 const Navbar = () => {
-  const [isMenuMobile, setIsMenuMobile] = useState(false);
 
   const [isProfile, setIsProfile] = useState(false);
 
-  window.addEventListener("resize", () => {
-    const innerWidth = window.innerWidth;
-    if (innerWidth < 900) {
-      setIsMenuMobile(true);
-    } else {
-      setIsMenuMobile(false);
-    }
-  });
+  const isMobile = useContext(LayoutContext);
 
-  useEffect(() => {
-    const innerWidth = window.innerWidth;
-    if (innerWidth < 900) {
-      setIsMenuMobile(true);
-    } else {
-      setIsMenuMobile(false);
-    }
-  }, []);
   return (
     <>
-      {isMenuMobile ? (
+
+      {isMobile?.isMobile ? (
         <NavbarMobile setIsProfile={setIsProfile} />
       ) : (
         <NavbarDesktop setIsProfile={setIsProfile} />

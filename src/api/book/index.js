@@ -7,6 +7,12 @@ export default {
     });
   },
 
+  findSach: (params) => {
+    return axiosWrapper.post(`/findSach`, {
+      ...params,
+    });
+  },
+
   createSach: (params) => {
     return axiosWrapper.post(`/createSach`, {
       ...params,

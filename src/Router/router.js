@@ -26,7 +26,10 @@ import NhaXuatBanManagement from "page/admin/page/System/nhaXuatBanManagement/Nh
 import Cart from "page/user/page/cart/Cart";
 import NgonNguManagement from "page/admin/page/System/ngonNguManagement/NgonNguManagement";
 import { BaiVietManagement } from "page/admin/page/baiVietManagement/BaiVietManagement";
+import Payment from "page/user/page/payment/Payment";
+import InfoBook from "page/user/page/infoBook/InfoBook";
 // import { Contact } from '../page/user/page/contact/Contact';
+import { Button, Result } from 'antd';
 
 export const MainRoutes = () => {
   return (
@@ -38,7 +41,7 @@ export const MainRoutes = () => {
           <Route index element={<HomeUser />} />
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
-          <Route path="infoRoom/:id" element={<InfoRoom />} />
+          <Route path="infoBook/:id" element={<InfoBook />} />
           <Route path="bookingSchedule" element={<BookingSchedule />} />
           <Route path="searchRoom" element={<MoreRoom />} />
           <Route path="profile" element={<Profile />} />
@@ -46,7 +49,14 @@ export const MainRoutes = () => {
           <Route path="introduce" element={<Introduce />} />
           <Route path="contact" element={<Contact />} />
           <Route path="cart/:id" element={<Cart />} />
+          <Route path="payment" element={<Payment />} />
         </Route>
+        <Route path="*" element={<Result
+          status="404"
+          title="404"
+          subTitle="Sorry, the page you visited does not exist."
+          extra={<Button type="primary">Back Home</Button>}
+        />} />
         <Route path="/:id/verify/:token" element={<VerifyEmail />} />
         <Route path="/admin" element={<Layout1Admin />}>
           <Route index element={<Dashboard />} />

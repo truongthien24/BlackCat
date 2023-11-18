@@ -13,7 +13,7 @@ const Book = (props) => {
     data: null,
   });
 
-  const addToCart = () => {
+  const addToFavourite = () => {
     // Check login
     if (checkLogin()) {
       toast("Chuc nang dang phat trien!", {
@@ -51,9 +51,9 @@ const Book = (props) => {
               </button>
               <button
                 className="bg-[#fff] book__heading-option-button rounded-[10px] w-[40px] h-[40px] flex items-center justify-center mx-[5px]"
-                onClick={addToCart}
+                onClick={addToFavourite}
               >
-                <Icon name="cart" color="#000" />
+                <Icon name="heart" color="#000" />
               </button>
             </div>
           </div>
@@ -68,12 +68,14 @@ const Book = (props) => {
           </span>
         </div>
       </div>
-      <ModalReviewSach
-        open={review?.open}
-        data={review?.data}
-        title=""
-        onReview={onReview}
-      />
+      {review?.open && (
+        <ModalReviewSach
+          open={review?.open}
+          data={review?.data}
+          title=""
+          onReview={onReview}
+        />
+      )}
     </>
   );
 };

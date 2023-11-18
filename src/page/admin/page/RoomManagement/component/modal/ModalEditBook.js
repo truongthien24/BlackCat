@@ -120,7 +120,7 @@ export const ModalEditBook = (props) => {
       },
       {
         name: "namXuatBan",
-        type: "number",
+        type: "date",
         required: true,
         label: "Năm xuất bản",
       },
@@ -203,7 +203,9 @@ export const ModalEditBook = (props) => {
     ];
   }, [tacGia, theLoai, nhaXuatBan, nhaCungCap, ngonNgu]);
 
-  const validationSchema = yup.object().shape({});
+  const validationSchema = yup.object().shape({
+    tienCoc: yup.number().required().oneOf([yup.ref('gia')], 'Phải bằng giá sách')
+  });
 
   const {
     register,

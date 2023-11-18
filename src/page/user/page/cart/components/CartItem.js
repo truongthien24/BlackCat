@@ -1,31 +1,43 @@
+import _ from "lodash";
 import { COLOR } from "page/user/shareComponent/constant";
-import React from "react";
+import React, { useEffect } from "react";
 import { useFormContext } from "react-hook-form";
 
 const CartItem = ({ data, columns }) => {
+  console.log("data", data);
   const {
     formState: { errors },
     register,
+    reset,
+    watch,
+    getValues,
   } = useFormContext();
+
+  useEffect(() => {
+    if (!_.isEmpty(data)) {
+      // reset({ ...data.sach, soLuongGioHang: data.soLuong });
+    }
+  }, [data]);
+
   const handleChangeQuantity = () => {};
+
   return (
     <div className="flex items-center justify-between w-full">
       {columns?.map((item, index) => {
         switch (item.name) {
           case "thongTinSanPham": {
             return (
-              <div
-                className="flex"
-                style={{ width: `${item.width}` }}
-              >
+              <div className="flex" style={{ width: `${item.width}` }}>
                 <img
-                  src={data?.hinhAnh?.url}
-                  className="h-full w-[100px] mr-[25px]"
+                  src={data?.sach?.hinhAnh?.url}
+                  className="h-full w-[50px] md:w-[100px] mr-[10px] md:mr-[25px]"
                 />
                 <div>
-                  <h4 className="max-w-[300px]">{data?.tenSach}</h4>
-                  <span className="text-[#797979] text-[14px]">
-                    {data?.tenTheLoai}
+                  <h4 className="max-w-[300px] text-[12.5px] md:text-[15px]">
+                    {data?.sach?.tenSach}
+                  </h4>
+                  <span className="text-[#797979] text-[12px] md:text-[14px]">
+                    {getValues("tenTheLoai")}
                   </span>
                 </div>
               </div>
@@ -40,7 +52,7 @@ const CartItem = ({ data, columns }) => {
                 <div className="flex items-center justify-center">
                   <button
                     type="button"
-                    className="bg-[#dcdbdb] w-[35px] h-[35px] flex items-center justify-center"
+                    className="bg-[#dcdbdb] w-[20px] h-[20px] md:w-[35px] md:h-[35px] flex items-center justify-center"
                     onClick={() => handleChangeQuantity("minas")}
                   >
                     <svg
@@ -59,13 +71,12 @@ const CartItem = ({ data, columns }) => {
                     </svg>
                   </button>
                   <input
-                    className="bg-[white] w-[35px] h-[35px] text-center"
-                    {...register("soLuong")}
-                    onError={errors["soLuong"]}
+                    className="bg-[white] text-[11px] md:text-[13px] w-[20px] h-[20px] md:w-[35px] md:h-[35px] text-center"
+                    value={data?.soLuong}
                   />
                   <button
                     type="button"
-                    className="bg-[#dcdbdb] w-[35px] h-[35px] flex items-center justify-center"
+                    className="bg-[#dcdbdb] w-[20px] h-[20px] md:w-[35px] md:h-[35px] flex items-center justify-center"
                     onClick={() => handleChangeQuantity("plus")}
                   >
                     <svg
@@ -84,28 +95,40 @@ const CartItem = ({ data, columns }) => {
                     </svg>
                   </button>
                 </div>
-                {/* {errors["soLuong"] && (
-                  <span className="text-[red] ml-[10px] text-[10px]">
-                    {errors["soLuong"]?.message}
-                  </span>
-                )} */}
               </div>
             );
           }
           case "gia": {
-            return (<div className="flex justify-center" style={{ width: `${item.width}` }}>
-                Giá
-            </div>)
+            return (
+              <div
+                className="flex justify-center text-[11px] md:text-[13px]"
+                style={{ width: `${item.width}` }}
+              >
+                {data?.sach?.tienCoc?.toLocaleString()}
+              </div>
+            );
           }
           case "action": {
-            return (<div className="flex justify-center" style={{ width: `${item.width}` }}>
+            return (
+              <div
+                className="flex justify-center text-[11px] md:text-[13px]"
+                style={{ width: `${item.width}` }}
+              >
                 x
-            </div>)
+              </div>
+            );
           }
           case "thanhTien": {
-            return (<div className="flex justify-center" style={{ width: `${item.width}` }}>
-                Thành tiền
-            </div>)
+            return (
+              <div
+                className="flex justify-center text-[11px] md:text-[13px]"
+                style={{ width: `${item.width}` }}
+              >
+                {(
+                  parseInt(data.sach.tienCoc) * parseInt(data.soLuong)
+                )?.toLocaleString()}
+              </div>
+            );
           }
         }
       })}

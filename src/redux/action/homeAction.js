@@ -27,3 +27,10 @@ export const setConfirm = (data) => async (dispatch) => {
     });
   }
 };
+
+export const setUserInfo = (data) => async (dispatch) => {
+  dispatch({
+    type: "SET-USER-INFO",
+    payload: data,
+  });
+}

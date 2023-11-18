@@ -9,6 +9,7 @@ import { toast } from "react-hot-toast";
 import * as yup from "yup";
 import useUpdateNhaCungCap from "../hook/useUpdateNhaCungCap";
 import useCreateNhaCungCap from "../hook/useCreateNhaCungCap";
+import FormNumberPhone from "page/admin/shareComponent/form/FormNumberPhone";
 
 const Details = ({
   data = {},
@@ -38,8 +39,8 @@ const Details = ({
         soDienThoai: yup
           .number()
           .required({ message: "Nhập số điện thoại vào đi" })
-          .test("+84", "Số điện thoại 10 hoặc 11 số thui!", (data) => {
-            if (data.toString().length >= 10 && data.toString().length <= 11) {
+          .test("len", "Số điện thoại 10 hoặc 11 số thui!", (data) => {
+            if (data.toString().length >= 9 && data.toString().length <= 10) {
               return true;
             }
             return false;
@@ -81,6 +82,7 @@ const Details = ({
   }, []);
 
   const submitForm = async (data) => {
+    console.log('data', data)
     if (showSlice?.initData?._id) {
       await mutateUpdate({
         Data: data,
@@ -139,11 +141,13 @@ const Details = ({
           />
         </div>
         <div className="col-span-3">
-          <FormTextField
+          <FormNumberPhone
             label="Số điện thoại nhà cung cấp"
             name="soDienThoai"
             errors={errors}
             required
+            minLength={9}
+            maxLength={10}
             control={control}
           />
         </div>
