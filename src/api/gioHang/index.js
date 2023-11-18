@@ -36,5 +36,11 @@ export default {
     return axiosWrapper.delete(`/deleteGioHang/${params?._id}`, {
       ...params,
     });
-  }
+  },
+
+  checkSanPham: (params) => {
+    return axiosWrapper.post(`/checkSanPham`, {
+      ...params,
+    });
+  },
 };

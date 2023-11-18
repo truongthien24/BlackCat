@@ -48,7 +48,7 @@ export const MainRoutes = () => {
           <Route path="introduce" element={<Introduce />} />
           <Route path="contact" element={<Contact />} />
           <Route path="cart/:id" element={<Cart />} />
-          <Route path="payment/:id" element={<Payment />} />
+          <Route path="payment" element={<Payment />} />
         </Route>
         <Route path="/:id/verify/:token" element={<VerifyEmail />} />
         <Route path="/admin" element={<Layout1Admin />}>

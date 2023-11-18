@@ -72,8 +72,7 @@ const CartItem = ({ data, columns }) => {
                   </button>
                   <input
                     className="bg-[white] text-[11px] md:text-[13px] w-[20px] h-[20px] md:w-[35px] md:h-[35px] text-center"
-                    // {...register("soLuong")}
-                    defaultValue={data?.soLuong}
+                    value={data?.soLuong}
                   />
                   <button
                     type="button"

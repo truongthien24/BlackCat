@@ -12,6 +12,9 @@ import { jwtDecode } from "jwt-decode";
 import useGetDetailGioHang from "page/admin/page/GioHangManagement/hook/userGetDetailGioHang";
 import { Empty } from "antd";
 import { useSelector } from "react-redux";
+import useCheckSanPham from "page/admin/page/GioHangManagement/hook/useCheckSanPham";
+import { toast } from "react-hot-toast";
+import useLoadingEffect from "fuse/hook/useLoadingEffect";
 
 const Cart = () => {
   const navigate = useNavigate();
@@ -31,6 +34,8 @@ const Cart = () => {
   const { gioHangDataDetail, isDataDetailLoading, fetchData, isFetching } =
     useGetDetailGioHang("0", "0", userInfo?.gioHang);
 
+  const { mutate, isLoading } = useCheckSanPham();
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -38,19 +43,16 @@ const Cart = () => {
   const method = useForm({
     mode: "onSubmit",
     defaultValues: {},
-    resolver: yupResolver(
-      yup.object().shape({
-        // sach: yup.object().shape({
-
-        // }),
-        soLuong: yup
-          .number()
-          .required("Please input")
-          .typeError("Number")
-          .min(1)
-          .max(99),
-      })
-    ),
+    // resolver: yupResolver(
+    //   yup.object().shape({
+    //     soLuong: yup
+    //       .number()
+    //       .required("Please input")
+    //       .typeError("Number")
+    //       .min(1)
+    //       .max(99),
+    //   })
+    // ),
   });
 
   const { handleSubmit } = method;
@@ -96,9 +98,22 @@ const Cart = () => {
     }
   };
 
-  const handleSubmitCart = (data) => {
-    navigate(`/payment/${userInfo?._id}`);
+  const handleSubmitCart = async (data) => {
+    await mutate({
+      Data: gioHangDataDetail, 
+      onSuccess: (res) => {
+        toast.success(res?.data?.message);
+        setTimeout(()=> {
+          navigate(`/payment`);
+        }, 1000)
+      }, 
+      onError: (err) => {
+        toast.error(err.error?.message)
+      }
+    })
   };
+
+  useLoadingEffect(isLoading, isDataDetailLoading);
 
   return (
     <div className="md:pt-[150px] pb-[20px] min-h-[calc(100vh_-_300px)] flex justify-center">
@@ -116,27 +131,26 @@ const Cart = () => {
               {renderCartItem()}
             </div>
             <div className="flex justify-end items-center">
-              {/* <p className="w-[15%] text-[13px] md:text-[15px] flex justify-center mr-[20px]">300.000</p> */}
+              <p className="w-[15%] text-[13px] md:text-[15px] flex justify-center mr-[20px]">{(gioHangDataDetail?.danhSach?.reduce((a, b) => a + (b?.sach?.tienCoc * b?.soLuong), 0)).toLocaleString()}</p>
               <div className="flex justify-center">
                 <button
                   className="text-[#fff] text-[11px] md:text-[15px] p-[10px] rounded-[5px] flex items-center justify-center"
                   type="submit"
                   disabled={!gioHangDataDetail?.danhSach?.length > 0}
                   style={{
-                    backgroundColor: `${
-                      gioHangDataDetail?.danhSach?.length > 0
-                        ? COLOR.primaryColor
-                        : "gray"
-                    }`,
+                    backgroundColor: `${gioHangDataDetail?.danhSach?.length > 0
+                      ? COLOR.primaryColor
+                      : "gray"
+                      }`,
                   }}
-                  // type="button"
-                  // onClick={async () => {
-                  //   console.log("thanh toán");
-                  //   const thanhToan = await axios.post(
-                  //     "http://localhost:3001/api/thanhToan",
-                  //     { tongTien: 300000 }
-                  //   );
-                  // }}
+                // type="button"
+                // onClick={async () => {
+                //   console.log("thanh toán");
+                //   const thanhToan = await axios.post(
+                //     "http://localhost:3001/api/thanhToan",
+                //     { tongTien: 300000 }
+                //   );
+                // }}
                 >
                   Thanh toán
                 </button>
