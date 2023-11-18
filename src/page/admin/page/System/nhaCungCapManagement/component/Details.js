@@ -38,7 +38,7 @@ const Details = ({
         soDienThoai: yup
           .number()
           .required({ message: "Nhập số điện thoại vào đi" })
-          .test("len", "Số điện thoại 10 hoặc 11 số thui!", (data) => {
+          .test("+84", "Số điện thoại 10 hoặc 11 số thui!", (data) => {
             if (data.toString().length >= 10 && data.toString().length <= 11) {
               return true;
             }
