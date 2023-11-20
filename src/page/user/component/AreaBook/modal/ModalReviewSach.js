@@ -209,6 +209,12 @@ const ModalReviewSach = ({ data, open = false, onReview, title }) => {
           </div>
         </div>
       </form>
+      <FsLightbox
+        toggler={isZoomImage}
+        sources={[
+          <img src={sachDataDetail?.hinhAnh?.url} />,
+        ]}
+      />
     </Modal>
   );
 };
