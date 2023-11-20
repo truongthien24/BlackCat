@@ -1,6 +1,6 @@
 import "./App.css";
 import { MainRoutes } from "./Router/router";
-import "antd/dist/reset.css";
+// import "antd/dist/reset.css";
 import { QueryClient, QueryClientProvider } from "react-query";
 import LayoutMaster from "fuse/LayoutMaster";
 // import "@ant-design/flowchart/dist/index.css";
