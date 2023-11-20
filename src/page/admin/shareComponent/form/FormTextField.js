@@ -1,7 +1,6 @@
 import { Icon } from "assets/icon";
 import React from "react";
 import { Controller } from "react-hook-form";
-import { Button, Input, Select, Space } from "antd";
 
 const FormTextField = ({
   label,
@@ -43,9 +42,6 @@ const FormTextField = ({
                   <span className="hover-span">
                     <Icon color="#c80000" name="warning" />
                   </span>
-                  <Space.Compact>
-                    <Input style={{ width: "30%" }} defaultValue="+84" />
-                  </Space.Compact>
                   <span className="absolute right-[110%] top-0 bg-[white] w-[max-content] rounded-[20px] border-[1.5px] border-solid border-orange-400 text-orange-400 px-[10px] z-[2] hidden">
                     {errors?.[name]?.message}
                   </span>

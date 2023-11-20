@@ -23,11 +23,11 @@ export const HomeUser = () => {
     },
   ];
 
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(layDuLieuPhong());
-  }, []);
+  // useEffect(() => {
+  //   dispatch(layDuLieuPhong());
+  // }, []);
 
   const { sachData, isDataLoading, fetchData, isFetching } = useGetDataBook(
     "0",

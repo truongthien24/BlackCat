@@ -11,22 +11,25 @@ import MethodPayment from "./components/MethodPayment";
 import ConfirmPayment from "./components/ConfirmPayment";
 
 const Payment = () => {
-
-  const {id} = useParams();
+  const { id } = useParams();
 
   const renderStepContent = () => {
-    const step = 'info';
-    switch(step) {
-      case 'info': {
-        return <InfoPayment/>
+    const step = "info";
+    switch (step) {
+      case "info": {
+        // InfoPayment địa chỉ giao hàng
+        return <InfoPayment />;
       }
-      case 'payment': {
-        return <MethodPayment/>
+      case "payment": {
+        // MethodPayment Phương thức thanh toán
+        return <MethodPayment />;
       }
-      case 'confirm': {
-        return <ConfirmPayment/>
+      case "confirm": {
+        // ConfirmPayment Thanh toán thành công
+        return <ConfirmPayment />;
       }
-      default: return <></>
+      default:
+        return <></>;
     }
   };
 
