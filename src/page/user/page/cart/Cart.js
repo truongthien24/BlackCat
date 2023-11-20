@@ -14,8 +14,6 @@ import { toast } from "react-hot-toast";
 import useLoadingEffect from "fuse/hook/useLoadingEffect";
 import { SaveOutlined, CloseOutlined, EditFilled } from '@ant-design/icons';
 import { Confirm } from "component/Confirm/Confirm";
-import * as yup from 'yup';
-import { yupResolver } from "@hookform/resolvers/yup";
 import useUpdateGioHang from "page/admin/page/GioHangManagement/hook/useUpdateGioHang";
 import { useDispatch } from "react-redux";
 import { setConfirm } from "redux/action/homeAction";
@@ -55,21 +53,9 @@ const Cart = () => {
   const method = useForm({
     mode: "onSubmit",
     defaultValues: {},
-    resolver: yupResolver(
-      yup.object().shape({
-        gioHang: yup.object().shape({
-          soLuong: yup
-            .number()
-            .required("Please input")
-            .typeError("Number")
-            .min(1)
-            .max(10),
-        })
-      })
-    ),
   });
 
-  const { handleSubmit, formState: { errors }, watch, reset } = method;
+  const { handleSubmit, watch, reset } = method;
 
   useEffect(() => {
     if (gioHangDataDetail) {
@@ -148,14 +134,22 @@ const Cart = () => {
                         <Button type="cancel" shape="circle" icon={<CloseOutlined />} onClick={handleCancel} />
                       </Tooltip>
                       <Tooltip title="Lưu">
-                        <Button type="primary" className="ml-[10px]" shape="circle" icon={<SaveOutlined />} onClick={() => {
+                        <Button type="primary" className="ml-[10px]" shape="circle" icon={<SaveOutlined />} onClick={async () => {
                           // setIsEdit(prev => { return !prev })
-                          mutateUpdateGioHang({
+                          await mutateUpdateGioHang({
                             Data: {
                               id: userInfo?.gioHang,
                               sach: watch('danhSach'),
                               insert: false,
                               update: true,
+                            },
+                            onSuccess: async (res) => {
+                              await fetchData();
+                              toast.success(res?.data?.message);
+                              setIsEdit(false)
+                            },
+                            onError: (err) => {
+                              toast.error(err?.error?.message)
                             }
                           })
                         }} />

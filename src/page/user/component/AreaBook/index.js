@@ -7,8 +7,8 @@ const AreaBook = (props) => {
     const { data } = props;
     return (
         <div>
-            <HeadingArea title={data?.title}/>
-            <SliderBook data={data?.data}/>
+            <HeadingArea title={data?.title} />
+            <SliderBook data={data?.data} />
         </div>
     )
 }

@@ -1,6 +1,6 @@
-import { Badge, Modal } from "antd";
+import { Badge, Button, Modal } from "antd";
 import { COLOR } from "page/user/shareComponent/constant";
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import ReviewContent from "./components/ReviewContent";
@@ -10,13 +10,17 @@ import * as yup from "yup";
 import useGetDetailBook from "page/admin/page/RoomManagement/hook/useGetDetailBook";
 import useLoadingEffect from "fuse/hook/useLoadingEffect";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
 import useUpdateGioHang from "page/admin/page/GioHangManagement/hook/useUpdateGioHang";
 import { jwtDecode } from "jwt-decode";
+import { ExpandAltOutlined } from '@ant-design/icons';
+import FsLightbox from "fslightbox-react";
+
 
 const ModalReviewSach = ({ data, open = false, onReview, title }) => {
   const navigate = useNavigate();
 
+
+  const [isZoomImage, setIsZoomImage] = useState(false);
   // const { userInfo } = useSelector((state) => state.home);
 
   const jwt = localStorage.getItem("jwt");
@@ -120,8 +124,12 @@ const ModalReviewSach = ({ data, open = false, onReview, title }) => {
         className="grid grid-cols-1 md:grid-cols-2 gap-[20px]"
         onSubmit={handleSubmit(addToCart)}
       >
-        <div className="w-full">
+        <div className="w-full h-full relative">
           <img src={sachDataDetail?.hinhAnh?.url} className="w-full h-full" />
+          <Button className="absolute right-[10px] top-[10px]" type="primary" shape="circle" icon={<ExpandAltOutlined />} onClick={() => {
+            // setIsEdit(prev => { return !prev })
+            setIsZoomImage(!isZoomImage);
+          }} />
         </div>
         <div className="w-full bg-[#f3f3f3] p-[15px] flex flex-col justify-between h-full">
           <ReviewContent data={sachDataDetail} />
@@ -192,9 +200,8 @@ const ModalReviewSach = ({ data, open = false, onReview, title }) => {
               disabled={sachDataDetail?.soLuong < 1}
               className="text-[#fff] w-full p-[10px] rounded-[5px] flex items-center justify-center"
               style={{
-                backgroundColor: `${
-                  sachDataDetail?.soLuong > 0 ? COLOR.primaryColor : "gray"
-                }`,
+                backgroundColor: `${sachDataDetail?.soLuong > 0 ? COLOR.primaryColor : "gray"
+                  }`,
               }}
             >
               Thêm vào giỏ hàng

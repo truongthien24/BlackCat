@@ -48,8 +48,6 @@ const CartItem = ({ arrayData, data, columns, isEdit }) => {
   };
 
 
-  console.log('watch', watch())
-
   const deleteItemCart = async (item) => {
     await dispatch(setConfirm({
       status: 'open',
@@ -96,6 +94,7 @@ const CartItem = ({ arrayData, data, columns, isEdit }) => {
                           <button
                             type="button"
                             className="bg-[#dcdbdb] w-[20px] h-[20px] md:w-[35px] md:h-[35px] flex items-center justify-center"
+                            disabled={watch(`danhSach[${indexItem}].soLuong`) === 1}
                             onClick={() => handleChangeQuantity("minas")}
                           >
                             <svg
@@ -115,6 +114,7 @@ const CartItem = ({ arrayData, data, columns, isEdit }) => {
                           </button>
                           <input
                             className="bg-[white] text-[11px] md:text-[13px] w-[20px] h-[20px] md:w-[35px] md:h-[35px] text-center"
+                            disabled
                             // value={data?.soLuong}
                             {...register(`danhSach[${indexItem}].soLuong`)}
                           />
@@ -122,6 +122,7 @@ const CartItem = ({ arrayData, data, columns, isEdit }) => {
                             type="button"
                             className="bg-[#dcdbdb] w-[20px] h-[20px] md:w-[35px] md:h-[35px] flex items-center justify-center"
                             onClick={() => handleChangeQuantity("plus")}
+                            disabled={watch(`danhSach[${indexItem}].soLuong`) === 10}
                           >
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
@@ -164,7 +165,7 @@ const CartItem = ({ arrayData, data, columns, isEdit }) => {
                   className="flex justify-center text-[11px] md:text-[13px]"
                   style={{ width: `${item.width}` }}
                 >
-                  <Tooltip title="delete" onClick={() => deleteItemCart(data?.sach?._id)}>
+                  <Tooltip title="Xoá" onClick={() => deleteItemCart(data?.sach?._id)}>
                     <Button type="delete" shape="circle" icon={<DeleteFilled />} />
                   </Tooltip>
                 </div>
@@ -185,84 +186,6 @@ const CartItem = ({ arrayData, data, columns, isEdit }) => {
           }
         }
       })}
-      {/* {columns?.findIndex((col) => col.name === "thongTinSanPham") != -1 && (
-        <div className="flex items-center" style={{}}>
-          <img
-            src={data?.hinhAnh?.url}
-            className="h-full w-[100px] mr-[10px]"
-          />
-          <div>
-            <h4 className="max-w-[250px]">{data?.tenSach}</h4>
-            <span className="text-[#797979] text-[14px]">
-              {data?.tenTheLoai}
-            </span>
-          </div>
-        </div>
-      )}
-      {columns?.findIndex((col) => col.name === "soLuong") != -1 && (
-        <div className="flex items-center my-[10px]">
-          <h5
-            style={{
-              color: `${COLOR.primaryColor}`,
-              marginRight: "10px",
-            }}
-          >
-            Số lượng
-          </h5>
-          <div className="flex items-center">
-            <button
-              type="button"
-              className="bg-[#dcdbdb] w-[35px] h-[35px] flex items-center justify-center"
-              onClick={() => handleChangeQuantity("minas")}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="w-4 h-4"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M18 12H6"
-                />
-              </svg>
-            </button>
-            <input
-              className="bg-[white] w-[35px] h-[35px] text-center"
-              {...register("soLuong")}
-              onError={errors["soLuong"]}
-            />
-            <button
-              type="button"
-              className="bg-[#dcdbdb] w-[35px] h-[35px] flex items-center justify-center"
-              onClick={() => handleChangeQuantity("plus")}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="w-4 h-4"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M12 6v12m6-6H6"
-                />
-              </svg>
-            </button>
-          </div>
-          {errors["soLuong"] && (
-            <span className="text-[red] ml-[10px] text-[10px]">
-              {errors["soLuong"]?.message}
-            </span>
-          )}
-        </div>
-      )} */}
     </div>
   );
 };
