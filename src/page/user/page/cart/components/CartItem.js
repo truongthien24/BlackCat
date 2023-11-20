@@ -1,17 +1,22 @@
+import { Button, Tooltip } from "antd";
 import _ from "lodash";
-import { COLOR } from "page/user/shareComponent/constant";
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import { useFormContext } from "react-hook-form";
+import { SearchOutlined, DeleteFilled, EditFilled } from '@ant-design/icons';
+import { useDispatch } from "react-redux";
+import { setConfirm } from "redux/action/homeAction";
+import { toast } from "react-hot-toast";
 
-const CartItem = ({ data, columns }) => {
-  console.log("data", data);
+
+const CartItem = ({ arrayData, data, columns, isEdit }) => {
   const {
-    formState: { errors },
-    register,
-    reset,
-    watch,
     getValues,
+    watch,
+    setValue,
+    register,
   } = useFormContext();
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (!_.isEmpty(data)) {
@@ -19,116 +24,164 @@ const CartItem = ({ data, columns }) => {
     }
   }, [data]);
 
-  const handleChangeQuantity = () => {};
+  const indexItem = useMemo(() => {
+    if (arrayData) {
+      return arrayData?.findIndex((i) => i === data);
+    }
+  }, [arrayData])
+
+  const handleChangeQuantity = (method) => {
+    let preValue = getValues(`danhSach[${indexItem}].soLuong`);
+    switch (method) {
+      case 'minas': {
+        const nextValue = --preValue;
+        setValue(`danhSach[${indexItem}].soLuong`, nextValue);
+        break;
+      };
+      case 'plus': {
+        const nextValue = ++preValue;
+        setValue(`danhSach[${indexItem}].soLuong`, nextValue)
+        break;
+      };
+      default: break;
+    }
+  };
+
+
+  console.log('watch', watch())
+
+  const deleteItemCart = async (item) => {
+    await dispatch(setConfirm({
+      status: 'open',
+      method: async () => {
+        toast('Chức năng đang phát triển')
+      }
+    }))
+  }
 
   return (
     <div className="flex items-center justify-between w-full">
       {columns?.map((item, index) => {
-        switch (item.name) {
-          case "thongTinSanPham": {
-            return (
-              <div className="flex" style={{ width: `${item.width}` }}>
-                <img
-                  src={data?.sach?.hinhAnh?.url}
-                  className="h-full w-[50px] md:w-[100px] mr-[10px] md:mr-[25px]"
-                />
-                <div>
-                  <h4 className="max-w-[300px] text-[12.5px] md:text-[15px]">
-                    {data?.sach?.tenSach}
-                  </h4>
-                  <span className="text-[#797979] text-[12px] md:text-[14px]">
-                    {getValues("tenTheLoai")}
-                  </span>
-                </div>
-              </div>
-            );
-          }
-          case "soLuong": {
-            return (
-              <div
-                className="flex items-center justify-center my-[10px]"
-                style={{ width: `${item.width}` }}
-              >
-                <div className="flex items-center justify-center">
-                  <button
-                    type="button"
-                    className="bg-[#dcdbdb] w-[20px] h-[20px] md:w-[35px] md:h-[35px] flex items-center justify-center"
-                    onClick={() => handleChangeQuantity("minas")}
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth={1.5}
-                      stroke="currentColor"
-                      className="w-4 h-4"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M18 12H6"
-                      />
-                    </svg>
-                  </button>
-                  <input
-                    className="bg-[white] text-[11px] md:text-[13px] w-[20px] h-[20px] md:w-[35px] md:h-[35px] text-center"
-                    value={data?.soLuong}
+        if (item.visible) {
+          switch (item.name) {
+            case "thongTinSanPham": {
+              return (
+                <div className="flex" style={{ width: `${item.width}` }}>
+                  <img
+                    src={data?.sach?.hinhAnh?.url}
+                    className="h-full w-[50px] md:w-[100px] mr-[10px] md:mr-[25px]"
                   />
-                  <button
-                    type="button"
-                    className="bg-[#dcdbdb] w-[20px] h-[20px] md:w-[35px] md:h-[35px] flex items-center justify-center"
-                    onClick={() => handleChangeQuantity("plus")}
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth={1.5}
-                      stroke="currentColor"
-                      className="w-4 h-4"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M12 6v12m6-6H6"
-                      />
-                    </svg>
-                  </button>
+                  <div>
+                    <h4 className="max-w-[300px] text-[12.5px] md:text-[15px]">
+                      {data?.sach?.tenSach}
+                    </h4>
+                    <span className="text-[#797979] text-[12px] md:text-[14px]">
+                      {getValues("tenTheLoai")}
+                    </span>
+                  </div>
                 </div>
-              </div>
-            );
-          }
-          case "gia": {
-            return (
-              <div
-                className="flex justify-center text-[11px] md:text-[13px]"
-                style={{ width: `${item.width}` }}
-              >
-                {data?.sach?.tienCoc?.toLocaleString()}
-              </div>
-            );
-          }
-          case "action": {
-            return (
-              <div
-                className="flex justify-center text-[11px] md:text-[13px]"
-                style={{ width: `${item.width}` }}
-              >
-                x
-              </div>
-            );
-          }
-          case "thanhTien": {
-            return (
-              <div
-                className="flex justify-center text-[11px] md:text-[13px]"
-                style={{ width: `${item.width}` }}
-              >
-                {(
-                  parseInt(data.sach.tienCoc) * parseInt(data.soLuong)
-                )?.toLocaleString()}
-              </div>
-            );
+              );
+            }
+            case "soLuong": {
+              return (
+                <div
+                  className="flex items-center justify-center my-[10px]"
+                  style={{ width: `${item.width}` }}
+                >
+                  <div className="flex items-center justify-center">
+                    {
+                      isEdit
+                        ?
+                        <>
+                          <button
+                            type="button"
+                            className="bg-[#dcdbdb] w-[20px] h-[20px] md:w-[35px] md:h-[35px] flex items-center justify-center"
+                            onClick={() => handleChangeQuantity("minas")}
+                          >
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              strokeWidth={1.5}
+                              stroke="currentColor"
+                              className="w-4 h-4"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M18 12H6"
+                              />
+                            </svg>
+                          </button>
+                          <input
+                            className="bg-[white] text-[11px] md:text-[13px] w-[20px] h-[20px] md:w-[35px] md:h-[35px] text-center"
+                            // value={data?.soLuong}
+                            {...register(`danhSach[${indexItem}].soLuong`)}
+                          />
+                          <button
+                            type="button"
+                            className="bg-[#dcdbdb] w-[20px] h-[20px] md:w-[35px] md:h-[35px] flex items-center justify-center"
+                            onClick={() => handleChangeQuantity("plus")}
+                          >
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              strokeWidth={1.5}
+                              stroke="currentColor"
+                              className="w-4 h-4"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M12 6v12m6-6H6"
+                              />
+                            </svg>
+                          </button>
+                        </>
+                        :
+                        <span className="text-[11px] md:text-[13px]">
+                          {data?.soLuong}
+                        </span>
+                    }
+                  </div>
+                </div>
+              );
+            }
+            case "gia": {
+              return (
+                <div
+                  className="flex justify-center text-[11px] md:text-[13px]"
+                  style={{ width: `${item.width}` }}
+                >
+                  {data?.sach?.tienCoc?.toLocaleString()}
+                </div>
+              );
+            }
+            case "action": {
+              return (
+                <div
+                  className="flex justify-center text-[11px] md:text-[13px]"
+                  style={{ width: `${item.width}` }}
+                >
+                  <Tooltip title="delete" onClick={() => deleteItemCart(data?.sach?._id)}>
+                    <Button type="delete" shape="circle" icon={<DeleteFilled />} />
+                  </Tooltip>
+                </div>
+              );
+            }
+            case "thanhTien": {
+              return (
+                <div
+                  className="flex justify-center text-[11px] md:text-[13px]"
+                  style={{ width: `${item.width}` }}
+                >
+                  {(
+                    parseInt(data.sach.tienCoc) * parseInt(data.soLuong)
+                  )?.toLocaleString()}
+                </div>
+              );
+            }
           }
         }
       })}

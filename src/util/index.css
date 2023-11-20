@@ -1,4 +1,3 @@
-@tailwind base;
 @tailwind components;
 @tailwind utilities;
 body {
@@ -344,6 +343,16 @@ html {
   background-color: white !important;
   color: #3790c7;
   border: #3790c7 1px solid;
+}
+
+.ant-btn-delete {
+  background-color: #ff6885 !important;
+  color: white;
+}
+
+.ant-btn-primary {
+  background-color: #498374 !important;
+  color: white;
 }
 
 @keyframes fadeOnLeft {
