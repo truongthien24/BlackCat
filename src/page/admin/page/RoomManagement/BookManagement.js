@@ -105,7 +105,7 @@ export const BookManagement = () => {
 
   return (
     <>
-      <div className="h-[12%] flex justify-between items-center">
+      <div className="h-[10%] flex justify-between items-center">
         <h3 className="text-[20px] text-[#3790c7] font-bold">
           {t("Quản lý sách")}
         </h3>
@@ -117,7 +117,7 @@ export const BookManagement = () => {
           {t("add")}
         </button>
       </div>
-      <div className="h-[88%]">
+      <div className="h-[90%]">
         <TableMain
           data={sachData}
           columns={columns(handleViewDanhGia)}

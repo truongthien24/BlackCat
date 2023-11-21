@@ -25,6 +25,7 @@ import useLoadingEffect from "fuse/hook/useLoadingEffect";
 import useUpdateBook from "../../hook/useUpdateBook";
 import { toast } from "react-hot-toast";
 import { convertToBase64 } from "page/user/shareComponent/Function/convertBase64";
+import FormDatePicker from "page/admin/shareComponent/form/FormDatePicker";
 
 export const ModalEditBook = (props) => {
   // Props
@@ -226,6 +227,7 @@ export const ModalEditBook = (props) => {
     handleSubmit,
     reset,
     watch,
+    control,
     formState: { errors },
   } = useForm({
     method: "onChange",
@@ -235,7 +237,7 @@ export const ModalEditBook = (props) => {
   useEffect(() => {
     if (dataEdit) {
       // APIEdit.forEach(data => setValue(`${data.name}`, dataEdit?.[data.name]));
-      reset({ ...dataEdit, hinhAnh: dataEdit?.hinhAnh });
+      reset({ ...dataEdit, hinhAnh: dataEdit?.hinhAnh, namXuatBan: dataEdit?.namXuatBan });
     }
   }, [dataEdit]);
 
@@ -334,11 +336,10 @@ export const ModalEditBook = (props) => {
               >
                 <button
                   type="button"
-                  className={`w-full p-[10px] bg-[white] shadow-md shadow-gray-300 rounded-[5px] duration-200 hover:translate-x-[-3px] ${
-                    btn?.tinhTrang
-                      ? "hover:shadow-orange-400"
-                      : "hover:shadow-green-400"
-                  }`}
+                  className={`w-full p-[10px] bg-[white] shadow-md shadow-gray-300 rounded-[5px] duration-200 hover:translate-x-[-3px] ${btn?.tinhTrang
+                    ? "hover:shadow-orange-400"
+                    : "hover:shadow-green-400"
+                    }`}
                 >
                   {btn?.[item.dataItemName]}
                 </button>
@@ -381,13 +382,8 @@ export const ModalEditBook = (props) => {
           {...register(`${item.name}`)}
         />
       );
-    } else if (item.type === "date") {
-      return (
-        <DatePicker
-          {...register(`${item.name}`)}
-          disabledDate={(d) => !d || d.isAfter(item.max)}
-        />
-      );
+    } else if (item.type === 'date') {
+      return (<FormDatePicker label={null} name={item.name} max={item.max} control={control}/>)
     } else {
       return (
         <div
