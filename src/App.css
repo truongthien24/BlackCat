@@ -15,6 +15,10 @@ html {
     scroll-behavior: smooths;
 }
 
+.eeeee {
+  -webkit-line-clamp: 2;
+}
+
 .fadeOn {
     animation-name: fadeOn;
     animation-duration: .5s;

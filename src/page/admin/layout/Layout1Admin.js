@@ -21,7 +21,7 @@ export const Layout1Admin = () => {
       <Navigation />
       <div className="w-[calc(100%-250px)] h-full">
         <TabMenu />
-        <div className="px-[20px] py-[15px] h-[92%]">
+        <div className="px-[20px] py-[10px] h-[92%]">
           <Outlet />
         </div>
       </div>
