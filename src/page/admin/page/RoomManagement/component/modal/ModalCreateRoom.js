@@ -1,4 +1,4 @@
-import { Badge, Modal, Popover, Skeleton } from "antd";
+import { Badge, Modal, Popover, Skeleton, DatePicker } from "antd";
 import React, { useEffect, useMemo, useState } from "react";
 import { Icon } from "../../../../../../assets/icon";
 import { UploadOutlined } from "@ant-design/icons";
@@ -106,9 +106,10 @@ export const ModalCreateRoom = (props) => {
       },
       {
         name: "namXuatBan",
-        type: "number",
+        type: "date",
         required: true,
         label: "Năm xuất bản",
+        max: new Date(),
       },
       {
         name: "nhaCungCap",
@@ -323,6 +324,13 @@ export const ModalCreateRoom = (props) => {
           {...register(`${item.name}`)}
         />
       );
+    } else if (item.type === "date") {
+      return (
+        <DatePicker
+          {...register(`${item.name}`)}
+          disabledDate={(d) => !d || d.isAfter(item.max + 1)}
+        />
+      );
     } else {
       return (
         <div
@@ -334,8 +342,12 @@ export const ModalCreateRoom = (props) => {
             // key={index}
             type={item.type}
             name={item.name}
+            readOnly={item.disable}
+            max={item?.max}
             placeholder={`Điền vào ${item.label}...`}
-            className={`w-[92%] outline-none`}
+            className={`w-[92%] outline-none ${
+              item?.disable ? "bg-[#cfcece]" : ""
+            }`}
             {...register(`${item.name}`)}
           />
           {errors?.[item.name] && (

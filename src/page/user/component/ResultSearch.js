@@ -18,7 +18,7 @@ const ResultSearch = ({ data, resultRef, searchRef }) => {
             className="flex rounded-[5px] duration-500 cursor-pointer hover:bg-[#eaeaea]"
             onClick={() => {
               navigate(`/infoBook/${sach?._id}`);
-              resultRef.current.style.display = 'none'
+              resultRef.current.style.display = "none";
             }}
           >
             <img

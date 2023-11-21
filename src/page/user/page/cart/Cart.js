@@ -14,7 +14,7 @@ import { toast } from "react-hot-toast";
 import useLoadingEffect from "fuse/hook/useLoadingEffect";
 import { SaveOutlined, CloseOutlined, EditFilled } from "@ant-design/icons";
 import { Confirm } from "component/Confirm/Confirm";
-import * as yup from 'yup';
+import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import useUpdateGioHang from "page/admin/page/GioHangManagement/hook/useUpdateGioHang";
 import { useDispatch } from "react-redux";
@@ -63,12 +63,17 @@ const Cart = () => {
             .typeError("Number")
             .min(1)
             .max(10),
-        })
+        }),
       })
     ),
   });
 
-  const { handleSubmit, formState: { errors }, watch, reset } = method;
+  const {
+    handleSubmit,
+    formState: { errors },
+    watch,
+    reset,
+  } = method;
 
   useEffect(() => {
     if (gioHangDataDetail) {
@@ -147,21 +152,36 @@ const Cart = () => {
             <div className="mb-[10px] md:mb-[20px] flex justify-between">
               <h2 className="font-[500] md:text-[22px]">Giỏ hàng của bạn</h2>
               <div className="flex items-center">
-                {
-                  !isEdit
-                    ?
-                    <Tooltip title="Chỉnh sửa">
-                      <Button type="primary" shape="circle" icon={<EditFilled />} onClick={() => {
-                        setIsEdit(prev => { return !prev })
-                      }} />
+                {!isEdit ? (
+                  <Tooltip title="Chỉnh sửa">
+                    <Button
+                      type="primary"
+                      shape="circle"
+                      icon={<EditFilled />}
+                      onClick={() => {
+                        setIsEdit((prev) => {
+                          return !prev;
+                        });
+                      }}
+                    />
+                  </Tooltip>
+                ) : (
+                  <>
+                    <Tooltip title="Huỷ bỏ">
+                      <Button
+                        type="cancel"
+                        shape="circle"
+                        icon={<CloseOutlined />}
+                        onClick={handleCancel}
+                      />
                     </Tooltip>
-                    :
-                    <>
-                      <Tooltip title="Huỷ bỏ">
-                        <Button type="cancel" shape="circle" icon={<CloseOutlined />} onClick={handleCancel} />
-                      </Tooltip>
-                      <Tooltip title="Lưu">
-                        <Button type="primary" className="ml-[10px]" shape="circle" icon={<SaveOutlined />} onClick={() => {
+                    <Tooltip title="Lưu">
+                      <Button
+                        type="primary"
+                        className="ml-[10px]"
+                        shape="circle"
+                        icon={<SaveOutlined />}
+                        onClick={async () => {
                           // setIsEdit(prev => { return !prev })
                           await mutateUpdateGioHang({
                             Data: {
@@ -169,14 +189,21 @@ const Cart = () => {
                               sach: watch("danhSach"),
                               insert: false,
                               update: true,
-                            }
-                          })
-                        }} />
-                      </Tooltip>
-                    </>
-
-                }
-
+                            },
+                            onSuccess: async (res) => {
+                              await fetchData();
+                              toast.success(res?.data?.message);
+                              setIsEdit(false);
+                            },
+                            onError: (err) => {
+                              toast.error(err?.error?.message);
+                            },
+                          });
+                        }}
+                      />
+                    </Tooltip>
+                  </>
+                )}
               </div>
             </div>
             <div className="border-solid border-[#498374] border-[1px] w-full px-[10px] py-[10px] md:px-[25px] md:py-[15px] grid grid-cols-1 gap-[15px]">

@@ -1,4 +1,12 @@
-import { Badge, Button, DatePicker, Modal, Popconfirm, Popover, Skeleton } from "antd";
+import {
+  Badge,
+  Button,
+  DatePicker,
+  Modal,
+  Popconfirm,
+  Popover,
+  Skeleton,
+} from "antd";
 import React, { useEffect, useMemo, useState } from "react";
 import { Icon } from "../../../../../../assets/icon";
 import { UploadOutlined } from "@ant-design/icons";
@@ -123,7 +131,7 @@ export const ModalEditBook = (props) => {
         type: "date",
         required: true,
         label: "Năm xuất bản",
-        max: new Date()
+        max: new Date(),
       },
       {
         name: "maNhaCungCap",
@@ -205,7 +213,10 @@ export const ModalEditBook = (props) => {
   }, [tacGia, theLoai, nhaXuatBan, nhaCungCap, ngonNgu]);
 
   const validationSchema = yup.object().shape({
-    tienCoc: yup.number().required().oneOf([yup.ref('gia')], 'Phải bằng giá sách')
+    tienCoc: yup
+      .number()
+      .required()
+      .oneOf([yup.ref("gia")], "Phải bằng giá sách"),
   });
 
   const {
@@ -294,8 +305,9 @@ export const ModalEditBook = (props) => {
     if (item.type === "select") {
       return (
         <div
-          className={`border-[1px] border-solid border-[#b4b4b4] rounded-[5px] px-[15px] py-[7px] relative ${errors?.[item.name]?.message ? "border-orange-400" : ""
-            }`}
+          className={`border-[1px] border-solid border-[#b4b4b4] rounded-[5px] px-[15px] py-[7px] relative ${
+            errors?.[item.name]?.message ? "border-orange-400" : ""
+          }`}
         >
           <select className="w-full outline-none" {...register(`${item.name}`)}>
             {item.dataSelect?.map((op, index) => {
@@ -322,10 +334,11 @@ export const ModalEditBook = (props) => {
               >
                 <button
                   type="button"
-                  className={`w-full p-[10px] bg-[white] shadow-md shadow-gray-300 rounded-[5px] duration-200 hover:translate-x-[-3px] ${btn?.tinhTrang
+                  className={`w-full p-[10px] bg-[white] shadow-md shadow-gray-300 rounded-[5px] duration-200 hover:translate-x-[-3px] ${
+                    btn?.tinhTrang
                       ? "hover:shadow-orange-400"
                       : "hover:shadow-green-400"
-                    }`}
+                  }`}
                 >
                   {btn?.[item.dataItemName]}
                 </button>
@@ -368,13 +381,19 @@ export const ModalEditBook = (props) => {
           {...register(`${item.name}`)}
         />
       );
-    } else if (item.type === 'date') {
-      return (<DatePicker {...register(`${item.name}`)} disabledDate={d => !d || d.isAfter(item.max)} />)
+    } else if (item.type === "date") {
+      return (
+        <DatePicker
+          {...register(`${item.name}`)}
+          disabledDate={(d) => !d || d.isAfter(item.max)}
+        />
+      );
     } else {
       return (
         <div
-          className={`border-[1px] border-solid border-[#b4b4b4] rounded-[5px] px-[15px] py-[7px] relative ${item?.disable ? "bg-[#cfcece]" : ""
-            } ${errors?.[item.name]?.message ? "border-orange-400" : ""}`}
+          className={`border-[1px] border-solid border-[#b4b4b4] rounded-[5px] px-[15px] py-[7px] relative ${
+            item?.disable ? "bg-[#cfcece]" : ""
+          } ${errors?.[item.name]?.message ? "border-orange-400" : ""}`}
         >
           <input
             // key={index}
@@ -383,8 +402,9 @@ export const ModalEditBook = (props) => {
             name={item.name}
             max={item?.max}
             placeholder={`Điền vào ${item.label}...`}
-            className={`w-[92%] outline-none ${item?.disable ? "bg-[#cfcece]" : ""
-              }`}
+            className={`w-[92%] outline-none ${
+              item?.disable ? "bg-[#cfcece]" : ""
+            }`}
             {...register(`${item.name}`)}
           />
           {errors?.[item.name] && (
