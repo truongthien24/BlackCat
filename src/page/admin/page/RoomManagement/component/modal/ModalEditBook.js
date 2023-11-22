@@ -218,6 +218,21 @@ export const ModalEditBook = (props) => {
       .number()
       .required()
       .oneOf([yup.ref("gia")], "Phải bằng giá sách"),
+
+    soLuong: yup
+      .number()
+      .required("Yêu cầu nhập vào")
+      .min(1, "Số lượng phải lớn hơn 0"),
+
+    gia: yup
+      .number()
+      .required("Yêu cầu nhập vào")
+      .min(1, "Giá tiền ko được nhập âm"),
+
+    soTrang: yup
+      .number()
+      .required("Không được để trống")
+      .min(1, "Số trang không được để âm"),
   });
 
   const {
@@ -237,7 +252,11 @@ export const ModalEditBook = (props) => {
   useEffect(() => {
     if (dataEdit) {
       // APIEdit.forEach(data => setValue(`${data.name}`, dataEdit?.[data.name]));
-      reset({ ...dataEdit, hinhAnh: dataEdit?.hinhAnh, namXuatBan: dataEdit?.namXuatBan });
+      reset({
+        ...dataEdit,
+        hinhAnh: dataEdit?.hinhAnh,
+        namXuatBan: dataEdit?.namXuatBan,
+      });
     }
   }, [dataEdit]);
 
@@ -247,6 +266,7 @@ export const ModalEditBook = (props) => {
     const base64 = await convertToBase64(file);
     setImage(base64);
     setValue("hinhAnh", {
+      required: true,
       url: base64,
       public_id: null,
     });
@@ -336,10 +356,11 @@ export const ModalEditBook = (props) => {
               >
                 <button
                   type="button"
-                  className={`w-full p-[10px] bg-[white] shadow-md shadow-gray-300 rounded-[5px] duration-200 hover:translate-x-[-3px] ${btn?.tinhTrang
-                    ? "hover:shadow-orange-400"
-                    : "hover:shadow-green-400"
-                    }`}
+                  className={`w-full p-[10px] bg-[white] shadow-md shadow-gray-300 rounded-[5px] duration-200 hover:translate-x-[-3px] ${
+                    btn?.tinhTrang
+                      ? "hover:shadow-orange-400"
+                      : "hover:shadow-green-400"
+                  }`}
                 >
                   {btn?.[item.dataItemName]}
                 </button>
@@ -382,8 +403,15 @@ export const ModalEditBook = (props) => {
           {...register(`${item.name}`)}
         />
       );
-    } else if (item.type === 'date') {
-      return (<FormDatePicker label={null} name={item.name} max={item.max} control={control}/>)
+    } else if (item.type === "date") {
+      return (
+        <FormDatePicker
+          label={null}
+          name={item.name}
+          max={item.max}
+          control={control}
+        />
+      );
     } else {
       return (
         <div

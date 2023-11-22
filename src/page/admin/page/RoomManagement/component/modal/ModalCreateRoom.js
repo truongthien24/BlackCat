@@ -20,6 +20,7 @@ import useLoadingEffect from "fuse/hook/useLoadingEffect";
 import { toast } from "react-hot-toast";
 import useUploadFile from "util/hook/useUploadFile";
 import { convertToBase64 } from "page/user/shareComponent/Function/convertBase64";
+import FormDatePicker from "page/admin/shareComponent/form/FormDatePicker";
 
 export const ModalCreateRoom = (props) => {
   // Props
@@ -190,7 +191,26 @@ export const ModalCreateRoom = (props) => {
     ];
   }, [tacGia, theLoai, nhaXuatBan, nhaCungCap, ngonNgu]);
 
-  const validationSchema = yup.object().shape({});
+  const validationSchema = yup.object().shape({
+    tienCoc: yup
+      .number()
+      .required()
+      .oneOf([yup.ref("gia")], "Phải bằng giá sách"),
+    soLuong: yup
+      .number()
+      .required("Yêu cầu nhập vào")
+      .min(1, "Số lượng phải lớn hơn 0"),
+
+    gia: yup
+      .number()
+      .required("Yêu cầu nhập vào")
+      .min(1, "Giá tiền ko được nhập âm"),
+
+    soTrang: yup
+      .number()
+      .required("Không được để trống")
+      .min(1, "Số trang không được để âm"),
+  });
 
   const {
     register,
@@ -199,6 +219,7 @@ export const ModalCreateRoom = (props) => {
     handleSubmit,
     reset,
     watch,
+    control,
     formState: { errors },
   } = useForm({
     method: "onChange",
@@ -326,17 +347,19 @@ export const ModalCreateRoom = (props) => {
       );
     } else if (item.type === "date") {
       return (
-        <DatePicker
-          {...register(`${item.name}`)}
-          disabledDate={(d) => !d || d.isAfter(item.max + 1)}
+        <FormDatePicker
+          label={null}
+          name={item.name}
+          max={item.max}
+          control={control}
         />
       );
     } else {
       return (
         <div
           className={`border-[1px] border-solid border-[#b4b4b4] rounded-[5px] px-[15px] py-[7px] relative ${
-            errors?.[item.name]?.message ? "border-orange-400" : ""
-          }`}
+            item?.disable ? "bg-[#cfcece]" : ""
+          } ${errors?.[item.name]?.message ? "border-orange-400" : ""}`}
         >
           <input
             // key={index}
