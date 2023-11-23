@@ -210,6 +210,12 @@ export const ModalEditBook = (props) => {
         required: true,
         label: "Quốc gia",
       },
+      {
+        name: "biaSach",
+        type: "string",
+        required: true,
+        label: "Bìa sách",
+      },
     ];
   }, [tacGia, theLoai, nhaXuatBan, nhaCungCap, ngonNgu]);
 

@@ -44,6 +44,7 @@ const ReviewContent = ({ data }) => {
         <ReviewInfoItem title="Năm xuất bản" data={data?.namXuatBan} />
         <ReviewInfoItem title="Số trang" data={data?.soTrang} />
         <ReviewInfoItem title="Kích thước" data={data?.kichThuoc} />
+        <ReviewInfoItem title="Bìa sách" data={data?.biaSach} />
       </div>
     </div>
   );

@@ -172,6 +172,7 @@ const InfoBook = () => {
                 title="Kích thước"
                 data={sachDataDetail?.kichThuoc}
               />
+              <ReviewInfoItem title="Bìa sách" data={sachDataDetail?.biaSach} />
             </div>
             <div>
               <div className="flex items-center my-[10px]">
