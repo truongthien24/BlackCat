@@ -1,10 +1,14 @@
-import axios from 'axios';
-import { jwtDecode } from 'jwt-decode';
-import React, { useMemo } from 'react'
-import { FormProvider, useForm } from 'react-hook-form';
+import { Button } from "antd";
+import { jwtDecode } from "jwt-decode";
+import React, { useMemo, useState } from "react";
+import { FormProvider, useForm } from "react-hook-form";
+import { PlusOutlined } from "@ant-design/icons";
+import ModalAddInfoPayment from "./modals/ModalAddInfoPayment";
 
 const InfoPayment = () => {
   const jwt = localStorage.getItem("jwt");
+
+  const [open, setOpen] = useState(false);
 
   const userInfo = useMemo(() => {
     if (jwt) {
@@ -14,67 +18,60 @@ const InfoPayment = () => {
   }, [jwt]);
 
   const method = useForm({
-    mode: 'onSubmit',
+    mode: "onSubmit",
     defaultValues: {},
-  })
+  });
 
   const { handleSubmit } = method;
 
-  const handleSubmitForm = (data) => {
+  const onOpen = (event) => {
+    setOpen(event);
+  };
 
-  }
+  const handleSubmitForm = (data) => {};
+
+  const renderThongTinGiaoHang = () => {
+    return userInfo?.thongTinNhanHang?.map((diaChi, index) => {
+      return (
+        <div
+          style={{
+            boxShadow:
+              "rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px",
+          }}
+        >
+          {test}
+        </div>
+      );
+    });
+  };
 
   return (
-    <FormProvider {...method}>
-      <form className="" onSubmit={handleSubmit(handleSubmitForm)}>
-        <div className="mb-[10px] md:mb-[20px] flex justify-between">
-          {/* <h2 className="font-[500] md:text-[22px]">
-            Thông tin nhận hàng
-          </h2> */}
-          {/* <div className="flex items-center">
-                {
-                  !isEdit
-                    ?
-                    <Tooltip title="Chỉnh sửa">
-                      <Button type="primary" shape="circle" icon={<EditFilled />} onClick={() => {
-                        setIsEdit(prev => { return !prev })
-                      }} />
-                    </Tooltip>
-                    :
-                    <>
-                      <Tooltip title="Huỷ bỏ">
-                        <Button type="cancel" shape="circle" icon={<CloseOutlined />} onClick={handleCancel} />
-                      </Tooltip>
-                      <Tooltip title="Lưu">
-                        <Button type="primary" className="ml-[10px]" shape="circle" icon={<SaveOutlined />} onClick={async () => {
-                          // setIsEdit(prev => { return !prev })
-                          await mutateUpdateGioHang({
-                            Data: {
-                              id: userInfo?.gioHang,
-                              sach: watch('danhSach'),
-                              insert: false,
-                              update: true,
-                            },
-                            onSuccess: async (res) => {
-                              await fetchData();
-                              toast.success(res?.data?.message);
-                              setIsEdit(false)
-                            },
-                            onError: (err) => {
-                              toast.error(err?.error?.message)
-                            }
-                          })
-                        }} />
-                      </Tooltip>
-                    </>
+    <>
+      <FormProvider {...method}>
+        <form className="" onSubmit={handleSubmit(handleSubmitForm)}>
+          <div className="mb-[10px] md:mb-[20px] grid grid-cols-1 gap-[10px]">
+            {renderThongTinGiaoHang()}
+            <div
+              className="w-full md:w-[300px] px-[10px] py-[7px] rounded-[10px] cursor-pointer"
+              style={{
+                boxShadow:
+                  "rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px",
+              }}
+              onClick={() => onOpen(true)}
+            >
+              <Button
+                type="primary"
+                icon={<PlusOutlined />}
+                className="mr-[10px]"
+              />
+              <span>Thêm thông tin giao hàng</span>
+            </div>
+          </div>
+        </form>
+      </FormProvider>
+      <ModalAddInfoPayment open={open} onOpen={onOpen} />
+    </>
+  );
+};
 
-                }
-
-              </div> */}
-        </div>
-      </form>
-    </FormProvider>
-  )
-}
-
-export default InfoPayment
+export default InfoPayment;
