@@ -1,4 +1,4 @@
-import { Badge, Modal, Popover, Skeleton } from "antd";
+import { Badge, Modal, Popover, Skeleton, DatePicker } from "antd";
 import React, { useEffect, useMemo, useState } from "react";
 import { Icon } from "../../../../../../assets/icon";
 import { UploadOutlined } from "@ant-design/icons";
@@ -20,6 +20,7 @@ import useLoadingEffect from "fuse/hook/useLoadingEffect";
 import { toast } from "react-hot-toast";
 import useUploadFile from "util/hook/useUploadFile";
 import { convertToBase64 } from "page/user/shareComponent/Function/convertBase64";
+import FormDatePicker from "page/admin/shareComponent/form/FormDatePicker";
 
 export const ModalCreateRoom = (props) => {
   // Props
@@ -106,9 +107,10 @@ export const ModalCreateRoom = (props) => {
       },
       {
         name: "namXuatBan",
-        type: "number",
+        type: "date",
         required: true,
         label: "Năm xuất bản",
+        max: new Date(),
       },
       {
         name: "nhaCungCap",
@@ -186,10 +188,36 @@ export const ModalCreateRoom = (props) => {
         required: true,
         label: "Quốc gia",
       },
+
+      {
+        name: "biaSach",
+        type: "string",
+        required: true,
+        label: "Bìa sách",
+      },
     ];
   }, [tacGia, theLoai, nhaXuatBan, nhaCungCap, ngonNgu]);
 
-  const validationSchema = yup.object().shape({});
+  const validationSchema = yup.object().shape({
+    tienCoc: yup
+      .number()
+      .required()
+      .oneOf([yup.ref("gia")], "Phải bằng giá sách"),
+    soLuong: yup
+      .number()
+      .required("Yêu cầu nhập vào")
+      .min(1, "Số lượng phải lớn hơn 0"),
+
+    gia: yup
+      .number()
+      .required("Yêu cầu nhập vào")
+      .min(1, "Giá tiền ko được nhập âm"),
+
+    soTrang: yup
+      .number()
+      .required("Không được để trống")
+      .min(1, "Số trang không được để âm"),
+  });
 
   const {
     register,
@@ -198,6 +226,7 @@ export const ModalCreateRoom = (props) => {
     handleSubmit,
     reset,
     watch,
+    control,
     formState: { errors },
   } = useForm({
     method: "onChange",
@@ -323,19 +352,32 @@ export const ModalCreateRoom = (props) => {
           {...register(`${item.name}`)}
         />
       );
+    } else if (item.type === "date") {
+      return (
+        <FormDatePicker
+          label={null}
+          name={item.name}
+          max={item.max}
+          control={control}
+        />
+      );
     } else {
       return (
         <div
           className={`border-[1px] border-solid border-[#b4b4b4] rounded-[5px] px-[15px] py-[7px] relative ${
-            errors?.[item.name]?.message ? "border-orange-400" : ""
-          }`}
+            item?.disable ? "bg-[#cfcece]" : ""
+          } ${errors?.[item.name]?.message ? "border-orange-400" : ""}`}
         >
           <input
             // key={index}
             type={item.type}
             name={item.name}
+            readOnly={item.disable}
+            max={item?.max}
             placeholder={`Điền vào ${item.label}...`}
-            className={`w-[92%] outline-none`}
+            className={`w-[92%] outline-none ${
+              item?.disable ? "bg-[#cfcece]" : ""
+            }`}
             {...register(`${item.name}`)}
           />
           {errors?.[item.name] && (

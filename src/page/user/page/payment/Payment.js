@@ -11,8 +11,7 @@ import MethodPayment from "./components/MethodPayment";
 import ConfirmPayment from "./components/ConfirmPayment";
 
 const Payment = () => {
-
-  const {id} = useParams();
+  const { id } = useParams();
 
   const [paymentStep, setPaymentStep] = useState({
     step: 0,
@@ -30,7 +29,8 @@ const Payment = () => {
       case 2: {
         return <ConfirmPayment/>
       }
-      default: return <></>
+      default:
+        return <></>;
     }
   };
 

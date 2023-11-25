@@ -6,10 +6,10 @@ import ReviewInfoItem from "page/user/component/AreaBook/modal/components/Review
 import { COLOR } from "page/user/shareComponent/constant";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from 'yup';
+import * as yup from "yup";
 import { toast } from "react-hot-toast";
 import { Tabs } from "antd";
-import { Empty } from 'antd';
+import { Empty } from "antd";
 import _ from "lodash";
 
 const InfoBook = () => {
@@ -74,36 +74,52 @@ const InfoBook = () => {
 
   const items = [
     {
-      key: '1',
-      label: 'Mô tả',
-      children: !_.isEmpty(sachDataDetail?.noiDung) ? <div>{sachDataDetail?.noiDung}</div> : <Empty image={Empty.PRESENTED_IMAGE_SIMPLE}/>,
+      key: "1",
+      label: "Nội dung sách",
+      children: !_.isEmpty(sachDataDetail?.noiDung) ? (
+        <div>{sachDataDetail?.noiDung}</div>
+      ) : (
+        <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+      ),
     },
     {
-      key: '2',
-      label: 'Đánh giá',
-      children: <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="Chức năng đang được phát triển"/>,
+      key: "2",
+      label: "Đánh giá",
+      children: (
+        <Empty
+          image={Empty.PRESENTED_IMAGE_SIMPLE}
+          description="Chức năng đang được phát triển"
+        />
+      ),
     },
   ];
 
   const onChange = (key) => {
     console.log(key);
   };
-  
-  
 
   useLoadingEffect(isDataDetailLoading);
 
   return (
     <div className="md:pt-[150px] pb-[20px] min-h-[calc(100vh_-_300px)] flex justify-center">
       <div className="flex flex-col bg-[#eaeaea] w-[95%] xl:w-[90%] 2xl:w-[70%] px-[25px] py-[20px]">
-        <form className="grid md:grid-cols-2 lg:grid-cols-5 2xl:grid-cols-3 gap-[30px]" onSubmit={handleSubmit(addToCart)}>
-          <img src={sachDataDetail?.hinhAnh?.url} className="lg:col-span-2 h-full" />
+        <form
+          className="grid md:grid-cols-2 lg:grid-cols-5 2xl:grid-cols-3 gap-[30px]"
+          onSubmit={handleSubmit(addToCart)}
+        >
+          <img
+            src={sachDataDetail?.hinhAnh?.url}
+            className="lg:col-span-2 h-full"
+          />
           <div className="lg:col-span-3 2xl:col-span-2 flex flex-col">
             <h2 className="">{sachDataDetail?.tenSach}</h2>
             <div className="flex items-center">
               <div className="flex items-center">
                 <p className="text-[gray] text-[11px] md:text-[13px] 2xl:text-[14px]">
-                  Tác giả: <span className="text-[#000]">{sachDataDetail?.tenTacGia}</span>
+                  Tác giả:{" "}
+                  <span className="text-[#000]">
+                    {sachDataDetail?.tenTacGia}
+                  </span>
                 </p>
               </div>
               <span className="mx-[10px]">|</span>
@@ -131,13 +147,32 @@ const InfoBook = () => {
               </span>
             </div>
             <div className="flex flex-col">
-              <ReviewInfoItem title="Nhà cung cấp" data={sachDataDetail?.tenNhaCungCap} />
-              <ReviewInfoItem title="Thể loại" data={sachDataDetail?.tenTheLoai} />
-              <ReviewInfoItem title="Ngôn ngữ" data={sachDataDetail?.tenNgonNgu} />
-              <ReviewInfoItem title="Nhà xuất bản" data={sachDataDetail?.tenNhaXuatBan} />
-              <ReviewInfoItem title="Năm xuất bản" data={sachDataDetail?.namXuatBan} />
+              <ReviewInfoItem
+                title="Nhà cung cấp"
+                data={sachDataDetail?.tenNhaCungCap}
+              />
+              <ReviewInfoItem
+                title="Thể loại"
+                data={sachDataDetail?.tenTheLoai}
+              />
+              <ReviewInfoItem
+                title="Ngôn ngữ"
+                data={sachDataDetail?.tenNgonNgu}
+              />
+              <ReviewInfoItem
+                title="Nhà xuất bản"
+                data={sachDataDetail?.tenNhaXuatBan}
+              />
+              <ReviewInfoItem
+                title="Năm xuất bản"
+                data={sachDataDetail?.namXuatBan}
+              />
               <ReviewInfoItem title="Số trang" data={sachDataDetail?.soTrang} />
-              <ReviewInfoItem title="Kích thước" data={sachDataDetail?.kichThuoc} />
+              <ReviewInfoItem
+                title="Kích thước"
+                data={sachDataDetail?.kichThuoc}
+              />
+              <ReviewInfoItem title="Bìa sách" data={sachDataDetail?.biaSach} />
             </div>
             <div>
               <div className="flex items-center my-[10px]">
@@ -206,8 +241,9 @@ const InfoBook = () => {
                 disabled={sachDataDetail?.soLuong < 1}
                 className="text-[#fff] w-full p-[10px] rounded-[5px] flex items-center justify-center"
                 style={{
-                  backgroundColor: `${sachDataDetail?.soLuong > 0 ? COLOR.primaryColor : "gray"
-                    }`,
+                  backgroundColor: `${
+                    sachDataDetail?.soLuong > 0 ? COLOR.primaryColor : "gray"
+                  }`,
                 }}
               >
                 Thêm vào giỏ hàng
@@ -215,7 +251,12 @@ const InfoBook = () => {
             </div>
           </div>
         </form>
-        <Tabs defaultActiveKey="1" items={items} onChange={onChange} className="mt-[20px]"/>
+        <Tabs
+          defaultActiveKey="1"
+          items={items}
+          onChange={onChange}
+          className="mt-[20px]"
+        />
       </div>
     </div>
   );
