@@ -62,8 +62,8 @@ const Cart = () => {
             .required("Please input")
             .typeError("Number")
             .min(1)
-            .max(10),
-          soNgayThue: yup.number().required("Please input").min(7).max(30)
+            .max(5),
+          soNgayThue: yup.number().required("Please input").min(7).max(30),
         }),
       })
     ),

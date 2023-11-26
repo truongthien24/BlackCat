@@ -2,20 +2,14 @@ import { Button, Tooltip } from "antd";
 import _ from "lodash";
 import React, { useEffect, useMemo } from "react";
 import { useFormContext } from "react-hook-form";
-import { SearchOutlined, DeleteFilled, EditFilled } from '@ant-design/icons';
+import { SearchOutlined, DeleteFilled, EditFilled } from "@ant-design/icons";
 import { useDispatch } from "react-redux";
 import { setConfirm } from "redux/action/homeAction";
 import { toast } from "react-hot-toast";
 import FormSelect from "page/admin/shareComponent/form/FormSelect";
 
-
 const CartItem = ({ arrayData, data, columns, isEdit }) => {
-  const {
-    getValues,
-    watch,
-    setValue,
-    register,
-  } = useFormContext();
+  const { getValues, watch, setValue, register } = useFormContext();
 
   const dispatch = useDispatch();
 
@@ -29,34 +23,36 @@ const CartItem = ({ arrayData, data, columns, isEdit }) => {
     if (arrayData) {
       return arrayData?.findIndex((i) => i === data);
     }
-  }, [arrayData])
+  }, [arrayData]);
 
   const handleChangeQuantity = (method) => {
     let preValue = getValues(`danhSach[${indexItem}].soLuong`);
     switch (method) {
-      case 'minas': {
+      case "minas": {
         const nextValue = --preValue;
         setValue(`danhSach[${indexItem}].soLuong`, nextValue);
         break;
-      };
-      case 'plus': {
+      }
+      case "plus": {
         const nextValue = ++preValue;
-        setValue(`danhSach[${indexItem}].soLuong`, nextValue)
+        setValue(`danhSach[${indexItem}].soLuong`, nextValue);
         break;
-      };
-      default: break;
+      }
+      default:
+        break;
     }
   };
 
-
   const deleteItemCart = async (item) => {
-    await dispatch(setConfirm({
-      status: 'open',
-      method: async () => {
-        toast('Chức năng đang phát triển')
-      }
-    }))
-  }
+    await dispatch(
+      setConfirm({
+        status: "open",
+        method: async () => {
+          toast("Chức năng đang phát triển");
+        },
+      })
+    );
+  };
 
   return (
     <div className="flex items-center justify-between w-full">
@@ -88,78 +84,84 @@ const CartItem = ({ arrayData, data, columns, isEdit }) => {
                   style={{ width: `${item.width}` }}
                 >
                   <div className="flex items-center justify-center">
-                    {
-                      isEdit
-                        ?
-                        <>
-                          <button
-                            type="button"
-                            className="bg-[#dcdbdb] w-[20px] h-[20px] md:w-[35px] md:h-[35px] flex items-center justify-center"
-                            disabled={watch(`danhSach[${indexItem}].soLuong`) === 1}
-                            onClick={() => handleChangeQuantity("minas")}
+                    {isEdit ? (
+                      <>
+                        <button
+                          type="button"
+                          className="bg-[#dcdbdb] w-[20px] h-[20px] md:w-[35px] md:h-[35px] flex items-center justify-center"
+                          disabled={
+                            watch(`danhSach[${indexItem}].soLuong`) === 1
+                          }
+                          onClick={() => handleChangeQuantity("minas")}
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            strokeWidth={1.5}
+                            stroke="currentColor"
+                            className="w-4 h-4"
                           >
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              strokeWidth={1.5}
-                              stroke="currentColor"
-                              className="w-4 h-4"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M18 12H6"
-                              />
-                            </svg>
-                          </button>
-                          <input
-                            className="bg-[white] text-[11px] md:text-[13px] w-[20px] h-[20px] md:w-[35px] md:h-[35px] text-center"
-                            disabled
-                            // value={data?.soLuong}
-                            {...register(`danhSach[${indexItem}].soLuong`)}
-                          />
-                          <button
-                            type="button"
-                            className="bg-[#dcdbdb] w-[20px] h-[20px] md:w-[35px] md:h-[35px] flex items-center justify-center"
-                            onClick={() => handleChangeQuantity("plus")}
-                            disabled={watch(`danhSach[${indexItem}].soLuong`) === 10}
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              d="M18 12H6"
+                            />
+                          </svg>
+                        </button>
+                        <input
+                          className="bg-[white] text-[11px] md:text-[13px] w-[20px] h-[20px] md:w-[35px] md:h-[35px] text-center"
+                          disabled
+                          // value={data?.soLuong}
+                          {...register(`danhSach[${indexItem}].soLuong`)}
+                        />
+                        <button
+                          type="button"
+                          className="bg-[#dcdbdb] w-[20px] h-[20px] md:w-[35px] md:h-[35px] flex items-center justify-center"
+                          onClick={() => handleChangeQuantity("plus")}
+                          disabled={
+                            watch(`danhSach[${indexItem}].soLuong`) === 5
+                          }
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            strokeWidth={1.5}
+                            stroke="currentColor"
+                            className="w-4 h-4"
                           >
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              strokeWidth={1.5}
-                              stroke="currentColor"
-                              className="w-4 h-4"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M12 6v12m6-6H6"
-                              />
-                            </svg>
-                          </button>
-                        </>
-                        :
-                        <span className="text-[11px] md:text-[13px]">
-                          {data?.soLuong}
-                        </span>
-                    }
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              d="M12 6v12m6-6H6"
+                            />
+                          </svg>
+                        </button>
+                      </>
+                    ) : (
+                      <span className="text-[11px] md:text-[13px]">
+                        {data?.soLuong}
+                      </span>
+                    )}
                   </div>
                 </div>
               );
             }
-            case 'giaThue': {
-              return <div
-                className="flex justify-center text-[11px] md:text-[13px]"
-                style={{ width: `${item.width}` }}
-              >
-                <div>
-                  <FormSelect name={`danhSach[${indexItem}].soNgayThue`}/>
+            case "giaThue": {
+              return (
+                <div
+                  className="flex justify-center text-[11px] md:text-[13px]"
+                  style={{ width: `${item.width}` }}
+                >
+                  <div>
+                    <FormSelect name={`danhSach[${indexItem}].soNgayThue`} />
+                  </div>
+                  {(
+                    data?.sach?.tienCoc * data?.sach?.soNgayThue
+                  ).toLocaleString()}
                 </div>
-                {(data?.sach?.tienCoc * data?.sach?.soNgayThue).toLocaleString()}
-              </div>
+              );
             }
             case "gia": {
               return (
@@ -177,8 +179,15 @@ const CartItem = ({ arrayData, data, columns, isEdit }) => {
                   className="flex justify-center text-[11px] md:text-[13px]"
                   style={{ width: `${item.width}` }}
                 >
-                  <Tooltip title="Xoá" onClick={() => deleteItemCart(data?.sach?._id)}>
-                    <Button type="delete" shape="circle" icon={<DeleteFilled />} />
+                  <Tooltip
+                    title="Xoá"
+                    onClick={() => deleteItemCart(data?.sach?._id)}
+                  >
+                    <Button
+                      type="delete"
+                      shape="circle"
+                      icon={<DeleteFilled />}
+                    />
                   </Tooltip>
                 </div>
               );

@@ -30,6 +30,7 @@ import Payment from "page/user/page/payment/Payment";
 import InfoBook from "page/user/page/infoBook/InfoBook";
 // import { Contact } from '../page/user/page/contact/Contact';
 import { Button, Result } from "antd";
+import MaGiamManagement from "page/admin/page/System/maGiamManagement/MaGiamManagement";
 
 export const MainRoutes = () => {
   return (
@@ -58,7 +59,14 @@ export const MainRoutes = () => {
               status="404"
               title="404"
               subTitle="Sorry, the page you visited does not exist."
-              extra={<Button type="primary">Back Home</Button>}
+              extra={
+                <Button
+                  type="primary"
+                  onClick={() => window.location.replace("/")}
+                >
+                  Back Home
+                </Button>
+              }
             />
           }
           HomeUser
@@ -74,6 +82,7 @@ export const MainRoutes = () => {
           <Route path="theLoaiManagement" element={<TheLoaiManagement />} />
           <Route path="tacGiaManagement" element={<TacGiaManagement />} />
           <Route path="ngonNguManagement" element={<NgonNguManagement />} />
+          <Route path="maGiamManagement" element={<MaGiamManagement />} />
           <Route path="baiVietManagement" element={<BaiVietManagement />} />
           <Route
             path="nhaCungCapManagement"

@@ -7,6 +7,15 @@ import {
   MenuUnfoldOutlined,
   DesktopOutlined,
   MailOutlined,
+  BookOutlined,
+  SettingOutlined,
+  HomeOutlined,
+  EditOutlined,
+  WifiOutlined,
+  WindowsOutlined,
+  SmileOutlined,
+  UserAddOutlined,
+  PercentageOutlined,
 } from "@ant-design/icons";
 import { Button, Menu } from "antd";
 import { useState } from "react";
@@ -64,9 +73,9 @@ export const Navigation = () => {
         Quản lý Sách
       </div>,
       "3",
-      <ContainerOutlined />
+      <BookOutlined />
     ),
-    getItem("System", "sub1", <ContainerOutlined />, [
+    getItem("System", "sub1", <SettingOutlined />, [
       getItem(
         <div
           onClick={() => {
@@ -75,7 +84,8 @@ export const Navigation = () => {
         >
           Quản lý Thể loại
         </div>,
-        "4"
+        "4",
+        <SmileOutlined />
       ),
       getItem(
         <div
@@ -85,7 +95,8 @@ export const Navigation = () => {
         >
           Quản lý Tác giả
         </div>,
-        "5"
+        "5",
+        <UserAddOutlined />
       ),
       getItem(
         <div
@@ -95,7 +106,8 @@ export const Navigation = () => {
         >
           Quản lý Nhà cung cấp
         </div>,
-        "6"
+        "6",
+        <HomeOutlined />
       ),
       getItem(
         <div
@@ -105,7 +117,8 @@ export const Navigation = () => {
         >
           Quản lý Nhà Xuất bản
         </div>,
-        "7"
+        "7",
+        <HomeOutlined />
       ),
       getItem(
         <div
@@ -115,7 +128,19 @@ export const Navigation = () => {
         >
           Quản lý ngôn ngữ
         </div>,
-        "8"
+        "8",
+        <EditOutlined />
+      ),
+      getItem(
+        <div
+          onClick={() => {
+            navigate("/admin/maGiamManagement");
+          }}
+        >
+          Quản lý mã giảm giá
+        </div>,
+        "9",
+        <PercentageOutlined />
       ),
     ]),
     getItem("Booking", "sub2", <MailOutlined />, [
@@ -127,7 +152,7 @@ export const Navigation = () => {
         >
           Checking Management
         </div>,
-        "9"
+        "10"
       ),
       getItem(
         <div
@@ -137,7 +162,7 @@ export const Navigation = () => {
         >
           Booking Service
         </div>,
-        "10"
+        "11"
       ),
     ]),
     getItem(
@@ -148,7 +173,7 @@ export const Navigation = () => {
       >
         Service Management
       </div>,
-      "11",
+      "12",
       <ContainerOutlined />
     ),
     getItem(
@@ -159,8 +184,8 @@ export const Navigation = () => {
       >
         Bai Viet
       </div>,
-      "12",
-      <ContainerOutlined />
+      "13",
+      <WindowsOutlined />
     ),
   ];
 

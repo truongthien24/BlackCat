@@ -7,10 +7,9 @@ import React, { useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import * as yup from "yup";
-import useUpdateNhaCungCap from "../hook/useUpdateNgonNgu";
-import useCreateNhaCungCap from "../hook/useCreateNgonNgu";
-import useCreateNgonNgu from "../hook/useCreateNgonNgu";
-import useUpdateNgonNgu from "../hook/useUpdateNgonNgu";
+import useUpdateTacGia from "../hook/useUpdateGiamGia";
+import useCreateGiamGia from "../hook/useCreateGiamGia";
+import useUpdateGiamGia from "../hook/useUpdateGiamGia";
 
 const Details = ({
   data = {},
@@ -19,19 +18,24 @@ const Details = ({
   showSlice,
   onShowSlice,
 }) => {
-  const { mutate, isLoading: isSubmitting } = useCreateNgonNgu();
+  const { mutate, isLoading: isSubmitting } = useCreateGiamGia();
 
   const { mutate: mutateUpdate, isLoading: isSubmittingUpdate } =
-    useUpdateNgonNgu();
+    useUpdateGiamGia();
 
   const method = useForm({
     method: "onSubmit",
     defaultValues: {
-      tenNgonNgu: "",
+      tenMaGiamGia: "",
+      phanTramGiamGia: "",
     },
     resolver: yupResolver(
       yup.object().shape({
-        tenNgonNgu: yup.string().required("Nhập tên ngôn ngữ vào đi"),
+        tenMaGiamGia: yup.string().required("Nhập tên vào đi"),
+        phanTramGiamGia: yup
+          .number()
+          .required("Nhập % vào đi")
+          .typeError("Phải nhập % vào"),
       })
     ),
   });
@@ -55,7 +59,7 @@ const Details = ({
       if (!_.isEmpty(data)) {
         reset(data);
       } else {
-        reset({ tenNgonNgu: "" });
+        reset({ tenTacGia: "" }, { chiTietTacGia: "" });
       }
     }
   }, [showSlice]);
@@ -103,16 +107,24 @@ const Details = ({
         onSubmit={handleSubmit(submitForm)}
       >
         {/* Có 3 cột */}
-        <div className="col-span-3">
+        <div className="col-span-1">
           <FormTextField
-            label="Tên ngôn ngữ"
-            name="tenNgonNgu"
+            label="Tên mã giảm giá"
+            name="tenMaGiamGia"
             errors={errors}
             required
             control={control}
           />
         </div>
-
+        <div className="col-span-2">
+          <FormTextField
+            label="Phần trăm giảm giá"
+            name="phanTramGiamGia"
+            errors={errors}
+            required
+            control={control}
+          />
+        </div>
         <CustomButton
           label="Lưu"
           type="submit"
