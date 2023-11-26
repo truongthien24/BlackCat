@@ -53,25 +53,16 @@ const Cart = () => {
 
   const method = useForm({
     mode: "onSubmit",
-    defaultValues: {},
-    resolver: yupResolver(
-      yup.object().shape({
-        gioHang: yup.object().shape({
-          soLuong: yup
-            .number()
-            .required("Please input")
-            .typeError("Number")
-            .min(1)
-            .max(5),
-          soNgayThue: yup.number().required("Please input").min(7).max(30),
-        }),
-      })
-    ),
+    defaultValues: {
+      gioHang: {
+        giaThue: 0
+      }
+    },
   });
+
 
   const {
     handleSubmit,
-    formState: { errors },
     watch,
     reset,
   } = method;
@@ -132,7 +123,7 @@ const Cart = () => {
           await dispatch(
             setConfirm({
               status: "close",
-              method: () => {},
+              method: () => { },
             })
           );
         },
@@ -213,10 +204,13 @@ const Cart = () => {
                 {renderCartItem()}
               </div>
               <div className="flex justify-end items-center">
-                <p className="w-[15%] text-[13px] md:text-[15px] flex justify-center mr-[20px]">
-                  {gioHangDataDetail?.danhSach
-                    ?.reduce((a, b) => a + b?.sach?.tienCoc * b?.soLuong, 0)
-                    ?.toLocaleString()}
+                <p className="text-[13px] md:text-[15px] flex justify-end mr-[20px]">
+                  <span className="mr-[10px]">Tổng tiền phải thanh toán: </span>
+                  <span className="text-[500]" style={{ color: `${COLOR.secondaryColor}` }}>
+                    {gioHangDataDetail?.danhSach
+                      ?.reduce((a, b) => a + b?.sach?.tienCoc * b?.soLuong, 0)
+                      ?.toLocaleString()} VND
+                  </span>
                 </p>
                 <div className="flex justify-center">
                   <button
@@ -226,14 +220,13 @@ const Cart = () => {
                       !gioHangDataDetail?.danhSach?.length > 0 || isEdit
                     }
                     style={{
-                      backgroundColor: `${
-                        gioHangDataDetail?.danhSach?.length > 0 && !isEdit
-                          ? COLOR.primaryColor
-                          : "gray"
-                      }`,
+                      backgroundColor: `${gioHangDataDetail?.danhSach?.length > 0 && !isEdit
+                        ? COLOR.primaryColor
+                        : "gray"
+                        }`,
                     }}
                   >
-                    Thanh toán
+                    Tiếp tục
                   </button>
                 </div>
               </div>

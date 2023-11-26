@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 import { setConfirm } from "redux/action/homeAction";
 import { toast } from "react-hot-toast";
 import FormSelect from "page/admin/shareComponent/form/FormSelect";
+import { getPercentRent } from "method/getPercentRent";
 
 const CartItem = ({ arrayData, data, columns, isEdit }) => {
   const { getValues, watch, setValue, register } = useFormContext();
@@ -26,20 +27,17 @@ const CartItem = ({ arrayData, data, columns, isEdit }) => {
   }, [arrayData]);
 
   const handleChangeQuantity = (method) => {
-    let preValue = getValues(`danhSach[${indexItem}].soLuong`);
+    const soLuong = `danhSach[${indexItem}].soLuong`;
+    let preValue = getValues(soLuong);
     switch (method) {
       case "minas": {
-        const nextValue = --preValue;
-        setValue(`danhSach[${indexItem}].soLuong`, nextValue);
+        setValue(soLuong, --preValue);
         break;
       }
       case "plus": {
-        const nextValue = ++preValue;
-        setValue(`danhSach[${indexItem}].soLuong`, nextValue);
+        setValue(soLuong, ++preValue);
         break;
       }
-      default:
-        break;
     }
   };
 
@@ -151,15 +149,28 @@ const CartItem = ({ arrayData, data, columns, isEdit }) => {
             case "giaThue": {
               return (
                 <div
-                  className="flex justify-center text-[11px] md:text-[13px]"
+                  className="flex justify-center items-center text-[11px] md:text-[13px]"
                   style={{ width: `${item.width}` }}
                 >
-                  <div>
-                    <FormSelect name={`danhSach[${indexItem}].soNgayThue`} />
-                  </div>
-                  {(
-                    data?.sach?.tienCoc * data?.sach?.soNgayThue
-                  ).toLocaleString()}
+                  <FormSelect
+                    disable={!isEdit}
+                    className="mb-[5px]"
+                    name={`danhSach[${indexItem}].soNgayThue`}
+                    onChangeForm={(e) => {
+                      setValue(
+                        `danhSach[${indexItem}].giaThue`,
+                        getPercentRent(parseInt(e)) * data?.sach?.gia
+                      );
+                    }}
+                    option={[
+                      { value: 7, label: "7 ngày" },
+                      { value: 14, label: "14 ngày" },
+                      { value: 30, label: "30 ngày" },
+                    ]}
+                  />
+                  <span className="ml-[10px]">
+                    {watch(`danhSach[${indexItem}].giaThue`)?.toLocaleString()}
+                  </span>
                 </div>
               );
             }
@@ -199,7 +210,9 @@ const CartItem = ({ arrayData, data, columns, isEdit }) => {
                   style={{ width: `${item.width}` }}
                 >
                   {(
-                    parseInt(data.sach.tienCoc) * parseInt(data.soLuong)
+                    parseInt(data.sach.tienCoc) * parseInt(data.soLuong) +
+                    watch(`danhSach[${indexItem}].giaThue`) *
+                      parseInt(data.soLuong)
                   )?.toLocaleString()}
                 </div>
               );

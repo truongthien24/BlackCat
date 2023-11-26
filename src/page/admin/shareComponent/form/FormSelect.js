@@ -10,13 +10,14 @@ const FormSelect = ({
     disable,
     type,
     required,
+    className,
     errors,
-    onChange,
+    onChangeForm,
     option,
     inputProps,
 }) => {
     return (
-        <div className="flex flex-col items-start">
+        <div className={`flex flex-col items-start ${className}`}>
             <h5 className="mb-[5px]">
                 {label} {required && <span className="text-[red]">*</span>}
             </h5>
@@ -26,10 +27,14 @@ const FormSelect = ({
                 render={({ field: { onChange, onBlur, value, ref } }) => {
                     return (
                         <Select
+                            disabled={disable}
                             options={option}
                             ref={ref}
                             value={value}
-                            onChange={onChange}
+                            onChange={(e) => {
+                                onChange(e);
+                                onChangeForm && onChangeForm(e)
+                            }}
                             onBlur={onBlur}
                             {...inputProps}
                         />
