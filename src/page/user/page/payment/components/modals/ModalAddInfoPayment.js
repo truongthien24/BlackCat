@@ -9,11 +9,12 @@ import {
   Autocomplete,
   useJsApiLoader,
 } from "@react-google-maps/api";
+import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 
 const center = {
-    lat: 14.0583,
-    lng: 108.2772,
-  };
+  lat: 14.0583,
+  lng: 108.2772,
+};
 
 const ModalAddInfoPayment = ({ open, onOpen, title }) => {
   const [selectedPlace, setSelectedPlace] = useState(null);
@@ -128,39 +129,29 @@ const ModalAddInfoPayment = ({ open, onOpen, title }) => {
           <div className="col-span-2">
             <h5>Chọn từ bản đồ: </h5>
             {isLoaded ? (
-              <GoogleMap
-                id="map"
-                mapContainerStyle={{
-                  height: "400px",
-                  width: "100%",
-                }}
-                center={center}
-                zoom={6}
-                onLoad={onLoad}
-                onUnmount={onUnmount}
-              >
-                {/* <Autocomplete onLoad={onLoad} onPlaceChanged={onPlaceChanged}>
-                  <input
-                    type="text"
-                    placeholder="Search for a location in Vietnam"
-                    style={{
-                      boxSizing: "border-box",
-                      border: "1px solid transparent",
-                      width: "240px",
-                      height: "32px",
-                      padding: "0 12px",
-                      borderRadius: "3px",
-                      boxShadow: "0 2px 6px rgba(0, 0, 0, 0.3)",
-                      fontSize: "14px",
-                      outline: "none",
-                      textOverflow: "ellipses",
-                      position: "absolute",
-                      left: "50%",
-                      marginLeft: "-120px",
-                    }}
-                  />
-                </Autocomplete> */}
-              </GoogleMap>
+              // <GoogleMap
+              //   id="map"
+              //   mapContainerStyle={{
+              //     height: "400px",
+              //     width: "100%",
+              //   }}
+              //   center={center}
+              //   zoom={6}
+              //   onLoad={onLoad}
+              //   onUnmount={onUnmount}
+              // >
+              // </GoogleMap>
+              <MapContainer style={{width: '100%', height: '200px'}} center={[51.505, -0.09]} zoom={10} scrollWheelZoom={false}>
+                <TileLayer
+                  attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                  url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                />
+                <Marker position={[51.505, -0.09]}>
+                  <Popup>
+                    A pretty CSS3 popup. <br /> Easily customizable.
+                  </Popup>
+                </Marker>
+              </MapContainer>
             ) : (
               <></>
             )}
