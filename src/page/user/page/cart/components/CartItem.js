@@ -6,6 +6,7 @@ import { SearchOutlined, DeleteFilled, EditFilled } from '@ant-design/icons';
 import { useDispatch } from "react-redux";
 import { setConfirm } from "redux/action/homeAction";
 import { toast } from "react-hot-toast";
+import FormSelect from "page/admin/shareComponent/form/FormSelect";
 
 
 const CartItem = ({ arrayData, data, columns, isEdit }) => {
@@ -148,6 +149,17 @@ const CartItem = ({ arrayData, data, columns, isEdit }) => {
                   </div>
                 </div>
               );
+            }
+            case 'giaThue': {
+              return <div
+                className="flex justify-center text-[11px] md:text-[13px]"
+                style={{ width: `${item.width}` }}
+              >
+                <div>
+                  <FormSelect name={`danhSach[${indexItem}].soNgayThue`}/>
+                </div>
+                {(data?.sach?.tienCoc * data?.sach?.soNgayThue).toLocaleString()}
+              </div>
             }
             case "gia": {
               return (

@@ -22,19 +22,28 @@ const ReviewContent = ({ data }) => {
           </p>
         </div>
       </div>
-      <div
-        className="text-[white] py-[5px] px-[12px] max-w-fit my-[20px] ml-[5px]"
-        style={{
-          backgroundColor: `${COLOR.secondaryColor}`,
-          transform: "skew(10deg)",
-        }}
-      >
-        <span
-          className="inline-block text-[18px] md:text-[22px] text-bold"
-          style={{ transform: "skew(-10deg)" }}
+      <div className="flex items-center justify-between my-[20px]">
+        <div
+          className="text-[white] py-[5px] px-[12px] max-w-fit ml-[5px]"
+          style={{
+            backgroundColor: `${COLOR.secondaryColor}`,
+            transform: "skew(10deg)",
+          }}
         >
-          {data?.gia?.toLocaleString()}đ
-        </span>
+          <span
+            className="inline-block text-[18px] md:text-[22px] text-bold"
+            style={{ transform: "skew(-10deg)" }}
+          >
+            {data?.gia?.toLocaleString()}đ
+          </span>
+        </div>
+        <div className="flex items-center">
+          Chỉ với
+          <span className="text-[white] p-[5px] rounded-[5px] inline-block mx-[5px]" style={{backgroundColor: `${COLOR.primaryColor}`}}>
+            {(data?.gia * 0.1).toLocaleString()} 
+          </span>
+          / tuần
+        </div>
       </div>
       <div className="flex flex-col">
         <ReviewInfoItem title="Nhà cung cấp" data={data?.tenNhaCungCap} />

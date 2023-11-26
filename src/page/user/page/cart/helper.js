@@ -7,8 +7,15 @@ export const columns = (isMobile, isEdit) => {
             visible: true,
         },
         {
+            name: 'giaThue',
+            title: 'Giá Thuê',
+            width: isMobile ? '15%' : '10%',
+            alignment: "center",
+            visible: true,
+        },
+        {
             name: 'gia',
-            title: 'Giá',
+            title: 'Giá Cọc',
             width: isMobile ? '15%' : '10%',
             alignment: "center",
             visible: true,
