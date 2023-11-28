@@ -55,17 +55,12 @@ const Cart = () => {
     mode: "onSubmit",
     defaultValues: {
       gioHang: {
-        giaThue: 0
-      }
+        giaThue: 0,
+      },
     },
   });
 
-
-  const {
-    handleSubmit,
-    watch,
-    reset,
-  } = method;
+  const { handleSubmit, watch, reset } = method;
 
   useEffect(() => {
     if (gioHangDataDetail) {
@@ -123,7 +118,7 @@ const Cart = () => {
           await dispatch(
             setConfirm({
               status: "close",
-              method: () => { },
+              method: () => {},
             })
           );
         },
@@ -206,10 +201,14 @@ const Cart = () => {
               <div className="flex justify-end items-center">
                 <p className="text-[13px] md:text-[15px] flex justify-end mr-[20px]">
                   <span className="mr-[10px]">Tổng tiền phải thanh toán: </span>
-                  <span className="text-[500]" style={{ color: `${COLOR.secondaryColor}` }}>
+                  <span
+                    className="text-[500]"
+                    style={{ color: `${COLOR.secondaryColor}` }}
+                  >
                     {gioHangDataDetail?.danhSach
                       ?.reduce((a, b) => a + b?.sach?.tienCoc * b?.soLuong, 0)
-                      ?.toLocaleString()} VND
+                      ?.toLocaleString()}{" "}
+                    VND
                   </span>
                 </p>
                 <div className="flex justify-center">
@@ -220,10 +219,11 @@ const Cart = () => {
                       !gioHangDataDetail?.danhSach?.length > 0 || isEdit
                     }
                     style={{
-                      backgroundColor: `${gioHangDataDetail?.danhSach?.length > 0 && !isEdit
-                        ? COLOR.primaryColor
-                        : "gray"
-                        }`,
+                      backgroundColor: `${
+                        gioHangDataDetail?.danhSach?.length > 0 && !isEdit
+                          ? COLOR.primaryColor
+                          : "gray"
+                      }`,
                     }}
                   >
                     Tiếp tục
