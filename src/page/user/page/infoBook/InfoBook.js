@@ -11,6 +11,7 @@ import { toast } from "react-hot-toast";
 import { Tabs } from "antd";
 import { Empty } from "antd";
 import _ from "lodash";
+import { checkLogin } from "page/user/shareComponent/Function/checkLogin";
 
 const InfoBook = () => {
   const { id } = useParams();
@@ -42,8 +43,8 @@ const InfoBook = () => {
           .required("Please input")
           .min(1, "Số lượng phải lớn hơn 0")
           .max(
-            10,
-            "Không được thuê quá 10 cuốn sách. Liên hệ:xxx để được tư vấn "
+            5,
+            "Không được thuê quá 5 cuốn sách. Liên hệ:xxx để được tư vấn "
           ),
       })
     ),
@@ -69,6 +70,13 @@ const InfoBook = () => {
         return setValue("soLuong", --soLuong);
       default:
         return;
+    }
+  };
+
+  const addToFavourite = () => {
+    // Check login
+    if (checkLogin()) {
+      toast.error("Bạn chưa đăng nhập");
     }
   };
 
@@ -132,6 +140,16 @@ const InfoBook = () => {
                 </p>
               </div>
             </div>
+            <div className="flex items-center">
+              Chỉ với
+              <span
+                className="text-[white] p-[5px] rounded-[5px] inline-block mx-[5px]"
+                style={{ backgroundColor: `${COLOR.primaryColor}` }}
+              >
+                {(sachDataDetail?.gia * 0.1).toLocaleString()}
+              </span>
+              / tuần
+            </div>
             <div
               className="text-[white] py-[5px] px-[12px] max-w-fit my-[20px] ml-[5px]"
               style={{
@@ -165,7 +183,7 @@ const InfoBook = () => {
               />
               <ReviewInfoItem
                 title="Năm xuất bản"
-                data={sachDataDetail?.namXuatBan}
+                data={new Date(sachDataDetail?.namXuatBan).getFullYear()}
               />
               <ReviewInfoItem title="Số trang" data={sachDataDetail?.soTrang} />
               <ReviewInfoItem

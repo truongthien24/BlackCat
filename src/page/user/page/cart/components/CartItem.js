@@ -75,7 +75,7 @@ const CartItem = ({ arrayData, data, columns, isEdit }) => {
                 </div>
               );
             }
-            case "soLuong": {
+            case "soLuong":  {
               return (
                 <div
                   className="flex items-center justify-center my-[10px]"

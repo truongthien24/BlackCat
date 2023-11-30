@@ -61,10 +61,10 @@ const Book = (props) => {
         <div className="flex flex-col items-center mt-[5px]">
           <h5>{data?.tenSach}</h5>
           <span style={{ color: `${COLOR.primaryColor}` }} className="my-[7px]">
-            {data?.gia?.toLocaleString()} VND
+            {(data?.gia * 0.1).toLocaleString()} VND
           </span>
           <span className="text-[13px] text-[#f7941d]">
-            {data?.soLuong > 0 ? "In Stock" : "Sold out"}
+            {data?.soLuong > 0 ? "Còn hàng" : "Hết hàng"}
           </span>
         </div>
       </div>

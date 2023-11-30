@@ -1,10 +1,7 @@
 import apiServices from "api";
 import { useQuery } from "react-query";
 
-const getApiData = async (
-  data,
-) => {
-
+const getApiData = async (data) => {
   const params = data;
 
   const sachs = await apiServices.book.findSach({
@@ -14,19 +11,11 @@ const getApiData = async (
   return sachs;
 };
 
-const useFindDataBook = (
-  data = {}
-) => {
+const useFindDataBook = (data = {}) => {
   const query = useQuery(
-    [
-      "find-data-book",
-      data
-    ],
+    ["find-data-book", data],
 
-    () =>
-      getApiData(
-        data
-      ),
+    () => getApiData(data),
 
     {
       keepPreviousData: true,

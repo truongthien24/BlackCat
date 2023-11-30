@@ -12,13 +12,11 @@ import useLoadingEffect from "fuse/hook/useLoadingEffect";
 import { useNavigate } from "react-router-dom";
 import useUpdateGioHang from "page/admin/page/GioHangManagement/hook/useUpdateGioHang";
 import { jwtDecode } from "jwt-decode";
-import { ExpandAltOutlined } from '@ant-design/icons';
+import { ExpandAltOutlined } from "@ant-design/icons";
 import FsLightbox from "fslightbox-react";
-
 
 const ModalReviewSach = ({ data, open = false, onReview, title }) => {
   const navigate = useNavigate();
-
 
   const [isZoomImage, setIsZoomImage] = useState(false);
   // const { userInfo } = useSelector((state) => state.home);
@@ -55,8 +53,8 @@ const ModalReviewSach = ({ data, open = false, onReview, title }) => {
           .required("Please input")
           .min(1, "Số lượng phải lớn hơn 0")
           .max(
-            10,
-            "Không được thuê quá 10 cuốn sách. Liên hệ:xxx để được tư vấn "
+            5,
+            "Không được thuê quá 5 cuốn sách. Liên hệ:xxx để được tư vấn "
           ),
       })
     ),
@@ -79,14 +77,14 @@ const ModalReviewSach = ({ data, open = false, onReview, title }) => {
         Data: {
           id: userInfo?.gioHang,
           sach: { idSach: data?._id, soLuong: data?.soLuong },
-          insert: true
+          insert: true,
         },
         onSuccess: (res) => {
-          navigate(`/cart/${userInfo?.gioHang}`)
+          navigate(`/cart/${userInfo?.gioHang}`);
         },
         onError: (err) => {
-          toast.error(err?.error?.message)
-        }
+          toast.error(err?.error?.message);
+        },
       });
       // navigate(`/cart/123`);
     }
@@ -126,10 +124,16 @@ const ModalReviewSach = ({ data, open = false, onReview, title }) => {
       >
         <div className="w-full h-full relative">
           <img src={sachDataDetail?.hinhAnh?.url} className="w-full h-full" />
-          <Button className="absolute right-[10px] top-[10px]" type="primary" shape="circle" icon={<ExpandAltOutlined />} onClick={() => {
-            // setIsEdit(prev => { return !prev })
-            setIsZoomImage(!isZoomImage);
-          }} />
+          <Button
+            className="absolute right-[10px] top-[10px]"
+            type="primary"
+            shape="circle"
+            icon={<ExpandAltOutlined />}
+            onClick={() => {
+              // setIsEdit(prev => { return !prev })
+              setIsZoomImage(!isZoomImage);
+            }}
+          />
         </div>
         <div className="w-full bg-[#f3f3f3] p-[15px] flex flex-col justify-between h-full">
           <ReviewContent data={sachDataDetail} />
@@ -200,8 +204,9 @@ const ModalReviewSach = ({ data, open = false, onReview, title }) => {
               disabled={sachDataDetail?.soLuong < 1}
               className="text-[#fff] w-full p-[10px] rounded-[5px] flex items-center justify-center"
               style={{
-                backgroundColor: `${sachDataDetail?.soLuong > 0 ? COLOR.primaryColor : "gray"
-                  }`,
+                backgroundColor: `${
+                  sachDataDetail?.soLuong > 0 ? COLOR.primaryColor : "gray"
+                }`,
               }}
             >
               Thêm vào giỏ hàng
@@ -211,9 +216,7 @@ const ModalReviewSach = ({ data, open = false, onReview, title }) => {
       </form>
       <FsLightbox
         toggler={isZoomImage}
-        sources={[
-          <img src={sachDataDetail?.hinhAnh?.url} />,
-        ]}
+        sources={[<img src={sachDataDetail?.hinhAnh?.url} />]}
       />
     </Modal>
   );

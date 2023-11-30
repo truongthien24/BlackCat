@@ -31,6 +31,7 @@ import InfoBook from "page/user/page/infoBook/InfoBook";
 // import { Contact } from '../page/user/page/contact/Contact';
 import { Button, Result } from "antd";
 import MaGiamManagement from "page/admin/page/System/maGiamManagement/MaGiamManagement";
+import { AllBooks } from "page/user/page/allBooks/allBook";
 
 export const MainRoutes = () => {
   return (
@@ -43,6 +44,7 @@ export const MainRoutes = () => {
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
           <Route path="infoBook/:id" element={<InfoBook />} />
+          <Route path="allBooks" element={<AllBooks />} />
           <Route path="bookingSchedule" element={<BookingSchedule />} />
           <Route path="searchRoom" element={<MoreRoom />} />
           <Route path="profile" element={<Profile />} />
