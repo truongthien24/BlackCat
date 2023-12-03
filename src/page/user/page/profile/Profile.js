@@ -5,9 +5,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
 import { ModalEditProfile } from '../../component/modal/ModalEditProfile';
 import { Confirm } from '../../../../component/Confirm/Confirm';
-import { collection, onSnapshot } from 'firebase/firestore';
-import { db } from '../../../../firebase/firebase.config';
-import { getUser } from '../../../../redux/action/accountAction';
 import { useEffect } from 'react';
 
 export const Profile = () => {
@@ -22,9 +19,9 @@ export const Profile = () => {
 
   // Effect 
   useEffect(() => {
-    onSnapshot(collection(db, 'Account'), (snapShot) => {
-      dispatch(getUser(userInfo?.id))
-    });
+    // onSnapshot(collection(db, 'Account'), (snapShot) => {
+    //   dispatch(getUser(userInfo?.id))
+    // });
   }, [])
 
   const { userInfo } = useSelector(state => state.taiKhoan);

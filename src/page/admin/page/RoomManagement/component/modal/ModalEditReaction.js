@@ -2,7 +2,6 @@ import { Modal, Skeleton } from "antd";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
-import { layDuLieuDanhGiaPhong } from "../../../../../../redux/action/danhGiaAction";
 import { Reaction } from "../../../../../user/component/Reaction";
 import { NoneInfo } from "../../../../../user/shareComponent/NoneInfo";
 
@@ -22,9 +21,9 @@ export const ModalEditReaction = (props) => {
     setTimeout(() => {
       setIsSkeleton(false);
     }, 500);
-    const res = await dispatch(layDuLieuDanhGiaPhong(idRoom));
+    // const res = await dispatch(layDuLieuDanhGiaPhong(idRoom));
 
-    setArrDanhGia(res);
+    // setArrDanhGia(res);
   }, [idRoom]);
 
   // Method

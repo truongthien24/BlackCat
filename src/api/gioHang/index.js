@@ -43,4 +43,16 @@ export default {
       ...params,
     });
   },
+
+  payment: (params) => {
+    return axiosWrapper.post(`/thanhToan`, {
+      ...params,
+    });
+  },
+
+  sendMail: (params) => {
+    return axiosWrapper.post('/sendMailGioHang', {
+      ...params,
+    })
+  }
 };
