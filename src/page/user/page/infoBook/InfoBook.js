@@ -12,9 +12,16 @@ import { Tabs } from "antd";
 import { Empty } from "antd";
 import _ from "lodash";
 import { checkLogin } from "page/user/shareComponent/Function/checkLogin";
+import { useSelector } from "react-redux";
+import useUpdateGioHang from "page/admin/page/GioHangManagement/hook/useUpdateGioHang";
 
 const InfoBook = () => {
   const { id } = useParams();
+
+  //useSelector lấy trong kho redux
+  const { userInfo } = useSelector((state) => state.home);
+
+  const { mutate, isLoading } = useUpdateGioHang();
 
   const {
     sachDataDetail,
@@ -50,13 +57,31 @@ const InfoBook = () => {
     ),
   });
 
-  const addToCart = (data) => {
-    if (data?.soLuong > sachDataDetail.soLuong) {
-      toast.error(
-        `Số lượng không đủ. Chỉ còn ${sachDataDetail.soLuong} quyển :((`
-      );
+  const addToCart = async (data) => {
+    if (checkLogin()) {
+      if (data?.soLuong > sachDataDetail.soLuong) {
+        toast.error(
+          `Số lượng không đủ. Chỉ còn ${sachDataDetail.soLuong} quyển :((`
+        );
+      } else {
+        // toast.error("Chức năng đang phát triển");
+        await mutate({
+          Data: {
+            id: userInfo?.gioHang,
+            sach: { idSach: data?._id, soLuong: data?.soLuong },
+            insert: true,
+          },
+          onSuccess: (res) => {
+            navigate(`/cart/${userInfo?.gioHang}`);
+          },
+          onError: (err) => {
+            toast.error(err?.error?.message);
+          },
+        });
+        // navigate(`/cart/123`);
+      }
     } else {
-      navigate("/cart/123213123");
+      toast.error("Bạn chưa đăng nhập");
     }
   };
 

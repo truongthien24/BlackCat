@@ -26,6 +26,7 @@ import InfoBook from "page/user/page/infoBook/InfoBook";
 import { Button, Result } from "antd";
 import MaGiamManagement from "page/admin/page/System/maGiamManagement/MaGiamManagement";
 import { AllBooks } from "page/user/page/allBooks/allBook";
+import BookCategory from "page/user/page/bookCategory/BookCategory";
 
 export const MainRoutes = () => {
   return (
@@ -44,6 +45,7 @@ export const MainRoutes = () => {
           <Route path="contact" element={<Contact />} />
           <Route path="cart/:id" element={<Cart />} />
           <Route path="payment" element={<Payment />} />
+          <Route path="book" element={<BookCategory />} />
         </Route>
         <Route
           path="*"
