@@ -10,8 +10,6 @@ import {
 import React, { useEffect, useMemo, useState } from "react";
 import { Icon } from "../../../../../../assets/icon";
 import { UploadOutlined } from "@ant-design/icons";
-import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
-import { app } from "../../../../../../firebase/firebase.config";
 import { useDispatch, useSelector } from "react-redux";
 import { setConfirm } from "../../../../../../redux/action/homeAction";
 import { useForm } from "react-hook-form";
@@ -20,7 +18,6 @@ import * as yup from "yup";
 import { useTranslation } from "react-i18next";
 import { setGridColumn } from "../../helper";
 import { FormAddRoom } from "../form/FormAddRoom";
-import { updateRoom } from "../../../../../../redux/action/phongAction";
 import useLoadingEffect from "fuse/hook/useLoadingEffect";
 import useUpdateBook from "../../hook/useUpdateBook";
 import { toast } from "react-hot-toast";
@@ -61,16 +58,6 @@ export const ModalEditBook = (props) => {
   const dispatch = useDispatch();
 
   const { t } = useTranslation();
-
-  // Effect
-  // useEffect(() => {
-  //   setIsSkeleton(true);
-  //   setTimeout(() => {
-  //     setIsSkeleton(false);
-  //   }, 500);
-  // }, [dataEdit]);
-
-  // useLoadingEffect(isSubmitting);
 
   // Form
   const APIEdit = useMemo(() => {
@@ -257,7 +244,6 @@ export const ModalEditBook = (props) => {
 
   useEffect(() => {
     if (dataEdit) {
-      // APIEdit.forEach(data => setValue(`${data.name}`, dataEdit?.[data.name]));
       reset({
         ...dataEdit,
         hinhAnh: dataEdit?.hinhAnh,
@@ -279,14 +265,6 @@ export const ModalEditBook = (props) => {
   };
 
   const submitForm = async (data) => {
-    // if (isChangeImage) {
-    //     const storageRef = getStorage(app);
-    //     const testRef = ref(storageRef, `${fileImage?.name}`);
-    //     await uploadBytes(testRef, fileImage).then(async (snapshot) => {
-    //         const down = await getDownloadURL(testRef);
-    //         setValue('image', down);
-    //     });
-    // }
     await mutate({
       Data: {
         ...data,

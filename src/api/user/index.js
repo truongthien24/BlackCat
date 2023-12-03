@@ -7,18 +7,27 @@ export default {
     });
   },
 
+  getAccountByID: (params) => {
+    return axiosWrapper.get(`/getAccountByID/${params}`);
+  },
+
   adminLogin: (params) => {
     return axiosWrapper.post(`/login-admin`, {
       ...params,
     });
   },
 
-
   userRegister: (params) => {
     return axiosWrapper.post(`/create-taiKhoan`, {
       ...params,
-    })
-  }
+    });
+  },
+
+  updateTaiKhoan: (params) => {
+    return axiosWrapper.patch(`/updateTaiKhoan`, {
+      ...params,
+    });
+  },
 
   //   getDataProduction: (params: object) => {
   //     return axiosWrapper.post(`/Production/DataService/GetData`, {

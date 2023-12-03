@@ -2,14 +2,17 @@ import { Modal } from "antd";
 import FormNumberPhone from "page/admin/shareComponent/form/FormNumberPhone";
 import FormTextField from "page/admin/shareComponent/form/FormTextField";
 import { COLOR } from "page/user/shareComponent/constant";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import {
   GoogleMap,
   Autocomplete,
   useJsApiLoader,
 } from "@react-google-maps/api";
-import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
+import useUpdateAccount from "page/admin/page/AccountManagement/hook/useUpdateAccount";
+import { useSelector } from "react-redux";
+import toast from "react-hot-toast";
+import { LayoutContext } from "page/user/layout/Layout1";
 
 const center = {
   lat: 14.0583,
@@ -18,31 +21,20 @@ const center = {
 
 const ModalAddInfoPayment = ({ open, onOpen, title }) => {
   const [selectedPlace, setSelectedPlace] = useState(null);
+  const [map, setMap] = React.useState(null);
+  const { fetchDataAccount } = useContext(LayoutContext);
+  const { userInfo } = useSelector((state) => state.home);
 
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
     googleMapsApiKey: "AIzaSyCdnfsBLV_MKpX_BZdCU_O4iLu5-q6l-CI",
   });
 
-  console.log('isLoaded', isLoaded)
+  const { mutate, isLoading } = useUpdateAccount();
 
   const method = useForm({
     mode: "onSubmit",
-    defaultValues: {
-      //   soLuong: 1,
-    },
-    // resolver: yupResolver(
-    //   yup.object().shape({
-    //     soLuong: yup
-    //       .number()
-    //       .required("Please input")
-    //       .min(1, "Số lượng phải lớn hơn 0")
-    //       .max(
-    //         10,
-    //         "Không được thuê quá 10 cuốn sách. Liên hệ:xxx để được tư vấn "
-    //       ),
-    //   })
-    // ),
+    defaultValues: {},
   });
 
   const {
@@ -55,19 +47,33 @@ const ModalAddInfoPayment = ({ open, onOpen, title }) => {
     formState: { errors },
   } = method;
 
-  const addInfoPayment = (data) => {
-    console.log("data", data);
+  const addInfoPayment = async (data) => {
+    const newInfoNhanHang = userInfo?.thongTinNhanHang;
+    newInfoNhanHang.push(data);
+    await mutate({
+      Data: {
+        id: userInfo?._id,
+        thongTinNhanHang: newInfoNhanHang?.map((info, index) => {
+          return { ...info, id: index };
+        }),
+      },
+      onSuccess: (res) => {
+        fetchDataAccount();
+        toast.success(res?.data?.message);
+      },
+      onError: (err) => {
+        toast.error(err?.error.message);
+      },
+    });
   };
-
-  const [map, setMap] = React.useState(null)
 
   const onLoad = React.useCallback(function callback(map) {
     // This is just an example of getting and using the map instance!!! don't just blindly copy!
     const bounds = new window.google.maps.LatLngBounds(center);
     map.fitBounds(bounds);
 
-    setMap(map)
-  }, [])
+    setMap(map);
+  }, []);
 
   const onPlaceChanged = (autocomplete) => {
     // Get the selected place details
@@ -88,8 +94,8 @@ const ModalAddInfoPayment = ({ open, onOpen, title }) => {
   };
 
   const onUnmount = React.useCallback(function callback(map) {
-    setMap(null)
-  }, [])
+    setMap(null);
+  }, []);
 
   return (
     <Modal
@@ -128,33 +134,33 @@ const ModalAddInfoPayment = ({ open, onOpen, title }) => {
           </div>
           <div className="col-span-2">
             <h5>Chọn từ bản đồ: </h5>
-            {isLoaded ? (
-              // <GoogleMap
-              //   id="map"
-              //   mapContainerStyle={{
-              //     height: "400px",
-              //     width: "100%",
-              //   }}
-              //   center={center}
-              //   zoom={6}
-              //   onLoad={onLoad}
-              //   onUnmount={onUnmount}
-              // >
-              // </GoogleMap>
-              <MapContainer style={{width: '100%', height: '200px'}} center={[51.505, -0.09]} zoom={10} scrollWheelZoom={false}>
-                <TileLayer
-                  attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                  url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                />
-                <Marker position={[51.505, -0.09]}>
-                  <Popup>
-                    A pretty CSS3 popup. <br /> Easily customizable.
-                  </Popup>
-                </Marker>
-              </MapContainer>
+            {/* {isLoaded ? (
+              <GoogleMap
+                id="map"
+                mapContainerStyle={{
+                  height: "400px",
+                  width: "100%",
+                }}
+                center={center}
+                zoom={6}
+                onLoad={onLoad}
+                onUnmount={onUnmount}
+              >
+              </GoogleMap>
             ) : (
               <></>
-            )}
+            )} */}
+          </div>
+          <div className="col-span-2 flex justify-end">
+            <button
+              className="text-[#fff] text-[11px] md:text-[15px] p-[10px] rounded-[5px] flex items-center justify-center"
+              type="submit"
+              style={{
+                backgroundColor: `${COLOR.primaryColor}`,
+              }}
+            >
+              Lưu
+            </button>
           </div>
         </form>
       </FormProvider>

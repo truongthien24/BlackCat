@@ -1,10 +1,5 @@
 import React from "react";
-import { ListRoomArea } from "../../component/ListRoomArea";
 import { Slider } from "../../component/Slider";
-import { Reason } from "../../component/Reason";
-import { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { layDuLieuPhong } from "../../../../redux/action/phongAction";
 import AreaBook from "page/user/component/AreaBook";
 import useGetDataBook from "page/admin/page/RoomManagement/hook/useGetDataBook";
 
@@ -23,12 +18,6 @@ export const HomeUser = () => {
     },
   ];
 
-  // const dispatch = useDispatch();
-
-  // useEffect(() => {
-  //   dispatch(layDuLieuPhong());
-  // }, []);
-
   const { sachData, isDataLoading, fetchData, isFetching } = useGetDataBook(
     "0",
     "0"
@@ -39,8 +28,6 @@ export const HomeUser = () => {
       <div className="w-full">
         <Slider data={listBanner} />
       </div>
-      {/* <SearchArea/> */}
-      {/* <ListRoomArea /> */}
       <div className="w-[90%] lg:w-[80%] py-[20px]">
         <AreaBook
           data={{
@@ -61,7 +48,6 @@ export const HomeUser = () => {
           }}
         />
       </div>
-      {/* <Reason /> */}
     </div>
   );
 };

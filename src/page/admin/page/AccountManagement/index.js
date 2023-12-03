@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
 import { Confirm } from '../../../../component/Confirm/Confirm';
-import { db } from '../../../../firebase/firebase.config';
 import { deleteUser, getAllUser, registerUser, updateUser } from '../../../../redux/action/accountAction';
 import { setConfirm } from '../../../../redux/action/homeAction';
 // import { FormEdit } from '../../shareComponent/form/FormEdit';
@@ -34,9 +33,6 @@ const AccountManagement = (props) => {
 
   useEffect(() => {
     // Khi có một account thay đổi => gọi lại dữ liệu
-    onSnapshot(collection(db, 'Account'), (snapShot) => {
-      dispatch(getAllUser())
-    });
   }, [])
 
   // API

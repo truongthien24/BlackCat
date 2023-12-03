@@ -1,20 +1,15 @@
-import { Badge, Button, Modal, Popconfirm, Popover, Skeleton } from "antd";
+import { Badge, Modal, Skeleton } from "antd";
 import React, { useEffect, useMemo, useState } from "react";
 import { Icon } from "../../../../../../assets/icon";
 import { UploadOutlined } from "@ant-design/icons";
-import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
-import { app } from "../../../../../../firebase/firebase.config";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setConfirm } from "../../../../../../redux/action/homeAction";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useTranslation } from "react-i18next";
 import { setGridColumn } from "../../helper";
-import { FormAddRoom } from "../form/FormAddRoom";
-import { updateRoom } from "../../../../../../redux/action/phongAction";
 import useLoadingEffect from "fuse/hook/useLoadingEffect";
-import useUpdateBook from "../../hook/useUpdateBaiViet";
 import { toast } from "react-hot-toast";
 import { convertToBase64 } from "page/user/shareComponent/Function/convertBase64";
 import useUpdateBaiViet from "../../hook/useUpdateBaiViet";
@@ -198,28 +193,6 @@ export const ModalEditBaiViet = (props) => {
               </Badge.Ribbon>
             );
           })}
-          {getValues("soLuongPhong")?.length < 5 && (
-            <Popover
-              content={
-                <FormAddRoom
-                  arrRoom={getValues("soLuongPhong")}
-                  setValue={setValue}
-                  handleOpenChange={handleOpenChange}
-                />
-              }
-              title="Title"
-              trigger="click"
-              open={open}
-              onOpenChange={handleOpenChange}
-            >
-              <button
-                type="button"
-                className={`w-full p-[10px] bg-[white] shadow-md shadow-gray-300 rounded-[5px] duration-200 hover:shadow-gray-400`}
-              >
-                +
-              </button>
-            </Popover>
-          )}
         </div>
       );
     } else if (item.type === "string-readOnly") {
