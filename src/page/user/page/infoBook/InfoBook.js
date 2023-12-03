@@ -56,7 +56,6 @@ const InfoBook = () => {
         `Số lượng không đủ. Chỉ còn ${sachDataDetail.soLuong} quyển :((`
       );
     } else {
-      // toast.error("Chức năng đang phát triển");
       navigate("/cart/123213123");
     }
   };

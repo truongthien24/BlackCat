@@ -52,6 +52,7 @@ const CartItem = ({ arrayData, data, columns, isEdit }) => {
     );
   };
 
+  // trả về hiển thị
   return (
     <div className="flex items-center justify-between w-full">
       {columns?.map((item, index) => {
@@ -68,14 +69,11 @@ const CartItem = ({ arrayData, data, columns, isEdit }) => {
                     <h4 className="max-w-[300px] text-[12.5px] md:text-[15px]">
                       {data?.sach?.tenSach}
                     </h4>
-                    <span className="text-[#797979] text-[12px] md:text-[14px]">
-                      {getValues("tenTheLoai")}
-                    </span>
                   </div>
                 </div>
               );
             }
-            case "soLuong":  {
+            case "soLuong": {
               return (
                 <div
                   className="flex items-center justify-center my-[10px]"
@@ -87,6 +85,7 @@ const CartItem = ({ arrayData, data, columns, isEdit }) => {
                         <button
                           type="button"
                           className="bg-[#dcdbdb] w-[20px] h-[20px] md:w-[35px] md:h-[35px] flex items-center justify-center"
+                          // khóa nút đó lại khi thỏa mãn điều kiện
                           disabled={
                             watch(`danhSach[${indexItem}].soLuong`) === 1
                           }
@@ -111,6 +110,7 @@ const CartItem = ({ arrayData, data, columns, isEdit }) => {
                           className="bg-[white] text-[11px] md:text-[13px] w-[20px] h-[20px] md:w-[35px] md:h-[35px] text-center"
                           disabled
                           // value={data?.soLuong}
+                          // đăng ký vào form
                           {...register(`danhSach[${indexItem}].soLuong`)}
                         />
                         <button

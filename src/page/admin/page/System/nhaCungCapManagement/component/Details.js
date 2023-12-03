@@ -90,6 +90,10 @@ const Details = ({
           toast.success(res?.data?.message);
           fetcher();
           fetchDetail();
+          // onShowSlice({
+          //   open: false,
+          //   initData: null,
+          // });
         },
         onError: async (error) => {
           toast.error(error?.error?.message);

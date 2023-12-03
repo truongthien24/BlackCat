@@ -14,6 +14,7 @@ import useUpdateGioHang from "page/admin/page/GioHangManagement/hook/useUpdateGi
 import { jwtDecode } from "jwt-decode";
 import { ExpandAltOutlined } from "@ant-design/icons";
 import FsLightbox from "fslightbox-react";
+import { checkLogin } from "page/user/shareComponent/Function/checkLogin";
 
 const ModalReviewSach = ({ data, open = false, onReview, title }) => {
   const navigate = useNavigate();
@@ -67,26 +68,30 @@ const ModalReviewSach = ({ data, open = false, onReview, title }) => {
   }, [sachDataDetail]);
 
   const addToCart = async (data) => {
-    if (data?.soLuong > sachDataDetail.soLuong) {
-      toast.error(
-        `Số lượng không đủ. Chỉ còn ${sachDataDetail.soLuong} quyển :((`
-      );
+    if (checkLogin()) {
+      if (data?.soLuong > sachDataDetail.soLuong) {
+        toast.error(
+          `Số lượng không đủ. Chỉ còn ${sachDataDetail.soLuong} quyển :((`
+        );
+      } else {
+        // toast.error("Chức năng đang phát triển");
+        await mutate({
+          Data: {
+            id: userInfo?.gioHang,
+            sach: { idSach: data?._id, soLuong: data?.soLuong },
+            insert: true,
+          },
+          onSuccess: (res) => {
+            navigate(`/cart/${userInfo?.gioHang}`);
+          },
+          onError: (err) => {
+            toast.error(err?.error?.message);
+          },
+        });
+        // navigate(`/cart/123`);
+      }
     } else {
-      // toast.error("Chức năng đang phát triển");
-      await mutate({
-        Data: {
-          id: userInfo?.gioHang,
-          sach: { idSach: data?._id, soLuong: data?.soLuong },
-          insert: true,
-        },
-        onSuccess: (res) => {
-          navigate(`/cart/${userInfo?.gioHang}`);
-        },
-        onError: (err) => {
-          toast.error(err?.error?.message);
-        },
-      });
-      // navigate(`/cart/123`);
+      toast.error("Bạn chưa đăng nhập");
     }
   };
 

@@ -8,7 +8,7 @@ const Caterory = () => {
   const items = [
     {
       key: "1",
-      label: "ALL CATEGORY",
+      label: "Thể loại sách",
       children: <ListCategory />,
     },
   ];

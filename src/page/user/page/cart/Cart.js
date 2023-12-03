@@ -72,6 +72,7 @@ const Cart = () => {
     if (gioHangDataDetail?.danhSach?.length > 0) {
       return gioHangDataDetail?.danhSach?.map((cart, index) => {
         return (
+          // truyền bằng props
           <CartItem
             arrayData={gioHangDataDetail?.danhSach}
             data={cart}
