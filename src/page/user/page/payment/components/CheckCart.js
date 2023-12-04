@@ -37,7 +37,7 @@ const BookCartItem = ({ book }) => {
 }
 
 
-const CheckCart = ({ onStep }) => {
+const CheckCart = ({ onStep, step }) => {
 
     const { userInfo } = useSelector(state => state.home);
 
@@ -63,6 +63,8 @@ const CheckCart = ({ onStep }) => {
     const onRules = () => {
         setOnOpenRules(prev => !prev)
     }
+
+    console.log(step)
 
     return (
         <div className="grid grid-cols-5 gap-[10px] w-[full]">
@@ -121,7 +123,7 @@ const CheckCart = ({ onStep }) => {
                             </h5>
                             <div className="flex justify-between">
                                 <span>Tổng tiền hàng</span>
-                                <span>{("150.000")}</span>
+                                <span>{(gioHangDataDetail?.tongGia).toLocaleString()}</span>
                             </div>
                             <div className="flex justify-between">
                                 <span>Tổng tiền phí vận chuyển</span>
@@ -134,11 +136,12 @@ const CheckCart = ({ onStep }) => {
                         </div>
                         <div className="flex items-start justify-end w-full rounded-[10px] px-[20px] py-[10px] text-[white]" style={{ backgroundColor: `${COLOR.primaryColor}` }}>
                             Tổng tiền thanh toán:
-                            <span className="ml-[10px] font-[500]" style={{ color: `${COLOR.secondaryColor}` }}>155.000</span>
+                            <span className="ml-[10px] font-[500]" style={{ color: `${COLOR.secondaryColor}` }}>{(gioHangDataDetail?.tongGia + 5000).toLocaleString()}</span>
                         </div>
                     </div>
                     <div className="flex items-center my-[10px]">
                         <Checkbox onChange={(e) => {
+                            console.log('e', e)
                             if(e.target.checked) {
                                 onStep(prev => {
                                     return {...prev, data: {

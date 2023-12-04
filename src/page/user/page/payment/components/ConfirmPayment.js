@@ -5,7 +5,7 @@ import useSendMailPaymentSuccess from '../hook/useSendMailPaymentSuccess';
 import useLoadingEffect from 'fuse/hook/useLoadingEffect';
 import { toast } from 'react-hot-toast';
 
-const ConfirmPayment = () => {
+const ConfirmPayment = ({step, onStep}) => {
 
   const navigate = useNavigate();
 
@@ -17,7 +17,7 @@ const ConfirmPayment = () => {
 
   useEffect(async()=> {
     await mutate({
-      Data: {},
+      Data: step?.data?.thongTinGioHang,
       onSuccess: (res) => {
         toast.success(res?.data?.message);
       },
