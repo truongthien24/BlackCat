@@ -34,6 +34,8 @@ const MethodPayment = ({ onStep, step }) => {
     })
   }
 
+  console.log('step', step)
+
   const submitData = (data) => {
 
   }
@@ -160,7 +162,7 @@ const MethodPayment = ({ onStep, step }) => {
           </div>
         </div>
       </form>
-      <ModalPayment open={popupPayment?.open} onOpen={onOpenPopupPayment} title="Thanh toán online" data={qrPayment} />
+      <ModalPayment open={popupPayment?.open} onOpen={onOpenPopupPayment} data={qrPayment} />
     </FormProvider>
   )
 }
