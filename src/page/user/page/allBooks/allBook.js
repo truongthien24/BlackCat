@@ -44,13 +44,15 @@ export const AllBooks = () => {
   useLoadingEffect(isDataLoading);
 
   return (
-    <div className="pt-[150px]">
-      <AreaBook
-        data={{
-          title: "Tất cả sách",
-          data: sachData?.filter((sach) => sach),
-        }}
-      ></AreaBook>
+    <div className="md:pt-[150px] pb-[20px] min-h-[calc(100vh_-_300px)] flex justify-center">
+      <div className="flex flex-col w-[95%] xl:w-[90%] 2xl:w-[70%] px-[25px] py-[20px]">
+        <AreaBook
+          data={{
+            title: "Tất cả sách",
+            data: sachData?.filter((sach) => sach),
+          }}
+        ></AreaBook>
+      </div>
     </div>
   );
 };

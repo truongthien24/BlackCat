@@ -39,8 +39,11 @@ const ReviewContent = ({ data }) => {
         </div>
         <div className="flex items-center">
           Chỉ với
-          <span className="text-[white] p-[5px] rounded-[5px] inline-block mx-[5px]" style={{backgroundColor: `${COLOR.primaryColor}`}}>
-            {(data?.gia * 0.1).toLocaleString()} 
+          <span
+            className="text-[white] p-[5px] rounded-[5px] inline-block mx-[5px]"
+            style={{ backgroundColor: `${COLOR.primaryColor}` }}
+          >
+            {(data?.gia * 0.1).toLocaleString()}
           </span>
           / tuần
         </div>
@@ -50,7 +53,7 @@ const ReviewContent = ({ data }) => {
         <ReviewInfoItem title="Thể loại" data={data?.tenTheLoai} />
         <ReviewInfoItem title="Ngôn ngữ" data={data?.tenNgonNgu} />
         <ReviewInfoItem title="Nhà xuất bản" data={data?.tenNhaXuatBan} />
-        <ReviewInfoItem title="Năm xuất bản" data={(new Date(data?.namXuatBan)).getFullYear()} />
+        <ReviewInfoItem title="Năm xuất bản" data={new Date(data?.namXuatBan).getFullYear()} />
         <ReviewInfoItem title="Số trang" data={data?.soTrang} />
         <ReviewInfoItem title="Kích thước" data={data?.kichThuoc} />
         <ReviewInfoItem title="Bìa sách" data={data?.biaSach} />

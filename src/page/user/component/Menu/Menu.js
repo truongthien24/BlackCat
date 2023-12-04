@@ -27,6 +27,12 @@ const Menu = () => {
       path: "/contact",
       child: [],
     },
+    {
+      key: "BaiViet",
+      title: "Bài viết",
+      path: "/baiviet",
+      child: [],
+    },
   ];
 
   const renderMenu = () => {
