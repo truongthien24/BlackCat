@@ -123,7 +123,7 @@ const CheckCart = ({ onStep, step }) => {
                             </h5>
                             <div className="flex justify-between">
                                 <span>Tổng tiền hàng</span>
-                                <span>{(gioHangDataDetail?.tongGia).toLocaleString()}</span>
+                                <span>{(gioHangDataDetail?.tongGia)?.toLocaleString()}</span>
                             </div>
                             <div className="flex justify-between">
                                 <span>Tổng tiền phí vận chuyển</span>
@@ -141,15 +141,15 @@ const CheckCart = ({ onStep, step }) => {
                     </div>
                     <div className="flex items-center my-[10px]">
                         <Checkbox onChange={(e) => {
-                            console.log('e', e)
-                            if(e.target.checked) {
-                                onStep(prev => {
-                                    return {...prev, data: {
-                                        thongTinGioHang: gioHangDataDetail
-                                    }}
-                                })
-                            }
-                         }} />
+                            onStep(prev => {
+                                return {
+                                    ...prev, data: {
+                                        thongTinGioHang: gioHangDataDetail,
+                                        dieuKhoan: e.target.checked,
+                                    }
+                                }
+                            })
+                        }} />
                         <p className="ml-[10px] text-[12px] md:text-[14px]">Đồng ý với <span className="cursor-pointer font-[500]" onClick={onRules} style={{ color: `${COLOR.secondaryColor}` }}>điều khoản</span> của Black&Cat.</p>
                     </div>
                 </form>
