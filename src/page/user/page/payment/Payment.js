@@ -20,8 +20,12 @@ const Payment = () => {
     status: false,
     data: {
       thongTinNhanHang: {},
-      thanhToan: {},
+      thanhToan: {
+        online: false,
+        done: false,
+      },
       thongTinGioHang: [],
+      dieuKhoan: false,
     },
   });
 
@@ -52,6 +56,9 @@ const Payment = () => {
             ...prev,
             step: prev.step - 1,
             status: false,
+            data: {
+              dieuKhoan: false,
+            }
           };
         });
       case "next":
@@ -136,10 +143,11 @@ const Payment = () => {
                 className="text-[#fff] text-[11px] md:text-[15px] p-[10px] rounded-[5px] flex items-center justify-center"
                 type="submit"
                 style={{
-                  backgroundColor: `${paymentStep?.step < 3 ? COLOR.primaryColor : "gray"
+                  backgroundColor: `${!(paymentStep?.step == 1 && !paymentStep?.data?.dieuKhoan) ? COLOR.primaryColor : "gray"
                     }`,
                 }}
                 onClick={() => changeStep("next")}
+                disabled={paymentStep?.step == 1 && !paymentStep?.data?.dieuKhoan}
               >
                 Tiếp theo
               </button>
