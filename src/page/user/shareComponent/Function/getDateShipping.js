@@ -3,6 +3,7 @@ export const getDateShipping = (date) => {
     formDate.setDate(formDate.getDate() + 3);
     const toDate = new Date(date);
     toDate.setDate(toDate.getDate() + 6);
-    return `${formDate.toLocaleDateString('en-GB')} - ${toDate.toLocaleDateString('en-GB')}`
+    // return `${formDate.toLocaleDateString('en-GB')} - ${toDate.toLocaleDateString('en-GB')}`
+    return [formDate.toLocaleDateString('en-GB'), toDate.toLocaleDateString('en-GB')]
 
 }
