@@ -25,18 +25,22 @@ export const Register = () => {
     {
       name: "tenDangNhap",
       type: "string",
+      label: "Tài khoản",
     },
     {
       name: "matKhau",
       type: "password",
+      label: "Mật khẩu",
     },
     {
       name: "confirmPassword",
       type: "password",
+      label: "Xác nhận mật khẩu",
     },
     {
       name: "email",
       type: "email",
+      label: "Email",
     },
   ];
 

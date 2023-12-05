@@ -207,7 +207,13 @@ const Cart = () => {
                     style={{ color: `${COLOR.secondaryColor}` }}
                   >
                     {gioHangDataDetail?.danhSach
-                      ?.reduce((a, b) => a + (b?.sach?.tienCoc * b?.soLuong) + (b?.giaThue * b?.soLuong), 0)
+                      ?.reduce(
+                        (a, b) =>
+                          a +
+                          b?.sach?.tienCoc * b?.soLuong +
+                          b?.giaThue * b?.soLuong,
+                        0
+                      )
                       ?.toLocaleString()}{" "}
                     VND
                   </span>

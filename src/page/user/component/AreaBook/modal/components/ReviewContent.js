@@ -53,7 +53,10 @@ const ReviewContent = ({ data }) => {
         <ReviewInfoItem title="Thể loại" data={data?.tenTheLoai} />
         <ReviewInfoItem title="Ngôn ngữ" data={data?.tenNgonNgu} />
         <ReviewInfoItem title="Nhà xuất bản" data={data?.tenNhaXuatBan} />
-        <ReviewInfoItem title="Năm xuất bản" data={new Date(data?.namXuatBan).getFullYear()} />
+        <ReviewInfoItem
+          title="Năm xuất bản"
+          data={new Date(data?.namXuatBan).getFullYear()}
+        />
         <ReviewInfoItem title="Số trang" data={data?.soTrang} />
         <ReviewInfoItem title="Kích thước" data={data?.kichThuoc} />
         <ReviewInfoItem title="Bìa sách" data={data?.biaSach} />
