@@ -27,6 +27,7 @@ import { Button, Result } from "antd";
 import MaGiamManagement from "page/admin/page/System/maGiamManagement/MaGiamManagement";
 import { AllBooks } from "page/user/page/allBooks/allBook";
 import BookCategory from "page/user/page/bookCategory/BookCategory";
+import DonHangManagement from "page/admin/page/donHangManagement/DonHangManagement";
 
 export const MainRoutes = () => {
   return (
@@ -77,6 +78,7 @@ export const MainRoutes = () => {
           <Route path="ngonNguManagement" element={<NgonNguManagement />} />
           <Route path="maGiamManagement" element={<MaGiamManagement />} />
           <Route path="baiVietManagement" element={<BaiVietManagement />} />
+          <Route path="donHangManagement" element={<DonHangManagement />} />
           <Route
             path="nhaCungCapManagement"
             element={<NhaCungCapManagement />}

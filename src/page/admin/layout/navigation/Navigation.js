@@ -147,10 +147,10 @@ export const Navigation = () => {
       getItem(
         <div
           onClick={() => {
-            navigate("/admin/checkingManagement");
+            navigate("/admin/donHangManagement");
           }}
         >
-          Checking Management
+          Đơn Hàng Management
         </div>,
         "10"
       ),

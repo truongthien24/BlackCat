@@ -8,16 +8,16 @@ const getApiData = async (pageIndex = 0, pageSize = 0, data) => {
     data,
   };
 
-  const nhaCungCap = await apiServices.nhaCungCap.getNhaCungCapByID({
+  const donHang = await apiServices.donHang.getDonHangByID({
     ...params,
   });
 
-  return nhaCungCap;
+  return donHang;
 };
 
-const useGetDetailNhaCungCap = (pageIndex = 0, pageSize = 0, data) => {
+const useGetDetailDonHang = (pageIndex = 0, pageSize = 0, data) => {
   const query = useQuery(
-    ["get-data-NhaCungCap", pageIndex, pageSize, data],
+    ["get-data-DonHang", pageIndex, pageSize, data],
 
     () => getApiData(pageIndex, pageSize, data),
 
@@ -27,13 +27,13 @@ const useGetDetailNhaCungCap = (pageIndex = 0, pageSize = 0, data) => {
     }
   );
   const {
-    data: { data: { data: nhaCungCapDataDetail = [] } = {} } = {},
+    data: { data: { data: donHangDataDetail = [] } = {} } = {},
     isLoading: isDataDetailLoading,
     refetch: fetchData,
     isFetching,
   } = query;
 
-  return { nhaCungCapDataDetail, isDataDetailLoading, fetchData, isFetching };
+  return { donHangDataDetail, isDataDetailLoading, fetchData, isFetching };
 };
 
-export default useGetDetailNhaCungCap;
+export default useGetDetailDonHang;

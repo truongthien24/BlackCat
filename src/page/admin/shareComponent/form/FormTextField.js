@@ -31,8 +31,10 @@ const FormTextField = ({
               <input
                 placeholder={`Điền vào ${label}...`}
                 className={`w-[92%] outline-none`}
+                style={{backgroundColor: 'transparent'}}
                 value={value}
                 onChange={onChange}
+                disabled={disable}
                 onBlur={onBlur}
                 {...inputProps}
                 type={type}

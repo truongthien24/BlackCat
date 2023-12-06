@@ -1,16 +1,16 @@
 import apiService from "api";
 import { useMutation } from "react-query";
 
-const updateNhaCungCap = async (params = {}) => {
-  const nhaCungCap = await apiService.nhaCungCap.updateNhaCungCap({
+const updateDonHang = async (params = {}) => {
+  const donHang = await apiService.donHang.updateDonHang({
     ...params?.Data,
   });
 
-  return nhaCungCap;
+  return donHang;
 };
 
-const useUpdateNhaCungCap = () => {
-  return useMutation(updateNhaCungCap, {
+const useUpdateDonHang = () => {
+  return useMutation(updateDonHang, {
     onSuccess: (_, { onSuccess, status }) => {
       onSuccess(_);
     },
@@ -20,4 +20,4 @@ const useUpdateNhaCungCap = () => {
   });
 };
 
-export default useUpdateNhaCungCap;
+export default useUpdateDonHang;
