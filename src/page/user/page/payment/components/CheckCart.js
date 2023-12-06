@@ -88,8 +88,6 @@ const CheckCart = ({ onStep, step }) => {
     setOnOpenRules((prev) => !prev);
   };
 
-  console.log(step);
-
   return (
     <div className="grid grid-cols-5 gap-[10px] w-[full]">
       <div className="grid grid-cols-1 gap-[15px] rounded-[10px] col-span-3 shadow-md p-[10px]">

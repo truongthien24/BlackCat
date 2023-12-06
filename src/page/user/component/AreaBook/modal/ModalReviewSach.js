@@ -75,7 +75,6 @@ const ModalReviewSach = ({ data, open = false, onReview, title }) => {
           `Số lượng không đủ. Chỉ còn ${sachDataDetail.soLuong} quyển :((`
         );
       } else {
-        // toast.error("Chức năng đang phát triển");
         await mutate({
           Data: {
             id: userInfo?.gioHang,

@@ -143,9 +143,7 @@ const Payment = () => {
             items={[
               {
                 title: "Verification",
-                // status: "finish",
                 status: paymentStep.step > 0 ? "finish" : "process",
-                // icon: <LoadingOutlined />,
                 icon:
                   paymentStep.step === 0 ? (
                     <LoadingOutlined />

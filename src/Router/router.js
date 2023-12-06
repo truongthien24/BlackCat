@@ -1,5 +1,5 @@
-import React from "react";
-import { Route, Routes } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import { Layout1 } from "../page/user/layout/Layout1";
 import { HomeUser } from "../page/user/page/home/Home";
 import { Login } from "../page/user/page/login/Login";
@@ -30,6 +30,17 @@ import BookCategory from "page/user/page/bookCategory/BookCategory";
 import DonHangManagement from "page/admin/page/donHangManagement/DonHangManagement";
 
 export const MainRoutes = () => {
+
+  const {pathname} = useLocation();
+
+  useEffect(() => {
+    if(pathname === "/login") {
+      if(localStorage.getItem('jwt')) {
+        window.location.replace('/')
+      }
+    }
+  }, [pathname])
+
   return (
     <div>
       <Routes>
