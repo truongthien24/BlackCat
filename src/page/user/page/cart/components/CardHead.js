@@ -6,7 +6,12 @@ const CardHead = ({ columns }) => {
       if (cl.visible) {
         return (
           <div key={index} style={{ width: `${cl.width}` }}>
-            <h5 className="text-[13px] md:text-[15px] font-[500]" style={{ textAlign: `${cl.alignment}` }}>{cl?.title}</h5>
+            <h5
+              className="text-[13px] md:text-[15px] font-[500]"
+              style={{ textAlign: `${cl.alignment}` }}
+            >
+              {cl?.title}
+            </h5>
           </div>
         );
       }
