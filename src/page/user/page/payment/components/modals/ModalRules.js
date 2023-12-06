@@ -19,6 +19,10 @@ const ModalRules = ({ open, onOpen, title }) => {
       >
         Điều khoản của chúng tôi
       </h2> */}
+      <div>Không được bom hàng quá 2 lần</div>
+      <div>Không được bom hàng quá 2 lần</div>
+      <div>Không được bom hàng quá 2 lần</div>
+      <div>Không được bom hàng quá 2 lần</div>
     </Modal>
   )
 }

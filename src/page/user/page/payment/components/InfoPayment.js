@@ -8,7 +8,7 @@ import { useSelector } from "react-redux";
 import { Icon } from "assets/icon";
 import { COLOR } from "page/user/shareComponent/constant";
 
-const InfoPayment = () => {
+const InfoPayment = ({step, onStep}) => {
   const jwt = localStorage.getItem("jwt");
 
   const [open, setOpen] = useState(false);
@@ -69,6 +69,20 @@ const InfoPayment = () => {
             value={diaChi?.id}
             onChange={() => {
               setValue("id", diaChi?.id);
+              onStep(prev=> {
+                return {
+                  ...prev,
+                  data: {
+                    thongTinGiaoHang: {
+                      thongTinNguoiNhan: {
+                        tenNguoiNhan: diaChi?.hoTen,
+                        diaChi: diaChi?.diaChi,
+                        sdt: diaChi?.soDt,
+                    }
+                    }
+                  }
+                }
+              })
             }}
           />
         </>

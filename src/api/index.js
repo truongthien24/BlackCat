@@ -10,6 +10,7 @@ import baiViet from "./baiViet";
 import ngonNgu from "./ngonNgu";
 import gioHang from "./gioHang";
 import maGiam from "./giamGia";
+import donHang from "./donHang";
 
 const apiService = {
   taiKhoan,
@@ -24,6 +25,7 @@ const apiService = {
   ngonNgu,
   gioHang,
   maGiam,
+  donHang,
 };
 
 export default apiService;

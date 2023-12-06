@@ -1,5 +1,5 @@
-import React from "react";
-import { Route, Routes } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import { Layout1 } from "../page/user/layout/Layout1";
 import { HomeUser } from "../page/user/page/home/Home";
 import { Login } from "../page/user/page/login/Login";
@@ -27,8 +27,20 @@ import { Button, Result } from "antd";
 import MaGiamManagement from "page/admin/page/System/maGiamManagement/MaGiamManagement";
 import { AllBooks } from "page/user/page/allBooks/allBook";
 import BookCategory from "page/user/page/bookCategory/BookCategory";
+import DonHangManagement from "page/admin/page/donHangManagement/DonHangManagement";
 
 export const MainRoutes = () => {
+
+  const {pathname} = useLocation();
+
+  useEffect(() => {
+    if(pathname === "/login") {
+      if(localStorage.getItem('jwt')) {
+        window.location.replace('/')
+      }
+    }
+  }, [pathname])
+
   return (
     <div>
       <Routes>
@@ -77,6 +89,7 @@ export const MainRoutes = () => {
           <Route path="ngonNguManagement" element={<NgonNguManagement />} />
           <Route path="maGiamManagement" element={<MaGiamManagement />} />
           <Route path="baiVietManagement" element={<BaiVietManagement />} />
+          <Route path="donHangManagement" element={<DonHangManagement />} />
           <Route
             path="nhaCungCapManagement"
             element={<NhaCungCapManagement />}

@@ -88,8 +88,6 @@ const CheckCart = ({ onStep, step }) => {
     setOnOpenRules((prev) => !prev);
   };
 
-  console.log(step);
-
   return (
     <div className="grid grid-cols-5 gap-[10px] w-[full]">
       <div className="grid grid-cols-1 gap-[15px] rounded-[10px] col-span-3 shadow-md p-[10px]">
@@ -121,7 +119,8 @@ const CheckCart = ({ onStep, step }) => {
             </div>
             <div className="ml-[35px]">
               <span className="text-[11px] md:text-[13px] text-[gray]">
-                {getDateShipping(new Date())}
+                {getDateShipping(new Date())[0]} -{" "}
+                {getDateShipping(new Date())[1]}
               </span>
             </div>
           </div>
@@ -228,6 +227,13 @@ const CheckCart = ({ onStep, step }) => {
                     data: {
                       thongTinGioHang: gioHangDataDetail,
                       dieuKhoan: e.target.checked,
+                      thongTinGiaoHang: {
+                        ngayNhanHangDuKien: {
+                          ngayBatDau: getDateShipping(new Date())[0],
+                          ngayKetThuc: getDateShipping(new Date())[1],
+                        },
+                        thongTinNguoiNhan: prev?.data?.thongTinGiaoHang?.thongTinNguoiNhan,
+                      },
                     },
                   };
                 });

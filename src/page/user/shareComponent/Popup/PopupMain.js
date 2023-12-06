@@ -11,7 +11,7 @@ const PopupMain = ({
         })
     }
     return (
-        <Modal title={title} open={showSlice?.open} onOk={handleOk} onCancel={handleCancel} footer={null} width={fullWidth ? 700 : 500}>
+        <Modal title={title} open={showSlice?.open} onOk={handleOk} onCancel={handleCancel} footer={null} width={fullWidth ? 900 : 500}>
             {children}
         </Modal>
     )
