@@ -15,6 +15,7 @@ import { jwtDecode } from "jwt-decode";
 import { ExpandAltOutlined } from "@ant-design/icons";
 import FsLightbox from "fslightbox-react";
 import { checkLogin } from "page/user/shareComponent/Function/checkLogin";
+import { getPercentRent } from "method/getPercentRent";
 
 const ModalReviewSach = ({ data, open = false, onReview, title }) => {
   const navigate = useNavigate();
@@ -78,7 +79,7 @@ const ModalReviewSach = ({ data, open = false, onReview, title }) => {
         await mutate({
           Data: {
             id: userInfo?.gioHang,
-            sach: { idSach: data?._id, soLuong: data?.soLuong },
+            sach: { idSach: data?._id, soLuong: data?.soLuong, soNgayThue: 7, giaThue: getPercentRent(7) * data?.gia, tienCoc: data?.gia },
             insert: true,
           },
           onSuccess: (res) => {

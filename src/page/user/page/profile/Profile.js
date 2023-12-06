@@ -1,38 +1,86 @@
-import React from "react";
-import { Icon } from "../../../../assets/icon";
+import React, { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
-import { ModalEditProfile } from "../../component/modal/ModalEditProfile";
-import { Confirm } from "../../../../component/Confirm/Confirm";
 import { useEffect } from "react";
 import { COLOR } from "page/user/shareComponent/constant";
 import useGetDataDonHang from "page/admin/page/donHangManagement/hook/useGetDataDonHang";
+import _ from "lodash";
+import moment from "moment";
+import { Empty } from "antd";
+import { toast } from "react-hot-toast";
+import ModalOrderDetail from "./components/modal/ModalOrderDetail";
 
 export const Profile = () => {
   // State
   const [statusOrder, setStatusOrder] = useState(0);
   const [isOpenEdit, setIsOpenEdit] = useState(false);
+  const [orderDetail, setOrderDetail] = useState({
+    open: false,
+    selector: null
+  })
 
   // Somethings
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
   // Effect
-  useEffect(() => {}, []);
+  useEffect(() => { }, []);
 
   const { userInfo } = useSelector((state) => state.home);
 
   const { donHangData, isDataLoading, fetchData, isFetching } =
     useGetDataDonHang("0", "0", userInfo?._id);
 
-  // Method
-  const handleEdit = () => {
-    setIsOpenEdit(true);
+  const donHangList = useMemo(() => {
+    if (!_.isEmpty(donHangData)) {
+      return donHangData?.filter((i) =>
+        i.tinhTrang === statusOrder
+      )
+    }
+    return [];
+  }, [donHangData, statusOrder])
+
+
+  const onOrderDetail = (onOrder) => {
+    setOrderDetail(onOrder);
   };
 
   const onStatusOrder = (status) => {
     setStatusOrder(status)
+  }
+
+  const renderDonHang = () => {
+    if (!_.isEmpty(donHangList)) {
+
+      return donHangList?.map((donHang, index) => {
+        return <div className="grid grid-cols-1 gap-[10px] bg-[#84bcaf4a] p-[10px] rounded-[5px]">
+          <div className="flex justify-between text-[13px] xl:text-[14px]">
+            <div className="flex items-center">
+              <h5 className="mr-[10px]">#{donHang?.maDonHang}</h5>
+              <div className="text-[12px] xl:text-[13px] flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 mr-[5px]">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                {moment(donHang?.thongTinGiaoHang?.ngayNhanHangDuKien?.ngayBatDau).format("DD/MM/yyyy") + " - " + moment(donHang?.thongTinGiaoHang?.ngayNhanHangDuKien?.ngayKetThuc).format("DD/MM/yyyy")}</div>
+            </div>
+            <button className="text-[12px] lg:text-[13px] font-[600] text-[#f78700]" on
+            onClick={()=> {
+              onOrderDetail({
+                open: true,
+                selector: donHang
+              })
+            }}>Xem chi tiết</button>
+          </div>
+          <div className="flex items-center text-[12px] xl:text-[13px]">
+            <div>Đầu sách: {donHang?.danhSach?.length}</div>
+            <div className="ml-[10px]">Tổng giá: {donHang?.tongGia?.toLocaleString()} VND</div>
+          </div>
+        </div>
+      })
+    } else {
+      return <Empty description="Chưa có đơn hàng nào" />
+    }
   }
 
   // Return
@@ -99,12 +147,14 @@ export const Profile = () => {
                     </svg>
                     <span>Đơn hàng</span>
                   </div>
-                  <div className="text-[13px] md:text-[14px] text-[#585858]">
+                  <button className="text-[13px] md:text-[14px] text-[#585858]" onClick={()=> {
+                    toast("Chức năng đang phát triển")
+                  }}>
                     Xem lịch sử đơn hàng
-                  </div>
+                  </button>
                 </div>
                 <div className="grid grid-cols-3 gap-[10px] mt-[15px]">
-                  <button className="flex relative justify-center items-center text-[13px] md:text-[14px] lg:text-[15px] rounded-[10px] py-[5px] px-[10px]" style={{backgroundColor: `${statusOrder === 0 ? COLOR.secondary : "#fff"}`}} onClick={()=> onStatusOrder(0)}>
+                  <button className="flex relative justify-center items-center text-[13px] md:text-[14px] lg:text-[15px] rounded-[10px] py-[5px] px-[10px] duration-300" style={{ backgroundColor: `${statusOrder === 0 ? COLOR.primaryColor : "#fff"}`, color: `${statusOrder === 0 ? "#fff" : "#000"}` }} onClick={() => onStatusOrder(0)}>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
@@ -128,7 +178,7 @@ export const Profile = () => {
                       }
                     </span>
                   </button>
-                  <button className="flex relative justify-center items-center text-[13px] md:text-[14px] lg:text-[15px] bg-[white] rounded-[10px] py-[5px] px-[10px]" style={{backgroundColor: `${statusOrder === 1 ? COLOR.secondary : "#fff"}`}} onClick={()=> onStatusOrder(1)}>
+                  <button className="flex relative justify-center items-center text-[13px] md:text-[14px] lg:text-[15px] rounded-[10px] py-[5px] px-[10px] duration-300" style={{ backgroundColor: `${statusOrder === 1 ? COLOR.primaryColor : "#fff"}`, color: `${statusOrder === 1 ? "#fff" : "#000"}` }} onClick={() => onStatusOrder(1)}>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
@@ -152,7 +202,7 @@ export const Profile = () => {
                       }
                     </span>
                   </button>
-                  <button className="flex relative justify-center items-center text-[13px] md:text-[14px] lg:text-[15px] bg-[white] rounded-[10px] py-[5px] px-[10px]" style={{backgroundColor: `${statusOrder === 2 ? COLOR.secondary : "#fff"}`}} onClick={()=> onStatusOrder(2)}>
+                  <button className="flex relative justify-center items-center text-[13px] md:text-[14px] lg:text-[15px] rounded-[10px] py-[5px] px-[10px] duration-300" style={{ backgroundColor: `${statusOrder === 2 ? COLOR.primaryColor : "#fff"}`, color: `${statusOrder === 2 ? "#fff" : "#000"}` }} onClick={() => onStatusOrder(2)}>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
@@ -167,7 +217,7 @@ export const Profile = () => {
                         d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z"
                       />
                     </svg>
-                    <span className="ml-[5px]">Đánh giá</span>
+                    <span className="ml-[5px]">Đã giao</span>
                     <span className="absolute right-[0px] top-[-10px] bg-[#e42e2e] text-[#fff] flex items-center justify-center text-[13px] w-[20px] h-[20px] rounded-[50%]">
                       {
                         (donHangData?.filter(
@@ -177,12 +227,15 @@ export const Profile = () => {
                     </span>
                   </button>
                 </div>
-                <div className="grid grid-cols-1 gap-[10px] mt-[15px]"></div>
+                <div className="grid grid-cols-1 gap-[10px] mt-[15px]">
+                  {renderDonHang()}
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+      <ModalOrderDetail open={orderDetail.open} data={orderDetail.selector} onOpen={onOrderDetail} title="Chi tiết đơn hàng"/>
     </>
   );
 };

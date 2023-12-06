@@ -78,6 +78,7 @@ const Payment = () => {
           await mutate({
             Data: {
               userId: userInfo?._id,
+              gioHangId: userInfo?.gioHang,
               email: userInfo?.email,
               danhSach: paymentStep?.data.thongTinGioHang?.danhSach,
               thongTinGiaoHang: {
