@@ -15,6 +15,7 @@ import useCreateDonHang from "page/admin/page/donHangManagement/hook/useCreateDo
 import { useSelector } from "react-redux";
 import toast from "react-hot-toast";
 import useLoadingEffect from "fuse/hook/useLoadingEffect";
+import _ from "lodash";
 
 const Payment = () => {
   const { id } = useParams();
@@ -236,13 +237,13 @@ const Payment = () => {
               type="submit"
               style={{
                 backgroundColor: `${
-                  !(paymentStep?.step == 1 && !paymentStep?.data?.dieuKhoan)
+                  !(paymentStep?.step == 1 && !paymentStep?.data?.dieuKhoan) && !(paymentStep?.step == 0 && _.isEmpty(paymentStep?.data?.thongTinGiaoHang.thongTinNguoiNhan)) && !(paymentStep?.step == 2 && paymentStep?.data?.thanhToan?.method === "online" && paymentStep?.data?.thanhToan?.done === false)
                     ? COLOR.primaryColor
                     : "gray"
                 }`,
               }}
               onClick={() => changeStep("next")}
-              disabled={paymentStep?.step == 1 && !paymentStep?.data?.dieuKhoan}
+              disabled={paymentStep?.step == 1 && !paymentStep?.data?.dieuKhoan || paymentStep?.step == 0 && _.isEmpty(paymentStep?.data?.thongTinGiaoHang.thongTinNguoiNhan) || paymentStep?.step == 2 && paymentStep?.data?.thanhToan?.method === "online" && paymentStep?.data?.thanhToan?.done === false}
             >
               Tiếp theo
             </button>

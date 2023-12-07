@@ -40,7 +40,7 @@ const MethodPayment = ({ onStep, step }) => {
     });
   };
 
-  const submitData = (data) => {};
+  const submitData = (data) => { };
 
   const payment = async (type) => {
     switch (type) {
@@ -99,12 +99,10 @@ const MethodPayment = ({ onStep, step }) => {
                 htmlFor={`methodPayment1`}
                 className="w-full px-[10px] py-[7px] rounded-[10px] cursor-pointer border-solid border-[1px]"
                 style={{
-                  borderColor: `${
-                    watch("methodPayment") == 0 ? COLOR.primaryColor : ""
-                  }`,
-                  backgroundColor: `${
-                    watch("methodPayment") == 0 ? "#66b5a14a" : ""
-                  }`,
+                  borderColor: `${watch("methodPayment") == 0 ? COLOR.primaryColor : ""
+                    }`,
+                  backgroundColor: `${watch("methodPayment") == 0 ? "#66b5a14a" : ""
+                    }`,
                   boxShadow:
                     "rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px",
                 }}
@@ -128,6 +126,21 @@ const MethodPayment = ({ onStep, step }) => {
                 value={0}
                 onChange={() => {
                   setValue("methodPayment", 0);
+                  onStep(prev=> {
+                    return {
+                      ...prev,
+                      data: {
+                        thongTinGioHang: prev.data.thongTinGioHang,
+                        dieuKhoan: prev.data.dieuKhoan,
+                        thongTinGiaoHang: prev.data.thongTinGiaoHang,
+                        thanhToan: {
+                          method: "offline",
+                          done: false,
+                          viThanhToan: "",
+                        },
+                      }
+                    }
+                  })
                 }}
               />
             </>
@@ -136,12 +149,10 @@ const MethodPayment = ({ onStep, step }) => {
                 htmlFor={`methodPayment2`}
                 className="w-full px-[10px] py-[7px] rounded-[10px] cursor-pointer border-solid border-[1px]"
                 style={{
-                  borderColor: `${
-                    watch("methodPayment") == 1 ? COLOR.primaryColor : ""
-                  }`,
-                  backgroundColor: `${
-                    watch("methodPayment") == 1 ? "#66b5a14a" : ""
-                  }`,
+                  borderColor: `${watch("methodPayment") == 1 ? COLOR.primaryColor : ""
+                    }`,
+                  backgroundColor: `${watch("methodPayment") == 1 ? "#66b5a14a" : ""
+                    }`,
                   boxShadow:
                     "rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px",
                 }}
@@ -165,6 +176,21 @@ const MethodPayment = ({ onStep, step }) => {
                 value={1}
                 onChange={() => {
                   setValue("methodPayment", 1);
+                  onStep(prev=> {
+                    return {
+                      ...prev,
+                      data: {
+                        thongTinGioHang: prev.data.thongTinGioHang,
+                        dieuKhoan: prev.data.dieuKhoan,
+                        thongTinGiaoHang: prev.data.thongTinGiaoHang,
+                        thanhToan: {
+                          method: "online",
+                          done: false,
+                          viThanhToan: "",
+                        },
+                      }
+                    }
+                  })
                 }}
               />
             </>
@@ -172,27 +198,33 @@ const MethodPayment = ({ onStep, step }) => {
         </div>
         <div className="rounded-[10px] col-span-2 shadow-md p-[10px] h-full">
           <div className="grid grid-cols-1 md:grid-cols-2">
-            <div className="grid grid-cols-4 md:grid-cols-6 gap-[20px]">
-              <button
-                type="button"
-                className="w-[60px] h-[60px] md:w-[80px] md:h-[80px] bg-cover"
-                style={{ backgroundImage: "url('./images/momo.png')" }}
-                onClick={() => {
-                  payment("momo");
-                }}
-              ></button>
-              <button
-                type="button"
-                className="mt-[12px] w-[60px] h-[60px] md:w-[60px] md:h-[60px]  bg-contain"
-                style={{
-                  backgroundImage: "url('./images/zalopay.png')",
-                  filter: "grayscale(1)",
-                }}
-                onClick={() => {
-                  payment("zalopay");
-                }}
-              ></button>
-            </div>
+            {
+              watch('methodPayment') == 1
+                ?
+                <div className="grid grid-cols-4 md:grid-cols-6 gap-[20px]">
+                  <button
+                    type="button"
+                    className="w-[60px] h-[60px] md:w-[80px] md:h-[80px] bg-cover"
+                    style={{ backgroundImage: "url('./images/momo.png')" }}
+                    onClick={() => {
+                      payment("momo");
+                    }}
+                  ></button>
+                  <button
+                    type="button"
+                    className="mt-[12px] w-[60px] h-[60px] md:w-[60px] md:h-[60px]  bg-contain"
+                    style={{
+                      backgroundImage: "url('./images/zalopay.png')",
+                      filter: "grayscale(1)",
+                    }}
+                    onClick={() => {
+                      payment("zalopay");
+                    }}
+                  ></button>
+                </div>
+                :
+                <div></div>
+            }
             {/* <div>
               {
                 qrPayment
