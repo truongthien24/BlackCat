@@ -39,10 +39,10 @@ const InfoPayment = ({step, onStep}) => {
             className="w-full px-[10px] py-[7px] rounded-[10px] cursor-pointer border-solid border-[1px]"
             style={{
               borderColor: `${
-                diaChi.id === watch("id") ? COLOR.primaryColor : ""
+                diaChi?.id === watch("id") ? COLOR.primaryColor : ""
               }`,
               backgroundColor: `${
-                diaChi.id === watch("id") ? "#66b5a14a" : ""
+                diaChi?.id === watch("id") ? "#66b5a14a" : ""
               }`,
               boxShadow:
                 "rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px",

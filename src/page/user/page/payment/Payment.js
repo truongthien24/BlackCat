@@ -237,13 +237,13 @@ const Payment = () => {
               type="submit"
               style={{
                 backgroundColor: `${
-                  !(paymentStep?.step == 1 && !paymentStep?.data?.dieuKhoan) && !(paymentStep?.step == 0 && _.isEmpty(paymentStep?.data?.thongTinGiaoHang.thongTinNguoiNhan)) && !(paymentStep?.step == 2 && paymentStep?.data?.thanhToan?.method === "online" && paymentStep?.data?.thanhToan?.done === false)
+                  !(paymentStep?.step == 1 && !paymentStep?.data?.dieuKhoan) && !(paymentStep?.step == 0 && _.isEmpty(paymentStep?.data?.thongTinGiaoHang?.thongTinNguoiNhan)) && !(paymentStep?.step == 2 && paymentStep?.data?.thanhToan?.method === "online" && paymentStep?.data?.thanhToan?.done === false)
                     ? COLOR.primaryColor
                     : "gray"
                 }`,
               }}
               onClick={() => changeStep("next")}
-              disabled={paymentStep?.step == 1 && !paymentStep?.data?.dieuKhoan || paymentStep?.step == 0 && _.isEmpty(paymentStep?.data?.thongTinGiaoHang.thongTinNguoiNhan) || paymentStep?.step == 2 && paymentStep?.data?.thanhToan?.method === "online" && paymentStep?.data?.thanhToan?.done === false}
+              disabled={paymentStep?.step == 1 && !paymentStep?.data?.dieuKhoan || paymentStep?.step == 0 && _.isEmpty(paymentStep?.data?.thongTinGiaoHang?.thongTinNguoiNhan) || paymentStep?.step == 2 && paymentStep?.data?.thanhToan?.method === "online" && paymentStep?.data?.thanhToan?.done === false}
             >
               Tiếp theo
             </button>

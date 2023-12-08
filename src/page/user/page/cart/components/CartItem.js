@@ -210,9 +210,9 @@ const CartItem = ({ arrayData, data, columns, isEdit }) => {
                   style={{ width: `${item.width}` }}
                 >
                   {(
-                    parseInt(data.sach.tienCoc) * parseInt(data.soLuong) +
+                    parseInt(data?.sach?.tienCoc) * parseInt(data?.soLuong) +
                     watch(`danhSach[${indexItem}].giaThue`) *
-                      parseInt(data.soLuong)
+                      parseInt(data?.soLuong)
                   )?.toLocaleString()}
                 </div>
               );

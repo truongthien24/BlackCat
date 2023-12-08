@@ -14,6 +14,7 @@ import _ from "lodash";
 import { checkLogin } from "page/user/shareComponent/Function/checkLogin";
 import { useSelector } from "react-redux";
 import useUpdateGioHang from "page/admin/page/GioHangManagement/hook/useUpdateGioHang";
+import { getPercentRent } from "method/getPercentRent";
 
 const InfoBook = () => {
   const { id } = useParams();
@@ -64,11 +65,10 @@ const InfoBook = () => {
           `Số lượng không đủ. Chỉ còn ${sachDataDetail.soLuong} quyển :((`
         );
       } else {
-        // toast.error("Chức năng đang phát triển");
         await mutate({
           Data: {
             id: userInfo?.gioHang,
-            sach: { idSach: data?._id, soLuong: data?.soLuong },
+            sach: { idSach: sachDataDetail?._id, soLuong: data?.soLuong, soNgayThue: 7, giaThue: getPercentRent(7) * sachDataDetail?.gia, tienCoc: sachDataDetail?.gia },
             insert: true,
           },
           onSuccess: (res) => {
