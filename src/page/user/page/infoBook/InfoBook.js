@@ -1,6 +1,6 @@
 import useLoadingEffect from "fuse/hook/useLoadingEffect";
 import useGetDetailBook from "page/admin/page/RoomManagement/hook/useGetDetailBook";
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import ReviewInfoItem from "page/user/component/AreaBook/modal/components/ReviewInfoItem";
 import { COLOR } from "page/user/shareComponent/constant";
@@ -14,6 +14,7 @@ import _ from "lodash";
 import { checkLogin } from "page/user/shareComponent/Function/checkLogin";
 import { useSelector } from "react-redux";
 import useUpdateGioHang from "page/admin/page/GioHangManagement/hook/useUpdateGioHang";
+import { getPercentRent } from "method/getPercentRent";
 
 const InfoBook = () => {
   const { id } = useParams();
@@ -37,6 +38,7 @@ const InfoBook = () => {
     register,
     setValue,
     getValues,
+    reset,
     formState: { errors },
   } = useForm({
     mode: "onSubmit",
@@ -57,6 +59,12 @@ const InfoBook = () => {
     ),
   });
 
+  useEffect(() => {
+    if (sachDataDetail) {
+      reset({ ...sachDataDetail, soLuong: 1 });
+    }
+  }, [sachDataDetail]);
+
   const addToCart = async (data) => {
     if (checkLogin()) {
       if (data?.soLuong > sachDataDetail.soLuong) {
@@ -68,7 +76,13 @@ const InfoBook = () => {
         await mutate({
           Data: {
             id: userInfo?.gioHang,
-            sach: { idSach: data?._id, soLuong: data?.soLuong },
+            sach: {
+              idSach: data?._id,
+              soLuong: data?.soLuong,
+              soNgayThue: 7,
+              giaThue: getPercentRent(7) * data?.gia,
+              tienCoc: data?.gia,
+            },
             insert: true,
           },
           onSuccess: (res) => {

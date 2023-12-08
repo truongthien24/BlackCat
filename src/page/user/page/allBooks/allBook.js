@@ -26,15 +26,7 @@ export const AllBooks = () => {
 
   const navigate = useNavigate();
 
-  const addToCart = (data) => {
-    if (data?.soLuong > sachData.soLuong) {
-      toast.error(`Số lượng không đủ. Chỉ còn ${sachData.soLuong} quyển :((`);
-    } else {
-      // toast.error("Chức năng đang phát triển");
-      navigate("/cart/123213123");
-    }
-  };
-
+  
   const items = [];
 
   const onChange = (key) => {
