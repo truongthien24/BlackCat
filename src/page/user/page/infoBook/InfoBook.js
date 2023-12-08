@@ -72,17 +72,10 @@ const InfoBook = () => {
           `Số lượng không đủ. Chỉ còn ${sachDataDetail.soLuong} quyển :((`
         );
       } else {
-        // toast.error("Chức năng đang phát triển");
         await mutate({
           Data: {
             id: userInfo?.gioHang,
-            sach: {
-              idSach: data?._id,
-              soLuong: data?.soLuong,
-              soNgayThue: 7,
-              giaThue: getPercentRent(7) * data?.gia,
-              tienCoc: data?.gia,
-            },
+            sach: { idSach: sachDataDetail?._id, soLuong: data?.soLuong, soNgayThue: 7, giaThue: getPercentRent(7) * sachDataDetail?.gia, tienCoc: sachDataDetail?.gia },
             insert: true,
           },
           onSuccess: (res) => {
