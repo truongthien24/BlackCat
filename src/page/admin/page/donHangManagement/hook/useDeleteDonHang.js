@@ -1,16 +1,16 @@
 import apiService from "api";
 import { useMutation } from "react-query";
 
-const deleteNhaCungCap = async (params = {}) => {
-  const nhaCungCap = await apiService.nhaCungCap.deleteNhaCungCap({
+const deleteDonHang = async (params = {}) => {
+  const donHang = await apiService.donHang.deleteDonHang({
     ...params?.Data,
   });
 
-  return nhaCungCap;
+  return donHang;
 };
 
-const useDeleteNhaCungCap = () => {
-  return useMutation(deleteNhaCungCap, {
+const useDeleteDonHang = () => {
+  return useMutation(deleteDonHang, {
     onSuccess: (_, { onSuccess, status }) => {
       onSuccess(_);
     },
@@ -20,4 +20,4 @@ const useDeleteNhaCungCap = () => {
   });
 };
 
-export default useDeleteNhaCungCap;
+export default useDeleteDonHang;

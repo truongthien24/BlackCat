@@ -7,8 +7,6 @@ import React, { useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import * as yup from "yup";
-// import useUpdateNhaCungCap from "../hook/useUpdateNhaCungCap";
-// import useCreateNhaCungCap from "../hook/useCreateNhaCungCap";
 import FormNumberPhone from "page/admin/shareComponent/form/FormNumberPhone";
 import FormSelect from "page/admin/shareComponent/form/FormSelect";
 import useUpdateDonHang from "../hook/useUpdateDonHang";

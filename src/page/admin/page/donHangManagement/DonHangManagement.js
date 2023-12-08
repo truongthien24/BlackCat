@@ -10,9 +10,9 @@ import { useDispatch } from "react-redux";
 import { setConfirm } from "redux/action/homeAction";
 import Details from "./component/Details";
 import { columns } from "./helper";
-import useDeleteNhaCungCap from "./hook/useDeleteNhaCungCap";
 import useGetDataDonHangs from "./hook/useGetDataDonHang";
 import useGetDetailDonHang from "./hook/useGetDetailDonHang";
+import useDeleteDonHang from "./hook/useDeleteDonHang";
 
 const DonHangManagement = () => {
   // State
@@ -34,7 +34,7 @@ const DonHangManagement = () => {
   } = useGetDetailDonHang("0", "0", showSlice?.initData?._id);
 
   const { mutate: mutateDelete, isLoading: isSubmittingDelete } =
-    useDeleteNhaCungCap();
+    useDeleteDonHang();
 
   // Method
   const handleAdd = () => {
@@ -45,7 +45,7 @@ const DonHangManagement = () => {
   };
 
   const handleEdit = (data) => {
-    console.log('data', data)
+    console.log("data", data);
     onShowSlice({
       open: true,
       initData: data,
@@ -103,9 +103,7 @@ const DonHangManagement = () => {
       </div>
       <PopupMain
         title={
-          _.isEmpty(showSlice?.initData?._id)
-            ? "Thêm đơn hàng"
-            : "Sửa đơn hàng"
+          _.isEmpty(showSlice?.initData?._id) ? "Thêm đơn hàng" : "Sửa đơn hàng"
         }
         showSlice={showSlice}
         onShowSlice={onShowSlice}

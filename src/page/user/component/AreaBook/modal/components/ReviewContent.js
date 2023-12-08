@@ -1,8 +1,14 @@
 import { COLOR } from "page/user/shareComponent/constant";
-import React from "react";
+import React, { useState } from "react";
 import ReviewInfoItem from "./ReviewInfoItem";
+import { FormProvider, useForm } from "react-hook-form";
+import ModalRules from "./ModalRules";
 
 const ReviewContent = ({ data }) => {
+  const [openRules, setOnOpenRules] = useState(false);
+  const onRules = () => {
+    setOnOpenRules((prev) => !prev);
+  };
   return (
     <div>
       <h3 className="text-[22px] font-[400] mb-[10px]">{data?.tenSach}</h3>
@@ -60,6 +66,24 @@ const ReviewContent = ({ data }) => {
         <ReviewInfoItem title="Số trang" data={data?.soTrang} />
         <ReviewInfoItem title="Kích thước" data={data?.kichThuoc} />
         <ReviewInfoItem title="Bìa sách" data={data?.biaSach} />
+        <ReviewInfoItem
+          title="Nội dung sách"
+          data={
+            <span
+              className="cursor-pointer font-[500]"
+              onClick={onRules}
+              style={{ color: `${COLOR.secondaryColor}` }}
+            >
+              Xem chi tiết
+              <ModalRules
+                open={openRules}
+                onOpen={onRules}
+                title="xem nội dung sách"
+                data={data}
+              />
+            </span>
+          }
+        />
       </div>
     </div>
   );

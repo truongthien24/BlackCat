@@ -20,7 +20,7 @@ export const ProfileTab = (props) => {
 
   // Method
   const handleViewProfile = () => {
-    navigate('profile');
+    navigate("profile");
     setIsProfile(false);
     // toast("Chức năng đang phát triển");
   };
@@ -57,7 +57,7 @@ export const ProfileTab = (props) => {
       width={250}
       footer={
         <div className="flex justify-center items-center text-[gray]">
-          @Copyright Steven Thien
+          @Black&Cat
         </div>
       }
     >
