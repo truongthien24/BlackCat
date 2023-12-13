@@ -1,5 +1,7 @@
 import { yupResolver } from "@hookform/resolvers/yup";
+import { Icon } from "assets/icon";
 import useCreateDanhGia from "page/admin/page/danhGiaManagement/hook/useCreateDanhGia";
+import { COLOR } from "page/user/shareComponent/constant";
 import React from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import * as yup from "yup";
@@ -21,11 +23,16 @@ const FormReaction = ({ onSubmit }) => {
     watch,
     formState: { errors },
     register,
+    reset,
   } = method;
+
+  const handleSubmitData = (data) => {
+    onSubmit(data, reset)
+  }
 
   return (
     <FormProvider {...method}>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(handleSubmitData)}>
         <div className="relative mt-6">
           <input
             placeholder="Nhập đánh giá vào đây"
@@ -36,16 +43,18 @@ const FormReaction = ({ onSubmit }) => {
             <button
               type="submit"
               aria-label="Submit"
-              className="flex aspect-square h-full items-center bg-[#000] justify-center rounded-xl bg-neutral-950 text-white transition hover:bg-neutral-800"
+              className="flex aspect-square h-full items-center  justify-center rounded-xl bg-neutral-950 text-white transition"
+              style={{ backgroundColor: `${COLOR.primaryColor}` }}
             >
-              <svg viewBox="0 0 16 6" aria-hidden="true" className="w-4">
+              {/* <svg viewBox="0 0 16 6" aria-hidden="true" className="w-4">
                 <path
                   fill="currentColor"
                   fill-rule="evenodd"
                   clip-rule="evenodd"
                   d="M16 3 10 .5v2H0v1h10v2L16 3Z"
                 ></path>
-              </svg>
+              </svg> */}
+              <Icon name="paper" />
             </button>
           </div>
         </div>

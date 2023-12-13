@@ -137,16 +137,20 @@ const InfoBook = () => {
     }
   };
 
-  const handleDanhGia = async (data) => {
+  const handleDanhGia = async (data, reset) => {
     await createDanhGia({
       Data: {
         idTaiKhoan: userInfo?._id,
         idSach: sachDataDetail?._id,
         noiDung: data?.noiDung,
         soSao: 5,
+        ...(data?.idDanhGiaFather && {
+          idDanhGiaFather: data?.idDanhGiaFather,
+        }),
       },
       onSuccess: async (res) => {
         await fetchDanhGia();
+        await reset();
         toast.success(res?.data?.message);
       },
       onError: (err) => {
@@ -193,7 +197,11 @@ const InfoBook = () => {
                   //     <p>{danhGia?.noiDung}</p>
                   //   </div>
                   // </div>
-                  <Reaction data={danhGia} key={index}/>
+                  <Reaction
+                    data={danhGia}
+                    key={index}
+                    onSubmitReply={handleDanhGia}
+                  />
                 );
               })}
             </div>
@@ -217,9 +225,9 @@ const InfoBook = () => {
 
   useLoadingEffect(
     isDataDetailLoading ||
-    isLoading ||
-    isLoadingDanhGia ||
-    isLoadingCreateDanhGia
+      isLoading ||
+      isLoadingDanhGia ||
+      isLoadingCreateDanhGia
   );
 
   return (
@@ -373,8 +381,9 @@ const InfoBook = () => {
                 disabled={sachDataDetail?.soLuong < 1}
                 className="text-[#fff] w-full p-[10px] rounded-[5px] flex items-center justify-center"
                 style={{
-                  backgroundColor: `${sachDataDetail?.soLuong > 0 ? COLOR.primaryColor : "gray"
-                    }`,
+                  backgroundColor: `${
+                    sachDataDetail?.soLuong > 0 ? COLOR.primaryColor : "gray"
+                  }`,
                 }}
               >
                 Thêm vào giỏ hàng
