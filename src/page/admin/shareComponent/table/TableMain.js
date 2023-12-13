@@ -145,69 +145,74 @@ export const TableMain = (props) => {
       columns.map((item, index) => {
         // if(item.dât)
         let obj = {};
-        if (item.key === "tinhTrang") {
-          obj = {
-            ...item,
-            render: (text) => {
-              return (
-                <div>
-                  {text === 2 ? (
-                    <div className="flex items-center">
-                      <span className="w-[4px] h-[4px] rounded-[50%] bg-[green] block mr-[5px]"></span>
-                      <span className="text-[12px] text-[green]">
-                        {t("Đã giao")}
-                      </span>
-                    </div>
-                  ) : text === 1 ? (
-                    <div className="flex items-center">
-                      <span className="w-[4px] h-[4px] rounded-[50%] bg-[#00e1ff] block mr-[5px]"></span>
-                      <span className="text-[13px] text-[#00e1ff]">
-                        {t("Đang giao")}
-                      </span>
-                    </div>
-                  ) : (
-                    <div className="flex items-center">
-                      <span className="w-[4px] h-[4px] rounded-[50%] bg-[orange] block mr-[5px]"></span>
-                      <span className="text-[13px] text-[orange]">
-                        {t("Chờ xác nhận")}
-                      </span>
-                    </div>
-                  )}
+        if (item.cell) {
+          obj = { ...item, render: (text, row) => item.cell(row) }
+        }
+        else {
+          if (item.key === "tinhTrang") {
+            obj = {
+              ...item,
+              render: (text) => {
+                return (
+                  <div>
+                    {text === 2 ? (
+                      <div className="flex items-center">
+                        <span className="w-[4px] h-[4px] rounded-[50%] bg-[green] block mr-[5px]"></span>
+                        <span className="text-[12px] text-[green]">
+                          {t("Đã giao")}
+                        </span>
+                      </div>
+                    ) : text === 1 ? (
+                      <div className="flex items-center">
+                        <span className="w-[4px] h-[4px] rounded-[50%] bg-[#00e1ff] block mr-[5px]"></span>
+                        <span className="text-[13px] text-[#00e1ff]">
+                          {t("Đang giao")}
+                        </span>
+                      </div>
+                    ) : (
+                      <div className="flex items-center">
+                        <span className="w-[4px] h-[4px] rounded-[50%] bg-[orange] block mr-[5px]"></span>
+                        <span className="text-[13px] text-[orange]">
+                          {t("Chờ xác nhận")}
+                        </span>
+                      </div>
+                    )}
+                  </div>
+                );
+              },
+            };
+          } else if (item.key === "soLuongPhong") {
+            obj = { ...item, render: (text) => <div>{text?.length}</div> };
+          } else if (item.key === "btn") {
+            obj = {
+              ...item,
+              render: (text, row) => (
+                // <Button type="primary">{t('view')}</Button>
+                <div
+                  className="flex items-center justify-center text-[#3790c7] text-[13px] py-[5px] px-[10px] rounded-[7px] duration-300 cursor-pointer hover:underline"
+                  type="button"
+                  onClick={() => {
+                    item.onClickFunc(row);
+                  }}
+                >
+                  {t("view")}
                 </div>
-              );
-            },
-          };
-        } else if (item.key === "soLuongPhong") {
-          obj = { ...item, render: (text) => <div>{text?.length}</div> };
-        } else if (item.key === "btn") {
-          obj = {
-            ...item,
-            render: (text, row) => (
-              // <Button type="primary">{t('view')}</Button>
-              <div
-                className="flex items-center justify-center text-[#3790c7] text-[13px] py-[5px] px-[10px] rounded-[7px] duration-300 cursor-pointer hover:underline"
-                type="button"
-                onClick={() => {
-                  item.onClickFunc(row);
-                }}
-              >
-                {t("view")}
-              </div>
-            ),
-          };
-        } else if (item.key === "hinhAnh") {
-          obj = {
-            ...item,
-            render: (text, row) => (
-              // <Button type="primary">{t('view')}</Button>
-              // <div className='flex items-center justify-center text-[#3790c7] text-[13px] py-[5px] px-[10px] rounded-[7px] duration-300 cursor-pointer hover:underline' type="button" onClick={()=> {
-              //   item.onClickFunc(row)
-              // }}>{t('view')}</div>
-              <img src={text?.url} className="w-[40px]" />
-            ),
-          };
-        } else {
-          obj = { ...item, ...getColumnSearchProps(`${item.dataIndex}`) };
+              ),
+            };
+          } else if (item.key === "hinhAnh") {
+            obj = {
+              ...item,
+              render: (text, row) => (
+                // <Button type="primary">{t('view')}</Button>
+                // <div className='flex items-center justify-center text-[#3790c7] text-[13px] py-[5px] px-[10px] rounded-[7px] duration-300 cursor-pointer hover:underline' type="button" onClick={()=> {
+                //   item.onClickFunc(row)
+                // }}>{t('view')}</div>
+                <img src={text?.url} className="w-[40px]" />
+              ),
+            };
+          } else {
+            obj = { ...item, ...getColumnSearchProps(`${item.dataIndex}`) };
+          }
         }
 
         return dataResult.push(obj);

@@ -2,7 +2,7 @@ import axiosWrapper from "../../services/jwtServices/jwtServices";
 
 export default {
   getAllDanhGia: (params) => {
-    return axiosWrapper.post(`/getAllDanhGia`, {
+    return axiosWrapper.get(`/getAllDanhGia`, {
       ...params,
     });
   },

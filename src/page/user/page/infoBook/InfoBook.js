@@ -19,6 +19,7 @@ import useGetDataDanhGia from "page/admin/page/danhGiaManagement/hook/useGetData
 import FormReaction from "./components/FormReaction";
 import useGetDataDanhGiaByIdSanPham from "page/admin/page/danhGiaManagement/hook/useGetDataDanhGiaByIDSanPham";
 import useCreateDanhGia from "page/admin/page/danhGiaManagement/hook/useCreateDanhGia";
+import { Reaction } from "page/user/component/Reaction";
 
 const InfoBook = () => {
   const { id } = useParams();
@@ -170,28 +171,29 @@ const InfoBook = () => {
       children: (
         <div className="grid grid-cols-1 gap-[10px]">
           {!_.isEmpty(danhGiaDataDetail) ? (
-            <div className="grid grid-cols-1 gap-[10px] md:gap-[20px]">
+            <div className="grid grid-cols-1 gap-[10px] md:gap-[15px]">
               {danhGiaDataDetail?.map((danhGia, index) => {
                 return (
-                  <div className="flex">
-                    <img
-                      className="w-[40px] h-[40px] rounded-[50%]"
-                      src="https://cdn1.vectorstock.com/i/1000x1000/60/20/orange-cat-cartoon-cute-vector-45736020.jpg"
-                    />
-                    <div className="ml-[10px]">
-                      <div className="flex item-center">
-                        <h5 className="font-[500] mr-[10px]">
-                          {danhGia?.idTaiKhoan?.email}
-                        </h5>
-                        <span>
-                          {new Date(danhGia?.ngayTao)?.toLocaleDateString(
-                            "en-GB"
-                          )}
-                        </span>
-                      </div>
-                      <p>{danhGia?.noiDung}</p>
-                    </div>
-                  </div>
+                  // <div className="flex">
+                  //   <img
+                  //     className="w-[40px] h-[40px] rounded-[50%]"
+                  //     src="https://cdn1.vectorstock.com/i/1000x1000/60/20/orange-cat-cartoon-cute-vector-45736020.jpg"
+                  //   />
+                  //   <div className="ml-[10px]">
+                  //     <div className="flex item-center">
+                  //       <h5 className="font-[500] mr-[10px]">
+                  //         {danhGia?.idTaiKhoan?.email}
+                  //       </h5>
+                  //       <span>
+                  //         {new Date(danhGia?.ngayTao)?.toLocaleDateString(
+                  //           "en-GB"
+                  //         )}
+                  //       </span>
+                  //     </div>
+                  //     <p>{danhGia?.noiDung}</p>
+                  //   </div>
+                  // </div>
+                  <Reaction data={danhGia} key={index}/>
                 );
               })}
             </div>
@@ -215,9 +217,9 @@ const InfoBook = () => {
 
   useLoadingEffect(
     isDataDetailLoading ||
-      isLoading ||
-      isLoadingDanhGia ||
-      isLoadingCreateDanhGia
+    isLoading ||
+    isLoadingDanhGia ||
+    isLoadingCreateDanhGia
   );
 
   return (
@@ -371,9 +373,8 @@ const InfoBook = () => {
                 disabled={sachDataDetail?.soLuong < 1}
                 className="text-[#fff] w-full p-[10px] rounded-[5px] flex items-center justify-center"
                 style={{
-                  backgroundColor: `${
-                    sachDataDetail?.soLuong > 0 ? COLOR.primaryColor : "gray"
-                  }`,
+                  backgroundColor: `${sachDataDetail?.soLuong > 0 ? COLOR.primaryColor : "gray"
+                    }`,
                 }}
               >
                 Thêm vào giỏ hàng

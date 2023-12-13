@@ -15,9 +15,9 @@ const getApiData = async (pageIndex = 0, pageSize = 0, data) => {
   return gioHang;
 };
 
-const useGetDetailGioHang = (pageIndex = 0, pageSize = 0, data) => {
+const useGetDetailDanhGia = (pageIndex = 0, pageSize = 0, data) => {
   const query = useQuery(
-    ["get-data-GioHang", pageIndex, pageSize, data],
+    ["get-data-danhGia", pageIndex, pageSize, data],
 
     () => getApiData(pageIndex, pageSize, data),
 
@@ -27,13 +27,13 @@ const useGetDetailGioHang = (pageIndex = 0, pageSize = 0, data) => {
     }
   );
   const {
-    data: { data: { data: gioHangDataDetail = [] } = {} } = {},
+    data: { data: { data: danhGiaDataDetail = [] } = {} } = {},
     isLoading: isDataDetailLoading,
     refetch: fetchData,
     isFetching,
   } = query;
 
-  return { gioHangDataDetail, isDataDetailLoading, fetchData, isFetching };
+  return { danhGiaDataDetail, isDataDetailLoading, fetchData, isFetching };
 };
 
-export default useGetDetailGioHang;
+export default useGetDetailDanhGia;

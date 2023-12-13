@@ -28,6 +28,7 @@ import MaGiamManagement from "page/admin/page/System/maGiamManagement/MaGiamMana
 import { AllBooks } from "page/user/page/allBooks/allBook";
 import BookCategory from "page/user/page/bookCategory/BookCategory";
 import DonHangManagement from "page/admin/page/donHangManagement/DonHangManagement";
+import DanhGiaManagement from "page/admin/page/danhGiaManagement/DanhGiaManagement";
 
 export const MainRoutes = () => {
 
@@ -90,6 +91,7 @@ export const MainRoutes = () => {
           <Route path="maGiamManagement" element={<MaGiamManagement />} />
           <Route path="baiVietManagement" element={<BaiVietManagement />} />
           <Route path="donHangManagement" element={<DonHangManagement />} />
+          <Route path="danhGiaManagement" element={<DanhGiaManagement />} />
           <Route
             path="nhaCungCapManagement"
             element={<NhaCungCapManagement />}
