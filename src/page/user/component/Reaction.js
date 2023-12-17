@@ -64,11 +64,14 @@ export const Reaction = (props) => {
                 size={40}
                 style={{ backgroundColor: "#fde3cf", color: "#f56a00" }}
               >
-                {reply?.idTaiKhoan?.email?.toString().toUpperCase().charAt(0)}
+                {reply?.idTaiKhoan?.tenDangNhap
+                  ?.toString()
+                  .toUpperCase()
+                  .charAt(0)}
               </Avatar>
               <div className="ml-[8px] h-max">
                 <h5 className="text-[11px] md:text-[13px] font-bold">
-                  {reply?.idTaiKhoan?.email}
+                  {reply?.idTaiKhoan?.tenDangNhap}
                 </h5>
                 <p className="text-[10px] md:text-[12px]">
                   {new Date(reply?.ngayTao)?.toLocaleDateString("en-GB")}
@@ -114,11 +117,14 @@ export const Reaction = (props) => {
             size={40}
             style={{ backgroundColor: "#fde3cf", color: "#f56a00" }}
           >
-            {data?.idTaiKhoan?.email.toString().toUpperCase().charAt(0)}
+            {/* charAt lấy ký tự ở vị trí đầu tiên
+              hình ảnh hiển thị */}
+            {data?.idTaiKhoan?.tenDangNhap?.toString().toUpperCase().charAt(0)}
           </Avatar>
           <div className="ml-[8px] h-max">
             <h5 className="text-[11px] md:text-[13px] font-bold">
-              {data?.idTaiKhoan?.email}
+              {/* Tên hiển thị */}
+              {data?.idTaiKhoan?.tenDangNhap}
             </h5>
             <p className="text-[10px] md:text-[12px]">
               {new Date(data?.ngayTao)?.toLocaleDateString("en-GB")}

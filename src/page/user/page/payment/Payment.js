@@ -5,7 +5,7 @@ import {
   SolutionOutlined,
 } from "@ant-design/icons";
 import React, { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import InfoPayment from "./components/InfoPayment";
 import MethodPayment from "./components/MethodPayment";
 import ConfirmPayment from "./components/ConfirmPayment";
@@ -37,10 +37,12 @@ const Payment = () => {
       },
     },
   });
-    //Redux Store Lấy giá trị home từ store
+  //Redux Store Lấy giá trị home từ store
   const { userInfo } = useSelector((state) => state.home);
 
   const { mutate, isLoading } = useCreateDonHang();
+
+  const navigate = useNavigate();
 
   const renderStepContent = () => {
     switch (paymentStep.step) {
@@ -64,6 +66,9 @@ const Payment = () => {
   const changeStep = async (type) => {
     switch (type) {
       case "prev":
+        // if (paymentStep.step === 0) {
+        //   navigate(`/cart/${userInfo?.gioHang}`);
+        // }
         return setPaymentStep((prev) => {
           return {
             ...prev,
@@ -227,6 +232,9 @@ const Payment = () => {
                   paymentStep?.step > 0 ? COLOR.primaryColor : "gray"
                 }`,
               }}
+              // style={{
+              //   backgroundColor: `${COLOR.primaryColor}`,
+              // }}
               disabled={paymentStep?.step == 0}
               onClick={() => changeStep("prev")}
             >

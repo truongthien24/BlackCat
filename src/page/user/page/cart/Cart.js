@@ -79,6 +79,7 @@ const Cart = () => {
             key={index}
             columns={columns(isMobile, isEdit)}
             isEdit={isEdit}
+            gioHang={userInfo?.gioHang}
           />
         );
       });

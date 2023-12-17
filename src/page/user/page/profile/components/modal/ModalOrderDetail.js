@@ -78,7 +78,7 @@ const ModalOrderDetail = ({ open, onOpen, title, data }) => {
             src={sach?.sach?.hinhAnh?.url}
             className="w-[50px] xl:w-[70px] h-[100px]"
           />
-          <p className="col-span-1">{sach?.sach?.tenSach}</p>
+          <p className="col-span-1">Tên sách: {sach?.sach?.tenSach}</p>
           <p>Thuê: {sach?.soNgayThue}ngày</p>
           <p>Tiền cọc: {sach?.tienCoc}</p>
           <p>Số lượng: {sach?.soLuong}</p>

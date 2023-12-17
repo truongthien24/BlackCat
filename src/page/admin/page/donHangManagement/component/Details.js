@@ -28,10 +28,25 @@ const Details = ({
   const method = useForm({
     method: "onSubmit",
     defaultValues: {
-      // tenNhaCungCap: "",
-      // diaChiNhaCungCap: "",
-      // soDienThoai: "",
+      thongTinGiaoHang: {
+        thongTinNguoiNhan: {
+          tenNguoiNhan: "",
+        },
+      },
+      thongTinGiaoHang: {
+        thongTinNguoiNhan: {
+          sdt: "",
+        },
+      },
+      thongTinGiaoHang: {
+        thongTinNguoiNhan: {
+          diaChi: "",
+        },
+      },
     },
+    // { tenNhaCungCap: "" },
+    // { diaChiNhaCungCap: "" },
+    // { soDienThoai: "" }
     // resolver: yupResolver(
     //   yup.object().shape({
     //     tenNhaCungCap: yup.string().required("Nhập tên nhà cung cấp vào đi"),
@@ -70,13 +85,31 @@ const Details = ({
       if (!_.isEmpty(data)) {
         reset(data);
       } else {
-        reset();
+        reset({
+          thongTinGiaoHang: {
+            thongTinNguoiNhan: {
+              tenNguoiNhan: "",
+            },
+          },
+          thongTinGiaoHang: {
+            thongTinNguoiNhan: {
+              sdt: "",
+            },
+          },
+          thongTinGiaoHang: {
+            thongTinNguoiNhan: {
+              diaChi: "",
+            },
+          },
+          maDonHang: "",
+        });
         // { tenNhaCungCap: "" },
         // { diaChiNhaCungCap: "" },
         // { soDienThoai: "" }
       }
     }
   }, [showSlice]);
+
 
   useEffect(() => {
     return () => reset();
@@ -186,6 +219,15 @@ const Details = ({
             name="ngayGiao"
             label="Ngày giao"
             required
+          />
+        </div>
+        <div className="col-span-1">
+          <FormTextField
+            label="Địa chỉ nhận hàng"
+            name="thongTinGiaoHang.thongTinNguoiNhan.diaChi"
+            errors={errors}
+            required
+            control={control}
           />
         </div>
         <div className="col-span-3 mt-[20px]">
