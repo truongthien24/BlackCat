@@ -37,7 +37,7 @@ const Payment = () => {
       },
     },
   });
-
+    //Redux Store Lấy giá trị home từ store
   const { userInfo } = useSelector((state) => state.home);
 
   const { mutate, isLoading } = useCreateDonHang();

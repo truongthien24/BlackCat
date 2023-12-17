@@ -17,15 +17,15 @@ export const Profile = () => {
   const [isOpenEdit, setIsOpenEdit] = useState(false);
   const [orderDetail, setOrderDetail] = useState({
     open: false,
-    selector: null
-  })
+    selector: null,
+  });
 
   // Somethings
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
   // Effect
-  useEffect(() => { }, []);
+  useEffect(() => {}, []);
 
   const { userInfo } = useSelector((state) => state.home);
 
@@ -34,54 +34,75 @@ export const Profile = () => {
 
   const donHangList = useMemo(() => {
     if (!_.isEmpty(donHangData)) {
-      return donHangData?.filter((i) =>
-        i.tinhTrang === statusOrder
-      )
+      return donHangData?.filter((i) => i.tinhTrang === statusOrder);
     }
     return [];
-  }, [donHangData, statusOrder])
-
+  }, [donHangData, statusOrder]);
 
   const onOrderDetail = (onOrder) => {
     setOrderDetail(onOrder);
   };
 
   const onStatusOrder = (status) => {
-    setStatusOrder(status)
-  }
+    setStatusOrder(status);
+  };
 
   const renderDonHang = () => {
     if (!_.isEmpty(donHangList)) {
-
+      /// map là xử lý mảng
       return donHangList?.map((donHang, index) => {
-        return <div className="grid grid-cols-1 gap-[10px] bg-[#84bcaf4a] p-[10px] rounded-[5px]">
-          <div className="flex justify-between text-[13px] xl:text-[14px]">
-            <div className="flex items-center">
-              <h5 className="mr-[10px]">#{donHang?.maDonHang}</h5>
-              <div className="text-[12px] xl:text-[13px] flex items-center">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 mr-[5px]">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-                {donHang?.thongTinGiaoHang?.ngayNhanHangDuKien?.ngayBatDau + " - " + donHang?.thongTinGiaoHang?.ngayNhanHangDuKien?.ngayKetThuc}</div>
+        return (
+          <div className="grid grid-cols-1 gap-[10px] bg-[#84bcaf4a] p-[10px] rounded-[5px]">
+            <div className="flex justify-between text-[13px] xl:text-[14px]">
+              <div className="flex items-center">
+                <h5 className="mr-[10px]">#{donHang?.maDonHang}</h5>
+                <div className="text-[12px] xl:text-[13px] flex items-center">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="w-4 h-4 mr-[5px]"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
+                  </svg>
+                  {donHang?.thongTinGiaoHang?.ngayNhanHangDuKien?.ngayBatDau +
+                    " - " +
+                    donHang?.thongTinGiaoHang?.ngayNhanHangDuKien?.ngayKetThuc}
+                </div>
+              </div>
+              <button
+                className="text-[12px] lg:text-[13px] font-[600] text-[#f78700]"
+                on
+                onClick={() => {
+                  onOrderDetail({
+                    open: true,
+                    selector: donHang,
+                  });
+                }}
+              >
+                Xem chi tiết
+              </button>
             </div>
-            <button className="text-[12px] lg:text-[13px] font-[600] text-[#f78700]" on
-            onClick={()=> {
-              onOrderDetail({
-                open: true,
-                selector: donHang
-              })
-            }}>Xem chi tiết</button>
+            <div className="flex items-center text-[12px] xl:text-[13px]">
+              <div>Đầu sách: {donHang?.danhSach?.length}</div>
+              <div className="ml-[10px]">
+                Tổng giá: {donHang?.tongGia?.toLocaleString()} VND
+              </div>
+            </div>
           </div>
-          <div className="flex items-center text-[12px] xl:text-[13px]">
-            <div>Đầu sách: {donHang?.danhSach?.length}</div>
-            <div className="ml-[10px]">Tổng giá: {donHang?.tongGia?.toLocaleString()} VND</div>
-          </div>
-        </div>
-      })
+        );
+        // length để kiểm tra mãng hoặc chuỗi đó có bao nhiêu phần tử
+      });
     } else {
-      return <Empty description="Chưa có đơn hàng nào" />
+      return <Empty description="Chưa có đơn hàng nào" />;
     }
-  }
+  };
 
   // Return
   return (
@@ -147,14 +168,26 @@ export const Profile = () => {
                     </svg>
                     <span>Đơn hàng</span>
                   </div>
-                  <button className="text-[13px] md:text-[14px] text-[#585858]" onClick={()=> {
-                    toast("Chức năng đang phát triển")
-                  }}>
+                  <button
+                    className="text-[13px] md:text-[14px] text-[#585858]"
+                    onClick={() => {
+                      toast("Chức năng đang phát triển");
+                    }}
+                  >
                     Xem lịch sử đơn hàng
                   </button>
                 </div>
                 <div className="grid grid-cols-3 gap-[10px] mt-[15px]">
-                  <button className="flex relative justify-center items-center text-[13px] md:text-[14px] lg:text-[15px] rounded-[10px] py-[5px] px-[10px] duration-300" style={{ backgroundColor: `${statusOrder === 0 ? COLOR.primaryColor : "#fff"}`, color: `${statusOrder === 0 ? "#fff" : "#000"}` }} onClick={() => onStatusOrder(0)}>
+                  <button
+                    className="flex relative justify-center items-center text-[13px] md:text-[14px] lg:text-[15px] rounded-[10px] py-[5px] px-[10px] duration-300"
+                    style={{
+                      backgroundColor: `${
+                        statusOrder === 0 ? COLOR.primaryColor : "#fff"
+                      }`,
+                      color: `${statusOrder === 0 ? "#fff" : "#000"}`,
+                    }}
+                    onClick={() => onStatusOrder(0)}
+                  >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
@@ -178,7 +211,16 @@ export const Profile = () => {
                       }
                     </span>
                   </button>
-                  <button className="flex relative justify-center items-center text-[13px] md:text-[14px] lg:text-[15px] rounded-[10px] py-[5px] px-[10px] duration-300" style={{ backgroundColor: `${statusOrder === 1 ? COLOR.primaryColor : "#fff"}`, color: `${statusOrder === 1 ? "#fff" : "#000"}` }} onClick={() => onStatusOrder(1)}>
+                  <button
+                    className="flex relative justify-center items-center text-[13px] md:text-[14px] lg:text-[15px] rounded-[10px] py-[5px] px-[10px] duration-300"
+                    style={{
+                      backgroundColor: `${
+                        statusOrder === 1 ? COLOR.primaryColor : "#fff"
+                      }`,
+                      color: `${statusOrder === 1 ? "#fff" : "#000"}`,
+                    }}
+                    onClick={() => onStatusOrder(1)}
+                  >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
@@ -202,7 +244,16 @@ export const Profile = () => {
                       }
                     </span>
                   </button>
-                  <button className="flex relative justify-center items-center text-[13px] md:text-[14px] lg:text-[15px] rounded-[10px] py-[5px] px-[10px] duration-300" style={{ backgroundColor: `${statusOrder === 2 ? COLOR.primaryColor : "#fff"}`, color: `${statusOrder === 2 ? "#fff" : "#000"}` }} onClick={() => onStatusOrder(2)}>
+                  <button
+                    className="flex relative justify-center items-center text-[13px] md:text-[14px] lg:text-[15px] rounded-[10px] py-[5px] px-[10px] duration-300"
+                    style={{
+                      backgroundColor: `${
+                        statusOrder === 2 ? COLOR.primaryColor : "#fff"
+                      }`,
+                      color: `${statusOrder === 2 ? "#fff" : "#000"}`,
+                    }}
+                    onClick={() => onStatusOrder(2)}
+                  >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
@@ -235,7 +286,12 @@ export const Profile = () => {
           </div>
         </div>
       </div>
-      <ModalOrderDetail open={orderDetail.open} data={orderDetail.selector} onOpen={onOrderDetail} title="Chi tiết đơn hàng"/>
+      <ModalOrderDetail
+        open={orderDetail.open}
+        data={orderDetail.selector}
+        onOpen={onOrderDetail}
+        title="Chi tiết đơn hàng"
+      />
     </>
   );
 };

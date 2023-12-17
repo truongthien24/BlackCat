@@ -17,6 +17,8 @@ import useDeleteNgonNgu from "./hook/useDeleteNgonNgu";
 const NgonNguManagement = () => {
   // State
   const [showSlice, onShowSlice] = useState({ open: false, initData: {} });
+  //useState là một hook dùng để lưu một giá trị state của component đó
+  
 
   const { t } = useTranslation();
 

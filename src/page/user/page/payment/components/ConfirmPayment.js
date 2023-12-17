@@ -7,6 +7,7 @@ import { toast } from "react-hot-toast";
 
 const ConfirmPayment = ({ step, onStep }) => {
   const navigate = useNavigate();
+  //Là một hook của React Router giúp bạn điều hướng giữa các trang trong ứng dụng React.
 
   const { mutate, isLoading } = useSendMailPaymentSuccess();
 
