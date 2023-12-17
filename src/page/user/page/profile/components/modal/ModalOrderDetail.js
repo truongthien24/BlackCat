@@ -1,15 +1,24 @@
-import { Button, Modal, Popover } from "antd";
-import moment from "moment";
+import { Modal } from "antd";
 import { COLOR } from "page/user/shareComponent/constant";
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { toast } from "react-hot-toast";
 import PopoverReturnOrder from "./components/PopoverReturnOrder";
+import { Confirm } from "component/Confirm/Confirm";
+import { useDispatch } from "react-redux";
+import { setConfirm } from "redux/action/homeAction";
+import useUpdateDonHang from "page/admin/page/donHangManagement/hook/useUpdateDonHang";
+import useLoadingEffect from "fuse/hook/useLoadingEffect";
 
 const ModalOrderDetail = ({ open, onOpen, title, data }) => {
-  const cancelOrder = () => {
-    toast("Chức năng đang phát triển");
-  };
   const [openReturnOrder, setOpenReturnOrder] = useState(false);
+
+  const [contentConfirm, setContentConfirm] = useState({
+    diffDate: 0,
+  });
+
+  const { mutate, isLoading } = useUpdateDonHang();
+
+  const dispatch = useDispatch();
 
   const hide = () => {
     setOpenReturnOrder(false);
@@ -18,6 +27,48 @@ const ModalOrderDetail = ({ open, onOpen, title, data }) => {
   const handleOpenChange = (newOpen) => {
     setOpenReturnOrder(newOpen);
   };
+
+  const returnBook = (diffDate, sach) => {
+    // toast(`Bạn còn ${diffDate} ngày để thuê sách`);
+    setContentConfirm({
+      diffDate: diffDate,
+    });
+    dispatch(
+      setConfirm({
+        status: "open",
+        method: async () => {
+          const newDanhSach = [];
+          for (let sachItem of data?.danhSach) {
+            if (sachItem === sach) {
+              sachItem.tinhTrang = true;
+            }
+            newDanhSach.push(sachItem);
+          }
+          await mutate({
+            Data: { ...data, danhSach: newDanhSach },
+            onSuccess: (res) => {
+              toast.success("Trả hàng thành công");
+              dispatch(
+                setConfirm({
+                  status: "close",
+                  method: () => {},
+                })
+              );
+            },
+            onError: (err) => {
+              toast.error(err?.error?.message);
+            },
+          });
+        },
+      })
+    );
+  };
+
+  const cancelOrder = () => {
+    toast("Chức năng đang phát triển");
+  };
+
+  useLoadingEffect(isLoading);
 
   const renderListOrder = () => {
     return data?.danhSach?.map((sach, index) => {
@@ -32,7 +83,11 @@ const ModalOrderDetail = ({ open, onOpen, title, data }) => {
           <p>Tiền cọc: {sach?.tienCoc}</p>
           <p>Số lượng: {sach?.soLuong}</p>
           {data?.tinhTrang == 2 && (
-            <PopoverReturnOrder sach={sach} dataMain={data} />
+            <PopoverReturnOrder
+              sach={sach}
+              dataMain={data}
+              submitReturnBook={returnBook}
+            />
           )}
         </div>
       );
@@ -40,140 +95,147 @@ const ModalOrderDetail = ({ open, onOpen, title, data }) => {
   };
 
   return (
-    <Modal
-      className="!w-[90%] 2xl:!w-[70%]"
-      open={open}
-      onCancel={() => {
-        onOpen({
-          open: false,
-        });
-      }}
-      footer={null}
-      title={title}
-    >
-      <div className="grid grid-cols-1 md:grid-cols-5 gap-[20px] p-[10px]">
-        <div
-          className="rounded-[10px] p-[10px] col-span-2 flex flex-col justify-between h-fit grid grid-cols-1 gap-[10px]"
-          style={{
-            boxShadow:
-              "rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px",
-          }}
-        >
-          <div className="flex items-center">
-            <h5
-              className="mr-[10px] font-[500]"
-              style={{ color: `${COLOR.primaryColor}` }}
-            >
-              Mã đơn hàng:{" "}
-            </h5>
-            <span>{data?.maDonHang}</span>
+    <>
+      <Modal
+        className="!w-[90%] 2xl:!w-[70%]"
+        open={open}
+        onCancel={() => {
+          onOpen({
+            open: false,
+          });
+        }}
+        footer={null}
+        title={title}
+      >
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-[20px] p-[10px]">
+          <div
+            className="rounded-[10px] p-[10px] col-span-2 flex flex-col justify-between h-fit grid grid-cols-1 gap-[10px]"
+            style={{
+              boxShadow:
+                "rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px",
+            }}
+          >
+            <div className="flex items-center">
+              <h5
+                className="mr-[10px] font-[500]"
+                style={{ color: `${COLOR.primaryColor}` }}
+              >
+                Mã đơn hàng:{" "}
+              </h5>
+              <span>{data?.maDonHang}</span>
+            </div>
+            <div className="flex items-center">
+              <h5
+                className="mr-[10px] font-[500]"
+                style={{ color: `${COLOR.primaryColor}` }}
+              >
+                Ngày giao hàng dự kiến:{" "}
+              </h5>
+              <span>
+                {data?.thongTinGiaoHang?.ngayNhanHangDuKien?.ngayBatDau +
+                  " - " +
+                  data?.thongTinGiaoHang?.ngayNhanHangDuKien?.ngayKetThuc}
+              </span>
+            </div>
+            <div className="flex items-center">
+              <h5
+                className="mr-[10px] font-[500]"
+                style={{ color: `${COLOR.primaryColor}` }}
+              >
+                Tên người nhận:{" "}
+              </h5>
+              <span>
+                {data?.thongTinGiaoHang?.thongTinNguoiNhan?.tenNguoiNhan}
+              </span>
+            </div>
+            <div className="flex items-center">
+              <h5
+                className="mr-[10px] font-[500]"
+                style={{ color: `${COLOR.primaryColor}` }}
+              >
+                Số điện thoại:{" "}
+              </h5>
+              <span>{data?.thongTinGiaoHang?.thongTinNguoiNhan?.sdt}</span>
+            </div>
+            <div className="flex items-center">
+              <h5
+                className="mr-[10px] font-[500]"
+                style={{ color: `${COLOR.primaryColor}` }}
+              >
+                Địa chỉ:{" "}
+              </h5>
+              <span>{data?.thongTinGiaoHang?.thongTinNguoiNhan?.diaChi}</span>
+            </div>
+            <div className="flex items-center">
+              <h5
+                className="mr-[10px] font-[500]"
+                style={{ color: `${COLOR.primaryColor}` }}
+              >
+                Hình thức thanh toán:{" "}
+              </h5>
+              <span>{data?.thongTinThanhToan?.phuongThucThanhToan}</span>
+            </div>
+            <div className="flex items-center">
+              <h5
+                className="mr-[10px] font-[500]"
+                style={{ color: `${COLOR.primaryColor}` }}
+              >
+                Tình trạng thanh toán:{" "}
+              </h5>
+              <span>
+                {data?.thongTinGiaoHang?.thanhToan
+                  ? "Đã thanh toán"
+                  : "Chưa thanh toán"}
+              </span>
+            </div>
+            <div className="flex items-center">
+              <h5
+                className="mr-[10px] font-[500]"
+                style={{ color: `${COLOR.primaryColor}` }}
+              >
+                Tình trạng đơn hàng:{" "}
+              </h5>
+              <span>
+                {data?.tinhTrang == 0
+                  ? "Đã xác nhận"
+                  : data?.tinhTrang == 1
+                  ? "Đang giao"
+                  : "Đã giao"}
+              </span>
+            </div>
+            {data?.tinhTrang == 0 && (
+              <button
+                className="flex justify-center w-full rounded-[10px] px-[20px] py-[10px] text-[white]"
+                style={{ backgroundColor: `${COLOR.secondaryColor}` }}
+                onClick={cancelOrder}
+              >
+                Huỷ đơn hàng
+              </button>
+            )}
           </div>
-          <div className="flex items-center">
-            <h5
-              className="mr-[10px] font-[500]"
-              style={{ color: `${COLOR.primaryColor}` }}
-            >
-              Ngày giao hàng dự kiến:{" "}
-            </h5>
-            <span>
-              {moment(
-                data?.thongTinGiaoHang?.ngayNhanHangDuKien?.ngayBatDau
-              ).format("DD/MM/yyyy") +
-                " - " +
-                moment(
-                  data?.thongTinGiaoHang?.ngayNhanHangDuKien?.ngayKetThuc
-                ).format("DD/MM/yyyy")}
-            </span>
+          <div
+            className="rounded-[10px] p-[10px] col-span-3 max-h-[80vh] overflow-y-scroll grid grid-cols-1 gap-[10px]"
+            style={{
+              boxShadow:
+                "rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px",
+            }}
+          >
+            {renderListOrder()}
           </div>
-          <div className="flex items-center">
-            <h5
-              className="mr-[10px] font-[500]"
-              style={{ color: `${COLOR.primaryColor}` }}
-            >
-              Tên người nhận:{" "}
-            </h5>
-            <span>
-              {data?.thongTinGiaoHang?.thongTinNguoiNhan?.tenNguoiNhan}
-            </span>
-          </div>
-          <div className="flex items-center">
-            <h5
-              className="mr-[10px] font-[500]"
-              style={{ color: `${COLOR.primaryColor}` }}
-            >
-              Số điện thoại:{" "}
-            </h5>
-            <span>{data?.thongTinGiaoHang?.thongTinNguoiNhan?.sdt}</span>
-          </div>
-          <div className="flex items-center">
-            <h5
-              className="mr-[10px] font-[500]"
-              style={{ color: `${COLOR.primaryColor}` }}
-            >
-              Địa chỉ:{" "}
-            </h5>
-            <span>{data?.thongTinGiaoHang?.thongTinNguoiNhan?.diaChi}</span>
-          </div>
-          <div className="flex items-center">
-            <h5
-              className="mr-[10px] font-[500]"
-              style={{ color: `${COLOR.primaryColor}` }}
-            >
-              Hình thức thanh toán:{" "}
-            </h5>
-            <span>
-              {data?.thongTinGiaoHang?.thongTinThanhToan?.phuongThucThanhToan}
-            </span>
-          </div>
-          <div className="flex items-center">
-            <h5
-              className="mr-[10px] font-[500]"
-              style={{ color: `${COLOR.primaryColor}` }}
-            >
-              Tình trạng thanh toán:{" "}
-            </h5>
-            <span>
-              {data?.thongTinGiaoHang?.thongTinThanhToan?.tinhTrang
-                ? "Đã thanh toán"
-                : "Chưa thanh toán"}
-            </span>
-          </div>
-          <div className="flex items-center">
-            <h5
-              className="mr-[10px] font-[500]"
-              style={{ color: `${COLOR.primaryColor}` }}
-            >
-              Tình trạng đơn hàng:{" "}
-            </h5>
-            <span>
-              {data?.tinhTrang == 0
-                ? "Đã xác nhận"
-                : data?.tinhTrang == 1
-                ? "Đang giao"
-                : "Đã giao"}
-            </span>
-          </div>
-          {data?.tinhTrang == 0 && (
-            <button
-              className="flex justify-center w-full rounded-[10px] px-[20px] py-[10px] text-[white]"
-              style={{ backgroundColor: `${COLOR.secondaryColor}` }}
-              onClick={cancelOrder}
-            >
-              Huỷ đơn hàng
-            </button>
-          )}
         </div>
-        <div
-          className="rounded-[10px] p-[10px] col-span-3 max-h-[80vh] overflow-y-scroll grid grid-cols-1 gap-[10px]"
-          style={{
-            boxShadow:
-              "rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px",
-          }}
-        >
-          {renderListOrder()}
-        </div>
-      </div>
-    </Modal>
+      </Modal>
+      <Confirm
+        content={
+          <div>
+            Hạn thuê sách còn{" "}
+            <span style={{ color: `${COLOR.secondaryColor}` }}>
+              {contentConfirm?.diffDate} ngày
+            </span>
+            . Bạn đã chắc chắn ?
+          </div>
+        }
+      />
+    </>
   );
 };
 

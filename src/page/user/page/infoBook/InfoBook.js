@@ -15,6 +15,11 @@ import { checkLogin } from "page/user/shareComponent/Function/checkLogin";
 import { useSelector } from "react-redux";
 import useUpdateGioHang from "page/admin/page/GioHangManagement/hook/useUpdateGioHang";
 import { getPercentRent } from "method/getPercentRent";
+import useGetDataDanhGia from "page/admin/page/danhGiaManagement/hook/useGetDataDanhGia";
+import FormReaction from "./components/FormReaction";
+import useGetDataDanhGiaByIdSanPham from "page/admin/page/danhGiaManagement/hook/useGetDataDanhGiaByIDSanPham";
+import useCreateDanhGia from "page/admin/page/danhGiaManagement/hook/useCreateDanhGia";
+import { Reaction } from "page/user/component/Reaction";
 
 const InfoBook = () => {
   const { id } = useParams();
@@ -22,7 +27,22 @@ const InfoBook = () => {
   //useSelector lấy trong kho redux
   const { userInfo } = useSelector((state) => state.home);
 
+  // const { danhGiaData, isDataLoading, fetchData, isFetching } =
+  //   useGetDataDanhGia(id);
+
+  const {
+    danhGiaDataDetail,
+    isDataDetailLoading: isLoadingDanhGia,
+    fetchData: fetchDanhGia,
+    isFetching: isFetchingDanhGia,
+  } = useGetDataDanhGiaByIdSanPham("0", "0", { idSanPham: id });
+
+  console.log("danhGiaDataDetail", danhGiaDataDetail);
+
   const { mutate, isLoading } = useUpdateGioHang();
+
+  const { mutate: createDanhGia, isLoading: isLoadingCreateDanhGia } =
+    useCreateDanhGia();
 
   const {
     sachDataDetail,
@@ -75,7 +95,13 @@ const InfoBook = () => {
         await mutate({
           Data: {
             id: userInfo?.gioHang,
-            sach: { idSach: sachDataDetail?._id, soLuong: data?.soLuong, soNgayThue: 7, giaThue: getPercentRent(7) * sachDataDetail?.gia, tienCoc: sachDataDetail?.gia },
+            sach: {
+              idSach: sachDataDetail?._id,
+              soLuong: data?.soLuong,
+              soNgayThue: 7,
+              giaThue: getPercentRent(7) * sachDataDetail?.gia,
+              tienCoc: sachDataDetail?.gia,
+            },
             insert: true,
           },
           onSuccess: (res) => {
@@ -111,6 +137,29 @@ const InfoBook = () => {
     }
   };
 
+  const handleDanhGia = async (data, reset) => {
+    // console.log('data', data)
+    await createDanhGia({
+      Data: {
+        idTaiKhoan: userInfo?._id,
+        idSach: sachDataDetail?._id,
+        noiDung: data?.noiDung,
+        soSao: 5,
+        ...(data?.idDanhGiaFather && {
+          idDanhGiaFather: data?.idDanhGiaFather,
+        }),
+      },
+      onSuccess: async (res) => {
+        await fetchDanhGia();
+        await reset();
+        toast.success(res?.data?.message);
+      },
+      onError: (err) => {
+        toast.error(err?.Error?.message);
+      },
+    });
+  };
+
   const items = [
     {
       key: "1",
@@ -125,10 +174,48 @@ const InfoBook = () => {
       key: "2",
       label: "Đánh giá",
       children: (
-        <Empty
-          image={Empty.PRESENTED_IMAGE_SIMPLE}
-          description="Chức năng đang được phát triển"
-        />
+        <div className="grid grid-cols-1 gap-[10px]">
+          {!_.isEmpty(danhGiaDataDetail) ? (
+            <div className="grid grid-cols-1 gap-[10px] md:gap-[15px]">
+              {danhGiaDataDetail?.map((danhGia, index) => {
+                return (
+                  // <div className="flex">
+                  //   <img
+                  //     className="w-[40px] h-[40px] rounded-[50%]"
+                  //     src="https://cdn1.vectorstock.com/i/1000x1000/60/20/orange-cat-cartoon-cute-vector-45736020.jpg"
+                  //   />
+                  //   <div className="ml-[10px]">
+                  //     <div className="flex item-center">
+                  //       <h5 className="font-[500] mr-[10px]">
+                  //         {danhGia?.idTaiKhoan?.email}
+                  //       </h5>
+                  //       <span>
+                  //         {new Date(danhGia?.ngayTao)?.toLocaleDateString(
+                  //           "en-GB"
+                  //         )}
+                  //       </span>
+                  //     </div>
+                  //     <p>{danhGia?.noiDung}</p>
+                  //   </div>
+                  // </div>
+                  <Reaction
+                    data={danhGia}
+                    key={index}
+                    onSubmitReply={handleDanhGia}
+                  />
+                );
+              })}
+            </div>
+          ) : (
+            <Empty
+              image={Empty.PRESENTED_IMAGE_SIMPLE}
+              description="Chưa có đánh giá nào"
+            />
+          )}
+          <div>
+            <FormReaction fetch={fetchDanhGia} onSubmit={handleDanhGia} />
+          </div>
+        </div>
       ),
     },
   ];
@@ -137,20 +224,25 @@ const InfoBook = () => {
     console.log(key);
   };
 
-  useLoadingEffect(isDataDetailLoading);
+  useLoadingEffect(
+    isDataDetailLoading ||
+      isLoading ||
+      isLoadingDanhGia ||
+      isLoadingCreateDanhGia
+  );
 
   return (
     <div className="md:pt-[150px] pb-[20px] min-h-[calc(100vh_-_300px)] flex justify-center">
       <div className="flex flex-col bg-[#eaeaea] w-[95%] xl:w-[90%] 2xl:w-[70%] px-[25px] py-[20px]">
         <form
-          className="grid md:grid-cols-2 lg:grid-cols-5 2xl:grid-cols-3 gap-[30px]"
+          className="grid md:grid-cols-2 lg:grid-cols-5 gap-[30px]"
           onSubmit={handleSubmit(addToCart)}
         >
           <img
             src={sachDataDetail?.hinhAnh?.url}
             className="lg:col-span-2 h-full"
           />
-          <div className="lg:col-span-3 2xl:col-span-2 flex flex-col">
+          <div className="lg:col-span-3  flex flex-col">
             <h2 className="">{sachDataDetail?.tenSach}</h2>
             <div className="flex items-center">
               <div className="flex items-center">

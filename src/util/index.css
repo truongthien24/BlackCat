@@ -355,6 +355,11 @@ html {
   color: white;
 }
 
+.ant-btn-secondary {
+  background-color: #f7941d !important;
+  color: white;
+}
+
 @keyframes fadeOnLeft {
   from {
     left: -15%;

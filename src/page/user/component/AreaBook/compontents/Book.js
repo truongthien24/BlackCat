@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { checkLogin } from "page/user/shareComponent/Function/checkLogin";
 import { toast } from "react-hot-toast";
 import ModalReviewSach from "../modal/ModalReviewSach";
+import { useNavigate } from "react-router-dom";
 
 const Book = (props) => {
   const { data } = props;
@@ -12,6 +13,8 @@ const Book = (props) => {
     open: false,
     data: null,
   });
+
+  const navigate = useNavigate();
 
   const addToFavourite = () => {
     // Check login
@@ -31,11 +34,15 @@ const Book = (props) => {
     });
   };
 
+  const chooseBook = () => {
+    navigate(`/infoBook/${data?._id}`)
+  }
+
   return (
     <>
-      <div className="rounded-[5px] bg-[white] book">
+      <div className="rounded-[5px] bg-[white] cursor-pointer book" onClick={chooseBook}>
         <div className="relative w-full book__heading">
-          <img
+          <img 
             src={data?.hinhAnh?.url}
             className="w-full h-[220px] md:h-[260px] 2xl:h-[300px] rounded-[5px] book__heading-img"
           />

@@ -168,10 +168,10 @@ export const Navigation = () => {
     getItem(
       <div
         onClick={() => {
-          navigate("/admin/serviceManagement");
+          navigate("/admin/danhGiaManagement");
         }}
       >
-        Service Management
+        Quản lý đánh giá
       </div>,
       "12",
       <ContainerOutlined />
