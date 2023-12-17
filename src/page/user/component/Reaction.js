@@ -64,7 +64,7 @@ export const Reaction = (props) => {
                 size={40}
                 style={{ backgroundColor: "#fde3cf", color: "#f56a00" }}
               >
-                {reply?.idTaiKhoan?.email.toString().toUpperCase().charAt(0)}
+                {reply?.idTaiKhoan?.email?.toString().toUpperCase().charAt(0)}
               </Avatar>
               <div className="ml-[8px] h-max">
                 <h5 className="text-[11px] md:text-[13px] font-bold">

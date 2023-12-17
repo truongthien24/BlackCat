@@ -138,6 +138,7 @@ const InfoBook = () => {
   };
 
   const handleDanhGia = async (data, reset) => {
+    // console.log('data', data)
     await createDanhGia({
       Data: {
         idTaiKhoan: userInfo?._id,
