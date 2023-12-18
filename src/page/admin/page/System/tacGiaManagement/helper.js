@@ -1,4 +1,6 @@
-export const columns = (onClickFuncc) => {
+import { COLOR, COLORChiTietTacGia } from "page/user/shareComponent/constant";
+
+export const columns = (onOpenChiTietTacGia) => {
   return [
     {
       title: "Tên tác  giả",
@@ -10,6 +12,22 @@ export const columns = (onClickFuncc) => {
       title: "Chi tiết tác giả",
       dataIndex: "chiTietTacGia",
       key: "chiTietTacGia",
+      cell: (cell) => {
+        return (
+          <div
+            className="w-fit flex items-center cursor-pointer py-[2px] px-[10px] rounded-[20px] justify-center text-[12px] text-[white]"
+            style={{ backgroundColor: `${COLORChiTietTacGia.secondaryColor}` }}
+            onClick={() => {
+              onOpenChiTietTacGia({
+                open: true,
+                selector: cell,
+              });
+            }}
+          >
+            Nhấp vào để xem chi tiết
+          </div>
+        );
+      },
     },
   ];
 };

@@ -90,9 +90,17 @@ export const Profile = () => {
               </button>
             </div>
             <div className="flex items-center text-[12px] xl:text-[13px]">
-              <div>Đầu sách: {donHang?.danhSach?.length}</div>
+              <div>
+                <strong>
+                  Số lượng sách đang thuê : {donHang?.danhSach?.length}
+                </strong>
+              </div>
               <div className="ml-[10px]">
-                Tổng giá: {donHang?.tongGia?.toLocaleString()} VND
+                {" "}
+                <strong>
+                  {" "}
+                  Tổng giá: {donHang?.tongGia?.toLocaleString()} VND
+                </strong>
               </div>
             </div>
           </div>

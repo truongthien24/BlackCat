@@ -3,7 +3,7 @@ import useGetDetailBook from "page/admin/page/RoomManagement/hook/useGetDetailBo
 import React, { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import ReviewInfoItem from "page/user/component/AreaBook/modal/components/ReviewInfoItem";
-import { COLOR } from "page/user/shareComponent/constant";
+import { COLOR, COLOR1 } from "page/user/shareComponent/constant";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -20,12 +20,18 @@ import FormReaction from "./components/FormReaction";
 import useGetDataDanhGiaByIdSanPham from "page/admin/page/danhGiaManagement/hook/useGetDataDanhGiaByIDSanPham";
 import useCreateDanhGia from "page/admin/page/danhGiaManagement/hook/useCreateDanhGia";
 import { Reaction } from "page/user/component/Reaction";
+import { useState } from "react";
+import ModalRules from "./modal/ModalRules";
 
 const InfoBook = () => {
   const { id } = useParams();
 
   //useSelector lấy trong kho redux
   const { userInfo } = useSelector((state) => state.home);
+  const [openRules, setOnOpenRules] = useState(false);
+  const onRules = () => {
+    setOnOpenRules((prev) => !prev);
+  };
 
   // const { danhGiaData, isDataLoading, fetchData, isFetching } =
   //   useGetDataDanhGia(id);
@@ -130,12 +136,12 @@ const InfoBook = () => {
     }
   };
 
-  const addToFavourite = () => {
-    // Check login
-    if (checkLogin()) {
-      toast.error("Bạn chưa đăng nhập");
-    }
-  };
+  // const addToFavourite = () => {
+  //   // Check login
+  //   if (checkLogin()) {
+  //     toast.error("Bạn chưa đăng nhập");
+  //   }
+  // };
 
   const handleDanhGia = async (data, reset) => {
     // console.log('data', data)
@@ -249,7 +255,19 @@ const InfoBook = () => {
                 <p className="text-[gray] text-[11px] md:text-[13px] 2xl:text-[14px]">
                   Tác giả:{" "}
                   <span className="text-[#000]">
-                    {sachDataDetail?.tenTacGia}
+                    <span
+                      className="cursor-pointer font-[500]"
+                      onClick={onRules}
+                      style={{ color: `${COLOR1.secondaryColor}` }}
+                    >
+                      {sachDataDetail?.tenTacGia}
+                      <ModalRules
+                        open={openRules}
+                        onOpen={onRules}
+                        title="xem chi tiết tác giả"
+                        data={sachDataDetail}
+                      />
+                    </span>
                   </span>
                 </p>
               </div>

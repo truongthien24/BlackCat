@@ -9,7 +9,7 @@ import { toast } from "react-hot-toast";
 import { FormProvider, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import _ from "lodash";
+import _, { rest } from "lodash";
 
 export const Reaction = (props) => {
   // Props
@@ -97,7 +97,7 @@ export const Reaction = (props) => {
   };
 
   const handleReplyReaction = () => {
-    setIsReply(true);
+    setIsReply(true, reset);
   };
 
   const handleSeenReply = () => {
@@ -105,7 +105,7 @@ export const Reaction = (props) => {
   };
 
   const onReplyReaction = (data) => {
-    onSubmitReply(data);
+    onSubmitReply(data, reset);
   };
 
   // Return
