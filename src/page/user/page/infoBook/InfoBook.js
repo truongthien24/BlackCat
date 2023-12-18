@@ -37,7 +37,7 @@ const InfoBook = () => {
     isFetching: isFetchingDanhGia,
   } = useGetDataDanhGiaByIdSanPham("0", "0", { idSanPham: id });
 
-  console.log("danhGiaDataDetail", danhGiaDataDetail);
+  // console.log("danhGiaDataDetail", danhGiaDataDetail);
 
   const { mutate, isLoading } = useUpdateGioHang();
 

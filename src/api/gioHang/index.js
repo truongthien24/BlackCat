@@ -32,12 +32,17 @@ export default {
   },
 
   deleteGioHang: (params) => {
-    console.log('params', params)
+    console.log("params", params);
     return axiosWrapper.delete(`/deleteGioHang/${params?._id}`, {
       ...params,
     });
   },
 
+  deleteSanPhamKhoiGioHang: (params) => {
+    return axiosWrapper.delete(`/deleteSanPhamKhoiGioHang/${params?._id}`, {
+      ...params,
+    });
+  },
   checkSanPham: (params) => {
     return axiosWrapper.post(`/checkSanPham`, {
       ...params,
@@ -51,8 +56,8 @@ export default {
   },
 
   sendMail: (params) => {
-    return axiosWrapper.post('/sendMailGioHang', {
+    return axiosWrapper.post("/sendMailGioHang", {
       ...params,
-    })
-  }
+    });
+  },
 };

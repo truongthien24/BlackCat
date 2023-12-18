@@ -19,12 +19,18 @@ const ModalRules = ({ open, onOpen, title }) => {
       >
         Điều khoản của chúng tôi
       </h2> */}
-      <div>Không được bom hàng quá 2 lần</div>
-      <div>Không được bom hàng quá 2 lần</div>
-      <div>Không được bom hàng quá 2 lần</div>
-      <div>Không được bom hàng quá 2 lần</div>
+      <div>Những điều cần lưu ý khi thuê sách tại cửa hàng BlackCat</div>
+      <div>1. Khi thuê sách nhưng trả sách trễ hơn sẽ bị mất tiền cọc</div>
+      <div>2. Khi làm hư hỏng sách sẽ mất tiền cọc</div>
+      <div>
+        3. Khi thuê sách 14 ngày nhưng trả lại sách trước 14 ngày thì giá thuê
+        cũng không thay đổi.
+      </div>
+      <div> vd: Khi thuê sách 14 ngày nhưng 3 ngày trả lại</div>
+      <div>4. Không được bom hàng quá 2 lần</div>
+      <div>5. Trước khi mở hàng phải quay video lại.</div>
     </Modal>
-  )
-}
+  );
+};
 
-export default ModalRules
+export default ModalRules;

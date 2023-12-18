@@ -8,12 +8,13 @@ import { setConfirm } from "redux/action/homeAction";
 import { toast } from "react-hot-toast";
 import FormSelect from "page/admin/shareComponent/form/FormSelect";
 import { getPercentRent } from "method/getPercentRent";
+import useDeleteSanPhamKhoiGioHang from "page/admin/page/GioHangManagement/hook/useDeleteSanPhamGioHang";
 
-const CartItem = ({ arrayData, data, columns, isEdit }) => {
+const CartItem = ({ arrayData, data, columns, isEdit, gioHang }) => {
   const { getValues, watch, setValue, register } = useFormContext();
 
   const dispatch = useDispatch();
-
+  const { mutate, isLoading } = useDeleteSanPhamKhoiGioHang();
   useEffect(() => {
     if (!_.isEmpty(data)) {
       // reset({ ...data.sach, soLuongGioHang: data.soLuong });
@@ -46,7 +47,15 @@ const CartItem = ({ arrayData, data, columns, isEdit }) => {
       setConfirm({
         status: "open",
         method: async () => {
-          toast("Chức năng đang phát triển");
+          await mutate({
+            Data: { _id: gioHang },
+            onSuccess: (res) => {
+              toast.success(res?.data?.message);
+            },
+            onError: (error) => {
+              toast.error(error?.error?.message);
+            },
+          });
         },
       })
     );

@@ -79,6 +79,7 @@ const Cart = () => {
             key={index}
             columns={columns(isMobile, isEdit)}
             isEdit={isEdit}
+            gioHang={userInfo?.gioHang}
           />
         );
       });
@@ -174,6 +175,7 @@ const Cart = () => {
                           await mutateUpdateGioHang({
                             Data: {
                               id: userInfo?.gioHang,
+                              // watch là lấy dữ liệu trong form
                               sach: watch("danhSach"),
                               insert: false,
                               update: true,
