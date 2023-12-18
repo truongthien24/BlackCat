@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FormBaseLogin } from "../../component/Form/FormBaseLogin";
 import * as yup from "yup";
@@ -6,10 +6,12 @@ import { useTranslation } from "react-i18next";
 import useLogin from "./hook/useLogin";
 import toast from "react-hot-toast";
 import useLoadingEffect from "fuse/hook/useLoadingEffect";
+import ModalForgetPassword from "./modal/ModalForgetPassword";
 
 export const Login = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const [isForget, setIsForget] = useState(false);
 
   const { mutate, isLoading: isSubmitting } = useLogin();
 
@@ -91,9 +93,17 @@ export const Login = () => {
                 formField={formField}
                 validationSchema={validationSchema}
                 methodSubmit={login}
+                onForget={setIsForget}
               />
             </div>
           </div>
+          <ModalForgetPassword
+            open={isForget}
+            onCancel={() => {
+              setIsForget(false);
+            }}
+            title="Quên cmn mật khẩu rồi :D"
+          />
         </div>
       </div>
     </>

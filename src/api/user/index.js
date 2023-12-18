@@ -29,6 +29,12 @@ export default {
     });
   },
 
+  getPasswordByEmail: (params) => {
+    return axiosWrapper.post(`/getPasswordByEmail`, {
+      ...params,
+    });
+  },
+
   //   getDataProduction: (params: object) => {
   //     return axiosWrapper.post(`/Production/DataService/GetData`, {
   //       ...params,
