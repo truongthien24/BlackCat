@@ -3,7 +3,6 @@ import { Modal } from "antd";
 import { Icon } from "assets/icon";
 import useLoadingEffect from "fuse/hook/useLoadingEffect";
 import useGetPasswordByEmail from "page/admin/page/AccountManagement/hook/useGetPasswordByEmail";
-// import useGetPasswordByEmail from "page/admin/page/accountManagement/hook/useGetPasswordByEmail";
 import React from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
