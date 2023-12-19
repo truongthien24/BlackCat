@@ -3,6 +3,8 @@ import axios from "axios";
 const axiosWrapper = axios.create({
   // baseURL: process.env.API_DEV_PATH,
   baseURL: "http://localhost:3001/api",
+  // baseURL:
+  //   "https://shimmering-syrniki-14c618.netlify.app/.netlify/functions/api",
 });
 
 axiosWrapper.interceptors.request.use((config) => {
