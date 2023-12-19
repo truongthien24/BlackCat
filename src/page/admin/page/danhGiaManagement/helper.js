@@ -3,6 +3,12 @@ import { COLOR } from "page/user/shareComponent/constant";
 export const columns = (onOpenNoiDungDanhGia) => {
   return [
     {
+      title: "Tên tài khoản",
+      dataIndex: "tenDangNhap",
+      key: "tenDangNhap",
+      width: "25%",
+    },
+    {
       title: "Email",
       dataIndex: "email",
       key: "email",
@@ -20,14 +26,22 @@ export const columns = (onOpenNoiDungDanhGia) => {
       key: "tenSach",
       width: "25%",
       cell: (cell) => {
-        return <div className="w-fit flex items-center cursor-pointer py-[2px] px-[10px] rounded-[20px] justify-center text-[12px] text-[white]" style={{backgroundColor: `${COLOR.secondaryColor}`}} onClick={()=> {
-          onOpenNoiDungDanhGia({
-            open: true,
-            selector: cell
-          })
-        }}>Xem chi tiết</div>
-      }
-    }
+        return (
+          <div
+            className="w-fit flex items-center cursor-pointer py-[2px] px-[10px] rounded-[20px] justify-center text-[12px] text-[white]"
+            style={{ backgroundColor: `${COLOR.secondaryColor}` }}
+            onClick={() => {
+              onOpenNoiDungDanhGia({
+                open: true,
+                selector: cell,
+              });
+            }}
+          >
+            Xem chi tiết
+          </div>
+        );
+      },
+    },
   ];
 };
 

@@ -97,7 +97,7 @@ export const Reaction = (props) => {
   };
 
   const handleReplyReaction = () => {
-    setIsReply(true);
+    setIsReply(true, reset);
   };
 
   const handleSeenReply = () => {
@@ -105,7 +105,7 @@ export const Reaction = (props) => {
   };
 
   const onReplyReaction = (data) => {
-    onSubmitReply(data);
+    onSubmitReply(data, reset);
   };
 
   // Return

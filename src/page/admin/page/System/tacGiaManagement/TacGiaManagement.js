@@ -3,7 +3,7 @@ import useLoadingEffect from "fuse/hook/useLoadingEffect";
 import _ from "lodash";
 import { TableMain } from "page/admin/shareComponent/table/TableMain";
 import PopupMain from "page/user/shareComponent/Popup/PopupMain";
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { toast } from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
@@ -13,10 +13,24 @@ import { columns } from "./helper";
 import useGetDataTacGia from "./hook/useGetDataTacGia";
 import useGetDetailTacGia from "./hook/useGetDetailTacGia";
 import useDeleteTacGia from "./hook/useDeleteTacGia";
+import { CellModal } from "page/admin/shareComponent/modal/CellModal";
+import { ChiTiet } from "page/admin/shareComponent/modal/ModalChiTiet";
 
 const TacGiaManagement = () => {
   // State
   const [showSlice, onShowSlice] = useState({ open: false, initData: {} });
+  const [isOpenChiTietTacGia, setIsOpenChiTietTacGia] = useState({
+    open: false,
+    selector: {},
+  });
+
+  const onOpenChiTietTacGia = (state) => {
+    setIsOpenChiTietTacGia(state);
+  };
+
+  const columnsTable = useMemo(() => {
+    return columns(onOpenChiTietTacGia);
+  }, []);
 
   const { t } = useTranslation();
 
@@ -97,7 +111,7 @@ const TacGiaManagement = () => {
       <div className="h-[88%]">
         <TableMain
           data={tacGiaData}
-          columns={columns()}
+          columns={columnsTable}
           handleEdit={handleEdit}
           handleDelete={handleDelete}
         />
@@ -109,15 +123,18 @@ const TacGiaManagement = () => {
         showSlice={showSlice}
         onShowSlice={onShowSlice}
         fullWidth
-        children={
-          <Details
-            data={tacGiaDataDetail}
-            fetcher={fetchData}
-            fetchDetail={fetchDataDetail}
-            showSlice={showSlice}
-            onShowSlice={onShowSlice}
-          />
-        }
+        children={<></>}
+      />
+      <CellModal
+        open={isOpenChiTietTacGia?.open}
+        onCancel={() => {
+          onOpenChiTietTacGia({
+            open: false,
+            selector: null,
+          });
+        }}
+        title="Chi Tiết tác giả"
+        children={<ChiTiet data={isOpenChiTietTacGia?.selector} />}
       />
       <Confirm />
     </>

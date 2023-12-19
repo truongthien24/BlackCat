@@ -75,16 +75,16 @@ const ReviewContent = ({ data }) => {
               style={{ color: `${COLOR.secondaryColor}` }}
             >
               Xem chi tiết
-              <ModalRules
-                open={openRules}
-                onOpen={onRules}
-                title="xem nội dung sách"
-                data={data}
-              />
             </span>
           }
         />
       </div>
+      <ModalRules
+        open={openRules}
+        onOpen={onRules}
+        title="xem nội dung sách"
+        data={data}
+      />
     </div>
   );
 };

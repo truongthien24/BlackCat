@@ -40,7 +40,7 @@ const Book = (props) => {
 
   return (
     <>
-      <div className="rounded-[5px] bg-[white] cursor-pointer book" onClick={chooseBook}>
+      <div className="rounded-[5px] bg-[white] cursor-pointer book">
         <div className="relative w-full book__heading">
           <img 
             src={data?.hinhAnh?.url}
@@ -65,7 +65,7 @@ const Book = (props) => {
             </div>
           </div>
         </div>
-        <div className="flex flex-col items-center mt-[5px]">
+        <div className="flex flex-col items-center mt-[5px]" onClick={chooseBook}>
           <h5>{data?.tenSach}</h5>
           <span style={{ color: `${COLOR.primaryColor}` }} className="my-[7px]">
             {(data?.gia * 0.1).toLocaleString()} VND
