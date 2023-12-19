@@ -33,6 +33,7 @@ const ModalForgetPassword = ({ open, onCancel, title }) => {
       Data: data,
       onSuccess: (res) => {
         toast.success(res?.data?.message);
+        onCancel();
       },
       onError: (err) => {
         toast.error(err?.message);
@@ -40,7 +41,7 @@ const ModalForgetPassword = ({ open, onCancel, title }) => {
     });
   };
 
-  // useLoadingEffect(isLoading);
+  useLoadingEffect(isLoading);
 
   return (
     <Modal
