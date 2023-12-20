@@ -38,6 +38,7 @@ import Cart from "./component/Cart";
 import Right from "./component/Right";
 import Bar from "./component/Bar";
 import Eye from "./component/Eye";
+import Setting from "./component/Setting";
 
 export const Icon = (props) => {
     switch (props.name) {
@@ -105,6 +106,7 @@ export const Icon = (props) => {
         case "right": return (<Right {...props} />);
         case "bar": return (<Bar {...props} />);
         case "eye": return (<Eye {...props} />);
+        case "setting": return (<Setting {...props} />);
         default: return <></>;
     }
 }
