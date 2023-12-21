@@ -62,6 +62,8 @@ const Cart = () => {
 
   const { handleSubmit, watch, reset } = method;
 
+  console.log('watch', watch())
+
   useEffect(() => {
     if (gioHangDataDetail) {
       reset({ ...gioHangDataDetail });
@@ -69,12 +71,13 @@ const Cart = () => {
   }, [gioHangDataDetail]);
 
   const renderCartItem = () => {
-    if (gioHangDataDetail?.danhSach?.length > 0) {
-      return gioHangDataDetail?.danhSach?.map((cart, index) => {
+    const danhSach = watch('danhSach')
+    if (danhSach?.length > 0) {
+      return danhSach?.map((cart, index) => {
         return (
           // truyền bằng props
           <CartItem
-            arrayData={gioHangDataDetail?.danhSach}
+            arrayData={danhSach}
             data={cart}
             key={index}
             columns={columns(isMobile, isEdit)}
@@ -135,7 +138,7 @@ const Cart = () => {
       <div className="md:pt-[150px] pb-[20px] min-h-[calc(100vh_-_300px)] flex justify-center">
         <FormProvider {...method}>
           <form
-            className="bg-[#eaeaea] min-h-[calc(100%_-_150px)] px-[10px] py-[10px] md:px-[25px] md:py-[20px] w-full xl:w-[90%] 2xl:w-[70%]"
+            className="bg-[#eaeaea] min-h-[calc(100%_-_150px)] px-[10px] py-[10px] md:px-[25px] md:py-[20px] w-full xl:w-[90%] 2xl:w-[70%] relative"
             onSubmit={handleSubmit(handleSubmitCart)}
           >
             <div className="mb-[10px] md:mb-[20px] flex justify-between">
@@ -208,7 +211,7 @@ const Cart = () => {
                     className="text-[500]"
                     style={{ color: `${COLOR.secondaryColor}` }}
                   >
-                    {gioHangDataDetail?.danhSach
+                    {watch('danhSach')
                       ?.reduce(
                         (a, b) =>
                           a +
@@ -225,11 +228,11 @@ const Cart = () => {
                     className="text-[#fff] text-[11px] md:text-[15px] p-[10px] rounded-[5px] flex items-center justify-center"
                     type="submit"
                     disabled={
-                      !gioHangDataDetail?.danhSach?.length > 0 || isEdit
+                      !watch('danhSach') > 0 || isEdit
                     }
                     style={{
                       backgroundColor: `${
-                        gioHangDataDetail?.danhSach?.length > 0 && !isEdit
+                        watch('danhSach') > 0 && !isEdit
                           ? COLOR.primaryColor
                           : "gray"
                       }`,
@@ -240,6 +243,7 @@ const Cart = () => {
                 </div>
               </div>
             </div>
+            <img src="/images/nonnoel.png" className="absolute left-[-13px] top-[-15px] w-[50px]"/>
           </form>
         </FormProvider>
       </div>

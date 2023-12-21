@@ -39,7 +39,7 @@ export default {
   },
 
   deleteSanPhamKhoiGioHang: (params) => {
-    return axiosWrapper.delete(`/deleteSanPhamKhoiGioHang/${params?._id}`, {
+    return axiosWrapper.delete(`/deleteSanPhamKhoiGioHang/${params?.id}`, {
       ...params,
     });
   },

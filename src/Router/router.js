@@ -29,6 +29,7 @@ import { AllBooks } from "page/user/page/allBooks/allBook";
 import BookCategory from "page/user/page/bookCategory/BookCategory";
 import DonHangManagement from "page/admin/page/donHangManagement/DonHangManagement";
 import DanhGiaManagement from "page/admin/page/danhGiaManagement/DanhGiaManagement";
+import Favourite from "page/user/page/favourite/Favourite";
 
 export const MainRoutes = () => {
 
@@ -59,6 +60,7 @@ export const MainRoutes = () => {
           <Route path="cart/:id" element={<Cart />} />
           <Route path="payment" element={<Payment />} />
           <Route path="book" element={<BookCategory />} />
+          <Route path="favourite" element={<Favourite />} />
         </Route>
         <Route
           path="*"
