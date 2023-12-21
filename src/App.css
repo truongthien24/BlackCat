@@ -111,7 +111,7 @@ html {
     justify-content: center;
   }
   .fondo {
-    background: #f4471f;
+    /* background: #f4471f; */
     border-radius: 50%;
     box-shadow: 0 1px 2.2px rgba(0, 0, 0, 0.051),
       0 2.3px 5.3px rgba(0, 0, 0, 0.059), 0 4.4px 10px rgba(0, 0, 0, 0.06),
@@ -123,13 +123,14 @@ html {
     width: 50px;
   }
   .botón:active .fondo {
-    background: #e93c15;
+    /* background: #e93c15; */
   }
   .icono {
     height: 100px;
     transform: rotate(-120deg);
     transition: transform 500ms;
     width: 100px;
+    margin-top: 15px;
   }
   .parte {
     background: white;

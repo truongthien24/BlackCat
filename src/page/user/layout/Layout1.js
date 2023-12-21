@@ -95,7 +95,8 @@ export const Layout1 = () => {
         </div>
         <ScrollToTop />
         <button
-          className="botón fixed right-0 top-[90%] md:right-1 md:top-[100px] z-[16]"
+          className="botón fixed right-0 top-[90%] md:right-1 md:top-[100px] z-[16] bg-contain bg-top bg-no-repeat"
+          style={{backgroundImage: "url(/images/caythong.png)"}}
           id="hehe"
           onClick={(e) => {
             const rest = document.querySelector("#hehe");
@@ -103,22 +104,22 @@ export const Layout1 = () => {
             setPlay((prev) => !prev);
           }}
         >
-          <div className="fondo" x="0" y="0" width="200" height="200"></div>
-          <div className="icono" width="200" height="200">
+          <div className="fondo" x="0" y="0" width="100" height="100"></div>
+          <div className="icono" width="100" height="100">
             <div
               className="parte izquierda"
               x="0"
               y="0"
-              width="200"
-              height="200"
+              width="100"
+              height="100"
               fill="#fff"
             ></div>
             <div
               className="parte derecha"
               x="0"
               y="0"
-              width="200"
-              height="200"
+              width="100"
+              height="100"
               fill="#fff"
             ></div>
           </div>
