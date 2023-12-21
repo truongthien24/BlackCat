@@ -23,7 +23,10 @@ const ModalUpdatePassword = ({ open, onOpen, title, data }) => {
     resolver: yupResolver(
       yup.object().shape({
         matKhauHienTai: yup.string().required("Nhập vào mật khẩu hiện tại"),
-        matKhauMoi: yup.string().required("Nhập vào mật khẩu hiện mới"),
+        matKhauMoi: yup
+          .string()
+          .required("Nhập vào mật khẩu hiện mới")
+          .min(6, "Không được nhập dưới 6"),
         matKhauMoiXacNhan: yup
           .string()
           .required("Nhập vào mật khẩu xác nhận")
@@ -85,6 +88,7 @@ const ModalUpdatePassword = ({ open, onOpen, title, data }) => {
               label="Mật khẩu hiện tại"
               required
               errors={errors}
+              type="password"
             />
           </div>
           <div className="w-full">
@@ -92,6 +96,7 @@ const ModalUpdatePassword = ({ open, onOpen, title, data }) => {
               control={control}
               name="matKhauMoi"
               label="Mật khẩu mới"
+              type="password"
               required
               errors={errors}
             />
@@ -101,6 +106,7 @@ const ModalUpdatePassword = ({ open, onOpen, title, data }) => {
               control={control}
               name="matKhauMoiXacNhan"
               label="Nhập lại mật khẩu mới"
+              type="password"
               required
               errors={errors}
             />

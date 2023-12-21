@@ -475,7 +475,7 @@ export const ModalCreateRoom = (props) => {
               className="flex items-center justify-center bg-[#3790c7] text-white py-[10px] px-[30px] rounded-[7px] duration-300 hover:shadow-[#3790c7a6] hover:shadow-lg hover:translate-y-[-3px]"
               type="submit"
             >
-              {t("save")}
+              {t("thêm")}
             </button>
           </div>
         </form>
