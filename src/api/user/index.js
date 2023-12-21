@@ -35,6 +35,12 @@ export default {
     });
   },
 
+  changePassword: (params) => {
+    return axiosWrapper.post(`/changePassword`, {
+      ...params,
+    });
+  }
+
   //   getDataProduction: (params: object) => {
   //     return axiosWrapper.post(`/Production/DataService/GetData`, {
   //       ...params,

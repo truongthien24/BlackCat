@@ -1,31 +1,58 @@
-import React, { useEffect } from 'react'
-import { Outlet } from 'react-router-dom'
-import { Navigation } from './navigation/Navigation'
-import TabMenu from './tabMenu/TabMenu'
-import { useNavigate } from 'react-router-dom'
+import React, { createContext, useEffect, useState } from "react";
+import { Outlet } from "react-router-dom";
+import { Navigation } from "./navigation/Navigation";
+import TabMenu from "./tabMenu/TabMenu";
+import { useNavigate } from "react-router-dom";
+import useGetAccountByID from "../page/AccountManagement/hook/useGetAccountByID";
+import { useDispatch } from "react-redux";
+import { setUserInfo } from "redux/action/homeAction";
+import { jwtDecode } from "jwt-decode";
+
+export const LayoutContextAdmin = createContext(null);
 
 export const Layout1Admin = () => {
-
-  const navigate = useNavigate()
-
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { pathname } = window.location;
 
+  const [id, setId] = useState(null);
+
   useEffect(() => {
-    if (!localStorage.getItem('jwt')) {
-      navigate('/admin/login');
+    const jwt = JSON.parse(localStorage.getItem("jwt"));
+    if (jwt) {
+      const jwtDC = jwtDecode(jwt);
+      setId(jwtDC?.users?._id);
     }
-  }, [pathname])
+  }, []);
+
+  useEffect(() => {
+    if (!localStorage.getItem("jwt")) {
+      navigate("/admin/login");
+    }
+  }, [pathname]);
+
+  const { accountData, isDataLoading, fetchData, isFetching } =
+    useGetAccountByID({ id: id });
+
+  useEffect(() => {
+    if (accountData) {
+      dispatch(setUserInfo(accountData));
+    }
+  }, [accountData]);
 
   return (
-    <div className="flex h-screen">
-      <Navigation />
-      <div className="w-[calc(100%-250px)] h-full">
-        <TabMenu />
-        <div className="px-[20px] py-[10px] h-[92%]">
-          <Outlet />
+    <LayoutContextAdmin.Provider
+      value={{ fetchDataAccount: fetchData }}
+    >
+      <div className="flex h-screen">
+        <Navigation />
+        <div className="w-[calc(100%-250px)] h-full">
+          <TabMenu />
+          <div className="px-[20px] py-[10px] h-[92%]">
+            <Outlet />
+          </div>
         </div>
       </div>
-    </div>
-
-  )
-}
+    </LayoutContextAdmin.Provider>
+  );
+};

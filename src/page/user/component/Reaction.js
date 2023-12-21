@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Avatar, Empty, Tooltip } from "antd";
 import { formateDate } from "../../../method/formatDate";
 import { Icon } from "../../../assets/icon";
@@ -35,6 +35,10 @@ export const Reaction = (props) => {
     ),
   });
 
+  const isAdmin = useMemo(() => {
+    return data?.admin;
+  }, [data]);
+
   const {
     handleSubmit,
     register,
@@ -57,21 +61,25 @@ export const Reaction = (props) => {
   const renderReply = () => {
     if (!_.isEmpty(data?.listReply)) {
       return data?.listReply?.map((reply, index) => {
+        const admin = reply?.admin;
         return (
           <div>
             <div className="flex items-start">
               <Avatar
                 size={40}
-                style={{ backgroundColor: "#fde3cf", color: "#f56a00" }}
+                style={{
+                  backgroundColor: `${admin ? "#f56a00" : "#fde3cf"}`,
+                  color: `${admin ? "#fde3cf" : "#f56a00"}`
+                }}
               >
-                {reply?.idTaiKhoan?.tenDangNhap
+                {admin ? 'Q' : reply?.idTaiKhoan?.tenDangNhap
                   ?.toString()
                   .toUpperCase()
                   .charAt(0)}
               </Avatar>
               <div className="ml-[8px] h-max">
-                <h5 className="text-[11px] md:text-[13px] font-bold">
-                  {reply?.idTaiKhoan?.tenDangNhap}
+                <h5 className="text-[11px] md:text-[13px] font-bold" style={{color: `${admin ? "#f56a00" : "#000"}`}}>
+                  {admin ? "Quản trị viên" :reply?.idTaiKhoan?.tenDangNhap}
                 </h5>
                 <p className="text-[10px] md:text-[12px]">
                   {new Date(reply?.ngayTao)?.toLocaleDateString("en-GB")}
@@ -115,7 +123,10 @@ export const Reaction = (props) => {
         <div className="flex items-start">
           <Avatar
             size={40}
-            style={{ backgroundColor: "#fde3cf", color: "#f56a00" }}
+            style={{
+              backgroundColor: `${isAdmin ? "red" : "#fde3cf"}`,
+              color: "#f56a00",
+            }}
           >
             {/* charAt lấy ký tự ở vị trí đầu tiên
               hình ảnh hiển thị */}

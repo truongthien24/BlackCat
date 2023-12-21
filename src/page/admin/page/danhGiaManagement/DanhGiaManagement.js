@@ -8,12 +8,14 @@ import PopupMain from "page/user/shareComponent/Popup/PopupMain";
 import React, { useMemo, useState } from "react";
 import { toast } from "react-hot-toast";
 import { useTranslation } from "react-i18next";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setConfirm } from "redux/action/homeAction";
 // import Details from "./component/Details";
 import { columns } from "./helper";
 import useGetDataDanhGia from "./hook/useGetDataDanhGia";
 import useGetDetailDanhGia from "./hook/userGetDetailDanhGia";
+import useDeleteDanhGia from "./hook/useDeleteDanhGia";
+import useCreateDanhGia from "./hook/useCreateDanhGia";
 // import useGetDataNhaXuatBan from "./hook/useGetDataNhaXuatBan";
 // import useGetDetailNhaXuatBan from "./hook/useGetDetailNhaXuatBan";
 // import useDeleteNhaXuatBan from "./hook/useDeleteNhaXuatBan";
@@ -22,7 +24,10 @@ const DanhGiaManagement = () => {
   // State
   const [showSlice, onShowSlice] = useState({ open: false, initData: {} });
 
-  const [isOpenNoiDungDanhGia, setIsOpenNoiDungDanhGia] = useState({ open: false, selector: {} })
+  const [isOpenNoiDungDanhGia, setIsOpenNoiDungDanhGia] = useState({
+    open: false,
+    selector: {},
+  });
 
   const { t } = useTranslation();
 
@@ -30,7 +35,7 @@ const DanhGiaManagement = () => {
 
   const onOpenNoiDungDanhGia = (state) => {
     setIsOpenNoiDungDanhGia(state);
-  }
+  };
 
   // Get Data
   const { danhGiaData, isDataLoading, fetchData, isFetching } =
@@ -43,13 +48,17 @@ const DanhGiaManagement = () => {
     isFetching: isFetchDetail,
   } = useGetDetailDanhGia("0", "0", showSlice?.initData?._id);
 
-
   const columnsTable = useMemo(() => {
-    return columns(onOpenNoiDungDanhGia)
-  }, [])
+    return columns(onOpenNoiDungDanhGia);
+  }, []);
 
-  // const { mutate: mutateDelete, isLoading: isSubmittingDelete } =
-  //   useDeleteNhaXuatBan();
+  const { mutate: mutateDelete, isLoading: isSubmittingDelete } =
+    useDeleteDanhGia();
+
+  const { mutate: createDanhGia, isLoading: isLoadingCreateDanhGia } =
+    useCreateDanhGia();
+
+  const { userInfo } = useSelector((state) => state.home);
 
   // Method
   const handleAdd = () => {
@@ -70,25 +79,54 @@ const DanhGiaManagement = () => {
     await dispatch(
       setConfirm({
         status: "open",
-        method: async () => { }
-        // await mutateDelete({
-        //   Data: { _id: data?._id },
-        //   onSuccess: async (res) => {
-        //     toast.success(res?.data?.message);
-        //     fetchData();
-        //     dispatch(
-        //       setConfirm({
-        //         status: "close",
-        //         method: () => {},
-        //       })
-        //     );
-        //   },
-        //   onError: async (error) => {
-        //     toast.error(error?.message);
-        //   },
-        // }),
+        method: async () => {
+          await mutateDelete({
+            Data: { _id: data?._id },
+            onSuccess: async (res) => {
+              toast.success(res?.data?.message);
+              fetchData();
+              dispatch(
+                setConfirm({
+                  status: "close",
+                  method: () => {},
+                })
+              );
+            },
+            onError: async (error) => {
+              toast.error(error?.message);
+            },
+          });
+        },
       })
     );
+  };
+
+  const handleReply = async (data) => {
+    const selectorData = isOpenNoiDungDanhGia?.selector;
+    await createDanhGia({
+      Data: {
+        idTaiKhoan: userInfo?._id,
+        idSach: selectorData.idSach?._id,
+        noiDung: data?.noiDung,
+        soSao: 5,
+        ...(selectorData?.idDanhGiaFather && {
+          idDanhGiaFather: selectorData?.idDanhGiaFather,
+        }),
+        admin: true,
+      },
+      onSuccess: async (res) => {
+        await fetchDataDetail();
+        await fetchData();
+        toast.success(res?.data?.message);
+        onOpenNoiDungDanhGia({
+          open: false,
+          selector: null,
+        });
+      },
+      onError: (err) => {
+        toast.error(err?.Error?.message);
+      },
+    });
   };
 
   useLoadingEffect(isDataLoading || isDataDetailLoading);
@@ -117,9 +155,7 @@ const DanhGiaManagement = () => {
       </div>
       <PopupMain
         title={
-          _.isEmpty(showSlice?.initData?._id)
-            ? "Thêm đánh giá"
-            : "Sửa đánh giá"
+          _.isEmpty(showSlice?.initData?._id) ? "Thêm đánh giá" : "Sửa đánh giá"
         }
         showSlice={showSlice}
         onShowSlice={onShowSlice}
@@ -135,12 +171,22 @@ const DanhGiaManagement = () => {
           <></>
         }
       />
-      <CellModal open={isOpenNoiDungDanhGia?.open} onCancel={() => {
-        onOpenNoiDungDanhGia({
-          open: false,
-          selector: null
-        })
-      }} title="Nội dung đánh giá" children={<Reaction data={isOpenNoiDungDanhGia?.selector} />} />
+      <CellModal
+        open={isOpenNoiDungDanhGia?.open}
+        onCancel={() => {
+          onOpenNoiDungDanhGia({
+            open: false,
+            selector: null,
+          });
+        }}
+        title="Nội dung đánh giá"
+        children={
+          <Reaction
+            data={isOpenNoiDungDanhGia?.selector}
+            onSubmitReply={handleReply}
+          />
+        }
+      />
       <Confirm />
     </>
   );
