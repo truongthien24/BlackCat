@@ -3,6 +3,7 @@ import { Modal } from "antd";
 import { Icon } from "assets/icon";
 import useLoadingEffect from "fuse/hook/useLoadingEffect";
 import useGetPasswordByEmail from "page/admin/page/AccountManagement/hook/useGetPasswordByEmail";
+// import useGetPasswordByEmail from "page/admin/page/accountManagement/hook/useGetPasswordByEmail";
 import React from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
@@ -19,7 +20,11 @@ const ModalForgetPassword = ({ open, onCancel, title }) => {
     defaultValues: {
       email: "",
     },
-    resolver: yupResolver(yup.object().shape({})),
+    resolver: yupResolver(
+      yup.object().shape({
+        email: yup.string().required("Vui lòng nhập email vào"),
+      })
+    ),
   });
 
   const {
@@ -36,7 +41,7 @@ const ModalForgetPassword = ({ open, onCancel, title }) => {
         onCancel();
       },
       onError: (err) => {
-        toast.error(err?.message);
+        toast.error(err?.error);
       },
     });
   };

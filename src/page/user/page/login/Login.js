@@ -48,7 +48,7 @@ export const Login = () => {
     await mutate({
       Data: data?.data,
       onSuccess: async (msg) => {
-        toast.success("Login success");
+        toast.success(msg?.data?.Message);
         localStorage.setItem("jwt", JSON.stringify(msg.data.token));
         localStorage.setItem("current_user", JSON.stringify(msg.data.Data));
         setTimeout(() => {
@@ -56,7 +56,7 @@ export const Login = () => {
         }, 500);
       },
       onError: async (err) => {
-        toast.error(err.error);
+        toast.error(err?.error);
       },
     });
   };
