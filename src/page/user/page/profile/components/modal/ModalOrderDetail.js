@@ -8,6 +8,7 @@ import { useDispatch } from "react-redux";
 import { setConfirm } from "redux/action/homeAction";
 import useUpdateDonHang from "page/admin/page/donHangManagement/hook/useUpdateDonHang";
 import useLoadingEffect from "fuse/hook/useLoadingEffect";
+import moment from "moment";
 
 const ModalOrderDetail = ({ open, onOpen, title, data }) => {
   const [openReturnOrder, setOpenReturnOrder] = useState(false);
@@ -73,7 +74,7 @@ const ModalOrderDetail = ({ open, onOpen, title, data }) => {
   const renderListOrder = () => {
     return data?.danhSach?.map((sach, index) => {
       return (
-        <div className="grid grid-cols-6 gap-[10px]" key={index}>
+        <div className="grid grid-cols-5 gap-[10px]" key={index}>
           <img
             src={sach?.sach?.hinhAnh?.url}
             className="w-[50px] xl:w-[70px] h-[100px]"
@@ -82,17 +83,19 @@ const ModalOrderDetail = ({ open, onOpen, title, data }) => {
           <p>Thuê: {sach?.soNgayThue}ngày</p>
           <p>Tiền cọc: {sach?.tienCoc}</p>
           <p>Số lượng: {sach?.soLuong}</p>
-          {data?.tinhTrang == 2 && (
+          {/* {data?.tinhTrang == 2 && (
             <PopoverReturnOrder
               sach={sach}
               dataMain={data}
               submitReturnBook={returnBook}
             />
-          )}
+          )} */}
         </div>
       );
     });
   };
+
+  console.log('data', data)
 
   return (
     <>
@@ -125,17 +128,33 @@ const ModalOrderDetail = ({ open, onOpen, title, data }) => {
               <span>{data?.maDonHang}</span>
             </div>
             <div className="flex items-center">
-              <h5
-                className="mr-[10px] font-[500]"
-                style={{ color: `${COLOR.primaryColor}` }}
-              >
-                Ngày giao hàng dự kiến:{" "}
-              </h5>
-              <span>
-                {data?.thongTinGiaoHang?.ngayNhanHangDuKien?.ngayBatDau +
-                  " - " +
-                  data?.thongTinGiaoHang?.ngayNhanHangDuKien?.ngayKetThuc}
-              </span>
+              {data?.tinhTrang == 2 ? (
+                <>
+                  <h5
+                    className="mr-[10px] font-[500]"
+                    style={{ color: `${COLOR.primaryColor}` }}
+                  >
+                    Ngày nhận hàng:{" "}
+                  </h5>
+                  <span>
+                    {moment(data?.ngayGiao)?.format("DD/MM/YYYY")}
+                  </span>
+                </>
+              ) : (
+                <>
+                  <h5
+                    className="mr-[10px] font-[500]"
+                    style={{ color: `${COLOR.primaryColor}` }}
+                  >
+                    Ngày giao hàng dự kiến:{" "}
+                  </h5>
+                  <span>
+                    {data?.thongTinGiaoHang?.ngayNhanHangDuKien?.ngayBatDau +
+                      " - " +
+                      data?.thongTinGiaoHang?.ngayNhanHangDuKien?.ngayKetThuc}
+                  </span>
+                </>
+              )}
             </div>
             <div className="flex items-center">
               <h5
@@ -210,6 +229,15 @@ const ModalOrderDetail = ({ open, onOpen, title, data }) => {
                 onClick={cancelOrder}
               >
                 Huỷ đơn hàng
+              </button>
+            )}
+            {data?.tinhTrang == 2 && (
+              <button
+                className="flex justify-center w-full rounded-[10px] px-[20px] py-[10px] text-[white]"
+                style={{ backgroundColor: `${COLOR.secondaryColor}` }}
+                onClick={returnBook}
+              >
+                Trả đơn hàng
               </button>
             )}
           </div>

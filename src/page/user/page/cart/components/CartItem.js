@@ -42,20 +42,31 @@ const CartItem = ({ arrayData, data, columns, isEdit, gioHang }) => {
     }
   };
 
-  const deleteItemCart = async (item) => {
+  const deleteItemCart = async (data) => {
     await dispatch(
       setConfirm({
         status: "open",
         method: async () => {
-          await mutate({
-            Data: { _id: gioHang },
-            onSuccess: (res) => {
-              toast.success(res?.data?.message);
-            },
-            onError: (error) => {
-              toast.error(error?.error?.message);
-            },
-          });
+          // await mutate({
+          //   Data: { id: gioHang._id, sachId: data },
+          //   onSuccess: (res) => {
+          //     toast.success(res?.data?.message);
+          //   },
+          //   onError: (error) => {
+          //     toast.error(error?.error?.message);
+          //   },
+          // });
+          const danhSach = watch("danhSach");
+          const newDanhSach = danhSach?.filter(
+            (sach) => sach.sach._id != data._id
+          );
+          setValue("danhSach", newDanhSach);
+          dispatch(
+            setConfirm({
+              status: "close",
+              method: null,
+            })
+          );
         },
       })
     );
@@ -166,10 +177,21 @@ const CartItem = ({ arrayData, data, columns, isEdit, gioHang }) => {
                     className="mb-[5px]"
                     name={`danhSach[${indexItem}].soNgayThue`}
                     onChangeForm={(e) => {
-                      setValue(
-                        `danhSach[${indexItem}].giaThue`,
-                        getPercentRent(parseInt(e)) * data?.sach?.gia
-                      );
+                      // setValue(
+                      //   `danhSach[${indexItem}].giaThue`,
+                      //   getPercentRent(parseInt(e)) * data?.sach?.gia
+                      // );
+                      const danhSach = watch("danhSach");
+                      danhSach.forEach((sach, indexSach) => {
+                        setValue(
+                          `danhSach[${indexSach}].soNgayThue`,
+                          parseInt(e)
+                        );
+                        setValue(
+                          `danhSach[${indexSach}].giaThue`,
+                          getPercentRent(parseInt(e)) * sach?.sach?.gia
+                        );
+                      });
                     }}
                     option={[
                       { value: 7, label: "7 ngày" },
@@ -201,7 +223,7 @@ const CartItem = ({ arrayData, data, columns, isEdit, gioHang }) => {
                 >
                   <Tooltip
                     title="Xoá"
-                    onClick={() => deleteItemCart(data?.sach?._id)}
+                    onClick={() => deleteItemCart(data?.sach)}
                   >
                     <Button
                       type="delete"

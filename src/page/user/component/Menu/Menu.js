@@ -9,12 +9,12 @@ const Menu = () => {
       path: "/allBooks",
       child: [],
     },
-    {
-      key: "newArrivals",
-      title: "New Arrivals",
-      path: "/book?type=newArrivals",
-      child: [],
-    },
+    // {
+    //   key: "newArrivals",
+    //   title: "New Arrivals",
+    //   path: "/book?type=newArrivals",
+    //   child: [],
+    // },
     {
       key: "aboutUs",
       title: "About Us",
