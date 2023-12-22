@@ -29,7 +29,14 @@ const FormDatePicker = ({
           console.log("value", value);
           return (
             <DatePicker
-              disabledDate={(d) => !d || d.isAfter(moment().add(1))}
+              disabledDate={(d) =>
+                !d ||
+                dayjs(d).isBefore(dayjs(), "day") ||
+                d.isAfter(dayjs(max).add(14, "day"), "day")
+              }
+              //!d kiểm tra xem ngày d có tồn tại hay không.
+              //dayjs(d).isBefore(dayjs(), 'day') kiểm tra xem ngày d có trước ngày hiện tại hay không.
+              //d.isAfter(dayjs(max).add(7, 'day'), 'day') kiểm tra xem ngày d có sau max + 7 ngày hay không.
               value={
                 value &&
                 dayjs(new Date(value).toLocaleDateString("en-GB"), "DD-MM-YYYY")

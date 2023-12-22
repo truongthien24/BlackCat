@@ -11,7 +11,7 @@ import FormNumberPhone from "page/admin/shareComponent/form/FormNumberPhone";
 import FormSelect from "page/admin/shareComponent/form/FormSelect";
 import useUpdateDonHang from "../hook/useUpdateDonHang";
 import useCreateDonHang from "../hook/useCreateDonHang";
-import FormDatePicker from "page/admin/shareComponent/form/FormDatePicker";
+import FormDateFuture from "page/admin/shareComponent/form/FormDateFuture";
 
 const Details = ({
   data = {},
@@ -109,7 +109,6 @@ const Details = ({
       }
     }
   }, [showSlice]);
-
 
   useEffect(() => {
     return () => reset();
@@ -213,12 +212,13 @@ const Details = ({
           />
         </div>
         <div className="col-span-1">
-          <FormDatePicker
+          <FormDateFuture
             control={control}
             errors={errors}
             name="ngayGiao"
             label="Ngày giao"
             required
+            max={new Date()}
           />
         </div>
         <div className="col-span-1">

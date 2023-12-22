@@ -1,13 +1,18 @@
-import { COLOR } from "page/user/shareComponent/constant";
+import { COLOR, COLOR1 } from "page/user/shareComponent/constant";
 import React, { useState } from "react";
 import ReviewInfoItem from "./ReviewInfoItem";
 import { FormProvider, useForm } from "react-hook-form";
 import ModalRules from "./ModalRules";
+import ModalChiTiet from "./ModalChiTiet";
 
 const ReviewContent = ({ data }) => {
   const [openRules, setOnOpenRules] = useState(false);
+  const [openRules1, setOnOpenRules1] = useState(false);
   const onRules = () => {
     setOnOpenRules((prev) => !prev);
+  };
+  const onRules1 = () => {
+    setOnOpenRules1((prev) => !prev);
   };
   return (
     <div>
@@ -15,7 +20,18 @@ const ReviewContent = ({ data }) => {
       <div className="flex items-center">
         <div className="flex items-center">
           <p className="text-[gray] text-[11px] md:text-[13px] 2xl:text-[14px]">
-            Tác giả: <span className="text-[#000]">{data?.tenTacGia}</span>
+            Tác giả:{" "}
+            <span className="text-[#000]">
+              <span className="text-[#000]">
+                <span
+                  className="cursor-pointer font-[500]"
+                  onClick={onRules1}
+                  style={{ color: `${COLOR1.secondaryColor}` }}
+                >
+                  {data?.tenTacGia}
+                </span>
+              </span>
+            </span>
           </p>
         </div>
         <span className="mx-[10px]">|</span>
@@ -83,6 +99,12 @@ const ReviewContent = ({ data }) => {
         open={openRules}
         onOpen={onRules}
         title="xem nội dung sách"
+        data={data}
+      />
+      <ModalChiTiet
+        open={openRules1}
+        onOpen={onRules1}
+        title="xem chi tiết tác giả"
         data={data}
       />
     </div>
