@@ -1,6 +1,6 @@
 import { Modal } from "antd";
 import { COLOR } from "page/user/shareComponent/constant";
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { toast } from "react-hot-toast";
 import PopoverReturnOrder from "./components/PopoverReturnOrder";
 import { Confirm } from "component/Confirm/Confirm";
@@ -9,6 +9,7 @@ import { setConfirm } from "redux/action/homeAction";
 import useUpdateDonHang from "page/admin/page/donHangManagement/hook/useUpdateDonHang";
 import useLoadingEffect from "fuse/hook/useLoadingEffect";
 import moment from "moment";
+import { checkDiffDate } from "page/user/shareComponent/Function/checkDiffDate";
 
 const ModalOrderDetail = ({ open, onOpen, title, data }) => {
   const [openReturnOrder, setOpenReturnOrder] = useState(false);
@@ -29,8 +30,16 @@ const ModalOrderDetail = ({ open, onOpen, title, data }) => {
     setOpenReturnOrder(newOpen);
   };
 
-  const returnBook = (diffDate, sach) => {
-    // toast(`Bạn còn ${diffDate} ngày để thuê sách`);
+  const ngayDenHan = useMemo(() => {
+    if (data?.ngayGiao) {
+      let res = new Date(data?.ngayGiao?.toString());
+      res.setDate(res.getDate() + data.danhSach[0]?.soNgayThue);
+      return res;
+    }
+  }, [data?.ngayGiao]);
+
+  const returnBook = () => {
+    const diffDate = checkDiffDate(ngayDenHan)
     setContentConfirm({
       diffDate: diffDate,
     });
@@ -38,17 +47,20 @@ const ModalOrderDetail = ({ open, onOpen, title, data }) => {
       setConfirm({
         status: "open",
         method: async () => {
-          const newDanhSach = [];
-          for (let sachItem of data?.danhSach) {
-            if (sachItem === sach) {
-              sachItem.tinhTrang = true;
-            }
-            newDanhSach.push(sachItem);
-          }
+          // const newDanhSach = [];
+          // for (let sachItem of data?.danhSach) {
+          //   if (sachItem === sach) {
+          //     sachItem.tinhTrang = true;
+          //   }
+          //   newDanhSach.push(sachItem);
+          // }
           await mutate({
-            Data: { ...data, danhSach: newDanhSach },
+            Data: { ...data, tinhTrang: 3, thongTinTraHang: {
+              ngayBatDau: (new Date()).toString(),
+              ngayKetThuc: "",
+            } },
             onSuccess: (res) => {
-              toast.success("Trả hàng thành công");
+              toast.success("Thành công. Đơn hàng sẽ được trả trong vài ngày");
               dispatch(
                 setConfirm({
                   status: "close",
@@ -94,8 +106,6 @@ const ModalOrderDetail = ({ open, onOpen, title, data }) => {
       );
     });
   };
-
-  console.log('data', data)
 
   return (
     <>
@@ -219,7 +229,9 @@ const ModalOrderDetail = ({ open, onOpen, title, data }) => {
                   ? "Đã xác nhận"
                   : data?.tinhTrang == 1
                   ? "Đang giao"
-                  : "Đã giao"}
+                  : data?.tinhTrang == 2
+                  ? "Đã giao" : data?.tinhTrang == 3
+                  ? "Đang trả đơn" : "Đã trả đơn"}
               </span>
             </div>
             {data?.tinhTrang == 0 && (

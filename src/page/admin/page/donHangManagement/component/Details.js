@@ -12,6 +12,7 @@ import FormSelect from "page/admin/shareComponent/form/FormSelect";
 import useUpdateDonHang from "../hook/useUpdateDonHang";
 import useCreateDonHang from "../hook/useCreateDonHang";
 import FormDateFuture from "page/admin/shareComponent/form/FormDateFuture";
+import FormDatePicker from "page/admin/shareComponent/form/FormDatePicker";
 
 const Details = ({
   data = {},
@@ -153,7 +154,7 @@ const Details = ({
   return (
     <FormProvider {...method}>
       <form
-        className="grid grid-cols-3 gap-[5px]"
+        className="grid grid-cols-3 gap-[10px]"
         onSubmit={handleSubmit(submitForm)}
       >
         {/* Có 3 cột */}
@@ -175,6 +176,7 @@ const Details = ({
             errors={errors}
             required
             control={control}
+            disable={watch("tinhTrang") > 1}
           />
         </div>
         <div className="col-span-1">
@@ -186,6 +188,17 @@ const Details = ({
             minLength={9}
             maxLength={10}
             control={control}
+            disabled={watch("tinhTrang") > 1}
+          />
+        </div>
+        <div className="col-span-2">
+          <FormTextField
+            label="Địa chỉ nhận hàng"
+            name="thongTinGiaoHang.thongTinNguoiNhan.diaChi"
+            errors={errors}
+            required
+            control={control}
+            disable={watch("tinhTrang") > 1}
           />
         </div>
         <div className="col-span-1">
@@ -207,6 +220,14 @@ const Details = ({
                 label: "Đã giao",
                 value: 2,
               },
+              {
+                label: "Đang trả hàng",
+                value: 3,
+              },
+              {
+                label: "Đã trả hàng",
+                value: 4,
+              },
             ]}
             control={control}
           />
@@ -217,17 +238,27 @@ const Details = ({
             errors={errors}
             name="ngayGiao"
             label="Ngày giao"
+            disabled={watch("tinhTrang") != 0}
             required
             max={new Date()}
           />
         </div>
         <div className="col-span-1">
-          <FormTextField
-            label="Địa chỉ nhận hàng"
-            name="thongTinGiaoHang.thongTinNguoiNhan.diaChi"
-            errors={errors}
-            required
+          <FormDateFuture
             control={control}
+            errors={errors}
+            disabled
+            name="thongTinTraHang.ngayBatDau"
+            label="Ngày bắt đầu trả hàng"
+          />
+        </div>
+        <div className="col-span-1">
+          <FormDateFuture
+            control={control}
+            disabled={watch("tinhTrang") != 4}
+            errors={errors}
+            name="thongTinTraHang.ngayKetThuc"
+            label="Ngày trả hàng kết thúc"
           />
         </div>
         <div className="col-span-3 mt-[20px]">

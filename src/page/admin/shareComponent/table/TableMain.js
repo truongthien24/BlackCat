@@ -165,18 +165,32 @@ export const TableMain = (props) => {
                     ) : text === 1 ? (
                       <div className="flex items-center">
                         <span className="w-[4px] h-[4px] rounded-[50%] bg-[#00e1ff] block mr-[5px]"></span>
-                        <span className="text-[13px] text-[#00e1ff]">
+                        <span className="text-[13px] text-[#2cb5c7]">
                           {t("Đang giao")}
                         </span>
                       </div>
-                    ) : (
+                    ) : text === 3 ?
                       <div className="flex items-center">
-                        <span className="w-[4px] h-[4px] rounded-[50%] bg-[orange] block mr-[5px]"></span>
-                        <span className="text-[13px] text-[orange]">
-                          {t("Chờ xác nhận")}
+                        <span className="w-[4px] h-[4px] rounded-[50%] bg-[#00a2ff] block mr-[5px]"></span>
+                        <span className="text-[13px] text-[#00a2ff]">
+                          {t("Đang trả hàng")}
                         </span>
                       </div>
-                    )}
+                      : text === 4 ?
+                      <div className="flex items-center">
+                        <span className="w-[4px] h-[4px] rounded-[50%] bg-[#9d35c3] block mr-[5px]"></span>
+                        <span className="text-[13px] text-[#9d35c3]">
+                          {t("Đã trả hàng")}
+                        </span>
+                      </div>
+                      : (
+                        <div className="flex items-center">
+                          <span className="w-[4px] h-[4px] rounded-[50%] bg-[orange] block mr-[5px]"></span>
+                          <span className="text-[13px] text-[orange]">
+                            {t("Chờ xác nhận")}
+                          </span>
+                        </div>
+                      )}
                   </div>
                 );
               },

@@ -17,7 +17,7 @@ const FormSelect = ({
     inputProps,
 }) => {
     return (
-        <div className={`flex flex-col items-start ${className}`}>
+        <div className={`flex flex-col items-start ${className} w-full`}>
             <h5 className="mb-[5px]">
                 {label} {required && <span className="text-[red]">*</span>}
             </h5>
@@ -28,6 +28,7 @@ const FormSelect = ({
                     return (
                         <Select
                             disabled={disable}
+                            className="w-full"
                             options={option}
                             ref={ref}
                             value={value}
