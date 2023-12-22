@@ -9,7 +9,7 @@ const FormDatePicker = ({
   label,
   control,
   name,
-  disable,
+  disabled,
   type,
   required,
   errors,
@@ -18,7 +18,7 @@ const FormDatePicker = ({
   max,
 }) => {
   return (
-    <div className="flex flex-col items-start">
+    <div className="flex flex-col items-start w-full">
       <h5 className="mb-[5px]">
         {label} {required && <span className="text-[red]">*</span>}
       </h5>
@@ -26,9 +26,10 @@ const FormDatePicker = ({
         control={control}
         name={name}
         render={({ field: { onChange, onBlur, value, ref } }) => {
-          console.log("value", value);
           return (
             <DatePicker
+              className="w-full"
+              disabled={disabled}
               disabledDate={(d) => !d || d.isAfter(max + 1)}
               value={
                 value &&

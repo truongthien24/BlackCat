@@ -228,11 +228,11 @@ const Cart = () => {
                     className="text-[#fff] text-[11px] md:text-[15px] p-[10px] rounded-[5px] flex items-center justify-center"
                     type="submit"
                     disabled={
-                      !watch('danhSach') > 0 || isEdit
+                      !watch('danhSach')?.length > 0 || isEdit
                     }
                     style={{
                       backgroundColor: `${
-                        watch('danhSach') > 0 && !isEdit
+                        watch('danhSach')?.length > 0 && !isEdit
                           ? COLOR.primaryColor
                           : "gray"
                       }`,
