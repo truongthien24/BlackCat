@@ -34,8 +34,8 @@ export const Login = () => {
   ];
 
   const validationSchema = yup.object().shape({
-    tenDangNhap: yup.string().required("Please input...."),
-    matKhau: yup.string().required("Please input...."),
+    tenDangNhap: yup.string().required("Yêu cầu nhập tên đăng nhập vào"),
+    matKhau: yup.string().required("Yêu cầu nhập mật khẩu"),
   });
 
   // useEffect(()=> {
@@ -56,7 +56,7 @@ export const Login = () => {
         }, 500);
       },
       onError: async (err) => {
-        toast.error(err?.error);
+        toast.error(err?.error?.message);
       },
     });
   };

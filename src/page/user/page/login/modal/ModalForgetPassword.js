@@ -41,7 +41,7 @@ const ModalForgetPassword = ({ open, onCancel, title }) => {
         onCancel();
       },
       onError: (err) => {
-        toast.error(err?.error);
+        toast.error(err?.error?.message);
       },
     });
   };

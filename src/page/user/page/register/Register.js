@@ -45,10 +45,14 @@ export const Register = () => {
   ];
 
   const validationSchema = yup.object().shape({
-    tenDangNhap: yup.string().required("Please input...."), //Reuired: bắt buộc nhập, string là kiểu kí tự chuỗi
+    tenDangNhap: yup
+      .string()
+      .required("Yêu cầu nhập tên đăng nhập vào")
+      .min(8, "Yêu cầu điền vào ít nhất 8 ký tự")
+      .max(20, "Tối đa 20 ký tự thui"), //Reuired: bắt buộc nhập, string là kiểu kí tự chuỗi
     matKhau: yup
       .string()
-      .required("Please input....")
+      .required("Yêu cầu nhập mật khẩu vào")
       .test("len", "Must be 6-24 characters", (data) => {
         if (data.toString().length >= 6 && data.toString().length <= 24) {
           return true; //Hợp lệ
@@ -57,8 +61,8 @@ export const Register = () => {
       }),
     confirmPassword: yup
       .string()
-      .required("Please input....")
-      .oneOf([yup.ref("matKhau")], "Password does not match")
+      .required("Yêu cầu nhập mật khẩu vào")
+      .oneOf([yup.ref("matKhau")], "Mật khẩu không khớp")
       .test("len", "Must be 6-24 characters", (data) => {
         if (data.toString().length >= 6 && data.toString().length <= 24) {
           return true;
@@ -67,8 +71,8 @@ export const Register = () => {
       }),
     email: yup
       .string()
-      .email("Please input abc@gmail...")
-      .required("Please input..."),
+      .email("Không đúng định dạng email@gmail.com")
+      .required("Yêu cầu nhập email vào"),
   });
 
   // useEffect(()=> {
@@ -82,10 +86,10 @@ export const Register = () => {
     await mutate({
       Data: { ...data?.data, loaiTaiKhoan: "user" },
       onSuccess: async (msg) => {
-        toast.success(msg.data.message);
+        toast.success(msg?.data?.message);
       },
       onError: async (err) => {
-        toast.error(err.error.message);
+        toast.error(err?.error?.message);
       },
     });
   };
