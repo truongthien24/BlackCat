@@ -35,7 +35,10 @@ export const Profile = () => {
 
   const donHangList = useMemo(() => {
     if (!_.isEmpty(donHangData)) {
-      return donHangData?.filter((i) => i.tinhTrang === statusOrder);
+      if(statusOrder == 2) {
+        return donHangData?.filter((i) => i.tinhTrang >= 2);
+      }
+      return donHangData?.filter((i) => i.tinhTrang === statusOrder)
     }
     return [];
   }, [donHangData, statusOrder]);
@@ -285,7 +288,7 @@ export const Profile = () => {
                       backgroundColor: `${
                         statusOrder === 2 ? COLOR.primaryColor : "#fff"
                       }`,
-                      color: `${statusOrder === 2 ? "#fff" : "#000"}`,
+                      color: `${statusOrder >= 2 ? "#fff" : "#000"}`,
                     }}
                     onClick={() => onStatusOrder(2)}
                   >
@@ -307,7 +310,7 @@ export const Profile = () => {
                     <span className="absolute right-[0px] top-[-10px] bg-[#e42e2e] text-[#fff] flex items-center justify-center text-[13px] w-[20px] h-[20px] rounded-[50%]">
                       {
                         (donHangData?.filter(
-                          (donHang) => donHang.tinhTrang === 2
+                          (donHang) => donHang.tinhTrang >= 2
                         )).length
                       }
                     </span>

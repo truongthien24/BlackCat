@@ -229,7 +229,9 @@ const ModalOrderDetail = ({ open, onOpen, title, data }) => {
                   ? "Đã xác nhận"
                   : data?.tinhTrang == 1
                   ? "Đang giao"
-                  : "Đã giao"}
+                  : data?.tinhTrang == 2
+                  ? "Đã giao" : data?.tinhTrang == 3
+                  ? "Đang trả đơn" : "Đã trả đơn"}
               </span>
             </div>
             {data?.tinhTrang == 0 && (
