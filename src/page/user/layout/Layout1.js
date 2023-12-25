@@ -24,7 +24,7 @@ export const Layout1 = () => {
   const [isMenuMobile, setIsMenuMobile] = useState(false);
 
   const [audio, setAudio] = useState(
-    new Audio("/audio/Christmas-background.mp3")
+    new Audio("/audio/HOÀ-NHỊP-GIÁNG-SINH.mp3")
   );
 
   const [play, setPlay] = useState(false);
@@ -96,7 +96,7 @@ export const Layout1 = () => {
         <ScrollToTop />
         <button
           className="botón fixed right-0 top-[90%] md:right-1 md:top-[100px] z-[16] bg-contain bg-top bg-no-repeat"
-          style={{backgroundImage: "url(/images/caythong.png)"}}
+          style={{ backgroundImage: "url(/images/caythong.png)" }}
           id="hehe"
           onClick={(e) => {
             const rest = document.querySelector("#hehe");
