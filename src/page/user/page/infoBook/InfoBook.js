@@ -159,7 +159,7 @@ const InfoBook = () => {
         toast.success(res?.data?.message);
       },
       onError: (err) => {
-        toast.error(err?.Error?.message);
+        toast.error(err?.error?.message);
       },
     });
   };
@@ -230,9 +230,9 @@ const InfoBook = () => {
 
   useLoadingEffect(
     isDataDetailLoading ||
-    isLoading ||
-    isLoadingDanhGia ||
-    isLoadingCreateDanhGia
+      isLoading ||
+      isLoadingDanhGia ||
+      isLoadingCreateDanhGia
   );
 
   return (
@@ -392,8 +392,9 @@ const InfoBook = () => {
                 disabled={sachDataDetail?.soLuong < 1}
                 className="text-[#fff] w-full p-[10px] rounded-[5px] flex items-center justify-center"
                 style={{
-                  backgroundColor: `${sachDataDetail?.soLuong > 0 ? COLOR.primaryColor : "gray"
-                    }`,
+                  backgroundColor: `${
+                    sachDataDetail?.soLuong > 0 ? COLOR.primaryColor : "gray"
+                  }`,
                 }}
               >
                 Thêm vào giỏ hàng

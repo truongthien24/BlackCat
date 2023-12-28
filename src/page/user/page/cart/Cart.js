@@ -62,7 +62,7 @@ const Cart = () => {
 
   const { handleSubmit, watch, reset } = method;
 
-  console.log('watch', watch())
+  console.log("watch", watch());
 
   useEffect(() => {
     if (gioHangDataDetail) {
@@ -71,7 +71,7 @@ const Cart = () => {
   }, [gioHangDataDetail]);
 
   const renderCartItem = () => {
-    const danhSach = watch('danhSach')
+    const danhSach = watch("danhSach");
     if (danhSach?.length > 0) {
       return danhSach?.map((cart, index) => {
         return (
@@ -211,7 +211,7 @@ const Cart = () => {
                     className="text-[500]"
                     style={{ color: `${COLOR.secondaryColor}` }}
                   >
-                    {watch('danhSach')
+                    {watch("danhSach")
                       ?.reduce(
                         (a, b) =>
                           a +
@@ -228,14 +228,18 @@ const Cart = () => {
                     className="text-[#fff] text-[11px] md:text-[15px] p-[10px] rounded-[5px] flex items-center justify-center"
                     type="submit"
                     disabled={
-                      !watch('danhSach')?.length > 0 || isEdit
+                      !watch("danhSach")?.length > 0 || isEdit
+                      // isEdit chỉnh sửa giỏ hàng
+                      //Điều kiện ở đây là !watch('danhSach')?.length > 0 || isEdit, có nghĩa là nút sẽ bị tắt nếu độ dài của  "danhSach" (thường là một mảng) là 0 hoặc biến isEdit có giá true
                     }
                     style={{
                       backgroundColor: `${
-                        watch('danhSach')?.length > 0 && !isEdit
+                        watch("danhSach")?.length > 0 && !isEdit
                           ? COLOR.primaryColor
                           : "gray"
                       }`,
+                      // ?: là cặp if else
+                      //watch('danhSach')?.length > 0 && !isEdit là true, màu nền sẽ được thiết lập thành COLOR.primaryColor, ngược lại nếu là false thì màu nền sẽ là "gray" (màu xám).
                     }}
                   >
                     Tiếp tục
@@ -243,7 +247,10 @@ const Cart = () => {
                 </div>
               </div>
             </div>
-            <img src="/images/nonnoel.png" className="absolute left-[-13px] top-[-15px] w-[50px]"/>
+            <img
+              src="/images/nonnoel.png"
+              className="absolute left-[-13px] top-[-15px] w-[50px]"
+            />
           </form>
         </FormProvider>
       </div>

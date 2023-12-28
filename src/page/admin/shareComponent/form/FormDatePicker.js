@@ -32,6 +32,7 @@ const FormDatePicker = ({
               disabled={disabled}
               // disabledDate={(d) => !d || d.isAfter(max + 1)}
               disabledDate={(d) => !d || d.isAfter(moment().add(1))}
+              //moment().add(1, 'day'): Thêm 1 ngày vào ngày hiện tại để có giá trị max.
               value={
                 value &&
                 dayjs(new Date(value).toLocaleDateString("en-GB"), "DD-MM-YYYY")
