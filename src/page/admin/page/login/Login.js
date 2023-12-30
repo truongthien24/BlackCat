@@ -54,7 +54,7 @@ export const Login = () => {
         }, 500);
       },
       onError: async (err) => {
-        toast.error(err.error);
+        toast.error(err.error?.message);
       },
     });
   };

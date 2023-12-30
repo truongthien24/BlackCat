@@ -4,7 +4,7 @@ import React, {
   useLayoutEffect,
   useState,
 } from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import { Footer } from "../component/Footer";
 import { ScrollToTop } from "../component/ScrollToTop";
 import { useDispatch } from "react-redux";
@@ -13,6 +13,7 @@ import Navbar from "../component/Navbar";
 import { setUserInfo } from "redux/action/homeAction";
 import { jwtDecode } from "jwt-decode";
 import useGetAccountByID from "page/admin/page/AccountManagement/hook/useGetAccountByID";
+import { toast } from "react-hot-toast";
 
 export const LayoutContext = createContext(null);
 
@@ -22,6 +23,8 @@ export const Layout1 = () => {
   const dispatch = useDispatch();
 
   const [isMenuMobile, setIsMenuMobile] = useState(false);
+
+  const navigate = useNavigate();
 
   const [audio, setAudio] = useState(
     new Audio("/audio/Christmas-background.mp3")
@@ -35,7 +38,12 @@ export const Layout1 = () => {
     const jwt = JSON.parse(localStorage.getItem("jwt"));
     if (jwt) {
       const jwtDC = jwtDecode(jwt);
-      setId(jwtDC?.users?._id);
+      if (["user"].includes(jwtDC?.users.loaiTaiKhoan)) {
+        setId(jwtDC?.users?._id);
+      } else {
+        navigate("/admin")
+        toast.error('Tài khoản không được phân quyền');
+      }
     }
   }, []);
 
@@ -96,7 +104,7 @@ export const Layout1 = () => {
         <ScrollToTop />
         <button
           className="botón fixed right-0 top-[90%] md:right-1 md:top-[100px] z-[16] bg-contain bg-top bg-no-repeat"
-          style={{backgroundImage: "url(/images/caythong.png)"}}
+          style={{ backgroundImage: "url(/images/caythong.png)" }}
           id="hehe"
           onClick={(e) => {
             const rest = document.querySelector("#hehe");

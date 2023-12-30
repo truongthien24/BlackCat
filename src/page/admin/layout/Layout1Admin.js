@@ -7,6 +7,7 @@ import useGetAccountByID from "../page/AccountManagement/hook/useGetAccountByID"
 import { useDispatch } from "react-redux";
 import { setUserInfo } from "redux/action/homeAction";
 import { jwtDecode } from "jwt-decode";
+import { toast } from "react-hot-toast";
 
 export const LayoutContextAdmin = createContext(null);
 
@@ -21,7 +22,12 @@ export const Layout1Admin = () => {
     const jwt = JSON.parse(localStorage.getItem("jwt"));
     if (jwt) {
       const jwtDC = jwtDecode(jwt);
-      setId(jwtDC?.users?._id);
+      if(["admin", "employee"].includes(jwtDC?.users.loaiTaiKhoan)) {
+        setId(jwtDC?.users?._id);
+      } else {
+        navigate("/")
+        toast.error('Tài khoản không được phân quyền');
+      }
     }
   }, []);
 
