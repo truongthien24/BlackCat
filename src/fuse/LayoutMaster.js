@@ -18,7 +18,6 @@ const LayoutMaster = ({ component }) => {
 //     }
 //     dispatch(setUserInfo(userJwt));
 //   });
-
   return (
     <LoadingProvider>
       <Toaster position="top-center" toastOptions={{ duration: 2000 }} />
