@@ -123,7 +123,17 @@ const TacGiaManagement = () => {
         showSlice={showSlice}
         onShowSlice={onShowSlice}
         fullWidth
-        children={<></>}
+        children={
+          <>
+            <Details
+              data={tacGiaDataDetail}
+              fetcher={fetchData}
+              fetchDetail={fetchDataDetail}
+              showSlice={showSlice}
+              onShowSlice={onShowSlice}
+            />
+          </>
+        }
       />
       <CellModal
         open={isOpenChiTietTacGia?.open}
