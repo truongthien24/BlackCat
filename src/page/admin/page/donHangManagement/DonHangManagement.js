@@ -52,30 +52,30 @@ const DonHangManagement = () => {
     });
   };
 
-  const handleDelete = async (data) => {
-    await dispatch(
-      setConfirm({
-        status: "open",
-        method: async () =>
-          await mutateDelete({
-            Data: { _id: data?._id },
-            onSuccess: async (res) => {
-              toast.success(res?.data?.message);
-              fetchData();
-              dispatch(
-                setConfirm({
-                  status: "close",
-                  method: () => {},
-                })
-              );
-            },
-            onError: async (error) => {
-              toast.error(error?.message);
-            },
-          }),
-      })
-    );
-  };
+  // const handleDelete = async (data) => {
+  //   await dispatch(
+  //     setConfirm({
+  //       status: "open",
+  //       method: async () =>
+  //         await mutateDelete({
+  //           Data: { _id: data?._id },
+  //           onSuccess: async (res) => {
+  //             toast.success(res?.data?.message);
+  //             fetchData();
+  //             dispatch(
+  //               setConfirm({
+  //                 status: "close",
+  //                 method: () => {},
+  //               })
+  //             );
+  //           },
+  //           onError: async (error) => {
+  //             toast.error(error?.message);
+  //           },
+  //         }),
+  //     })
+  //   );
+  // };
 
   useLoadingEffect(isDataLoading || isDataDetailLoading || isSubmittingDelete);
 
@@ -85,20 +85,20 @@ const DonHangManagement = () => {
         <h3 className="text-[20px] text-[#3790c7] font-bold">
           {t("Quản lý đơn hàng")}
         </h3>
-        <button
+        {/* <button
           className="flex items-center justify-center bg-[#3790c7] text-white py-[10px] px-[20px] rounded-[7px] duration-300 hover:shadow-[#3790c7a6] hover:shadow-lg hover:translate-y-[-3px]"
           type="submit"
           onClick={handleAdd}
         >
           {t("add")}
-        </button>
+        </button> */}
       </div>
       <div className="h-[88%]">
         <TableMain
           data={donHangData}
           columns={columns()}
           handleEdit={handleEdit}
-          handleDelete={handleDelete}
+          // handleDelete={handleDelete}
         />
       </div>
       <PopupMain

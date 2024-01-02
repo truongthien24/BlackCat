@@ -238,7 +238,7 @@ const Details = ({
             errors={errors}
             name="ngayGiao"
             label="Ngày giao"
-            disabled={watch("tinhTrang") != 0}
+            disabled={watch("tinhTrang") != 1 && watch("tinhTrang") != 2}
             required
             max={new Date()}
           />
