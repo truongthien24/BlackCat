@@ -132,6 +132,8 @@ const Payment = () => {
 
   useLoadingEffect(isLoading);
 
+  console.log("paymentStep", paymentStep);
+
   return (
     <div className="md:pt-[150px] pb-[20px] min-h-[calc(100vh_-_300px)] flex justify-center">
       <div className="flex flex-col items-center bg-[#eaeaea] w-[95%] xl:w-[90%] 2xl:w-[70%] px-[25px] py-[20px]">
@@ -256,7 +258,10 @@ const Payment = () => {
                     paymentStep?.step == 2 &&
                     paymentStep?.data?.thanhToan?.method === "online" &&
                     paymentStep?.data?.thanhToan?.done === false
-                  )
+                  ) 
+                  &&
+                  !(paymentStep?.step == 2 &&
+                    !paymentStep?.data?.thanhToan)
                     ? COLOR.primaryColor
                     : "gray"
                 }`,
@@ -270,7 +275,9 @@ const Payment = () => {
                   )) ||
                 (paymentStep?.step == 2 &&
                   paymentStep?.data?.thanhToan?.method === "online" &&
-                  paymentStep?.data?.thanhToan?.done === false)
+                  paymentStep?.data?.thanhToan?.done === false) ||
+                (paymentStep?.step == 2 &&
+                  !paymentStep?.data?.thanhToan)
               }
             >
               Tiếp theo

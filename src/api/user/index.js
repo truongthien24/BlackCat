@@ -39,13 +39,14 @@ export default {
     return axiosWrapper.post(`/changePassword`, {
       ...params,
     });
-  }
+  },
 
-  //   getDataProduction: (params: object) => {
-  //     return axiosWrapper.post(`/Production/DataService/GetData`, {
-  //       ...params,
-  //     });
-  //   },
+  getAllTaiKhoan: (params) => {
+    return axiosWrapper.get(`/getAllTaiKhoan`, {
+      ...params,
+    });
+  },
+
   //   update: (params: object) => {
   //     return axiosWrapper.post(`/Purchasing/DataService/Update`, {
   //       ...params,

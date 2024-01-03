@@ -39,7 +39,7 @@ const ModalOrderDetail = ({ open, onOpen, title, data }) => {
   }, [data?.ngayGiao]);
 
   const returnBook = () => {
-    const diffDate = checkDiffDate(ngayDenHan)
+    const diffDate = checkDiffDate(ngayDenHan);
     setContentConfirm({
       diffDate: diffDate,
     });
@@ -55,10 +55,14 @@ const ModalOrderDetail = ({ open, onOpen, title, data }) => {
           //   newDanhSach.push(sachItem);
           // }
           await mutate({
-            Data: { ...data, tinhTrang: 3, thongTinTraHang: {
-              ngayBatDau: (new Date()).toString(),
-              ngayKetThuc: "",
-            } },
+            Data: {
+              ...data,
+              tinhTrang: 3,
+              thongTinTraHang: {
+                ngayBatDau: new Date().toString(),
+                ngayKetThuc: "",
+              },
+            },
             onSuccess: (res) => {
               toast.success("Thành công. Đơn hàng sẽ được trả trong vài ngày");
               dispatch(
@@ -146,9 +150,7 @@ const ModalOrderDetail = ({ open, onOpen, title, data }) => {
                   >
                     Ngày nhận hàng:{" "}
                   </h5>
-                  <span>
-                    {moment(data?.ngayGiao)?.format("DD/MM/YYYY")}
-                  </span>
+                  <span>{moment(data?.ngayGiao)?.format("DD/MM/YYYY")}</span>
                 </>
               ) : (
                 <>
@@ -204,19 +206,23 @@ const ModalOrderDetail = ({ open, onOpen, title, data }) => {
               </h5>
               <span>{data?.thongTinThanhToan?.phuongThucThanhToan}</span>
             </div>
-            <div className="flex items-center">
-              <h5
-                className="mr-[10px] font-[500]"
-                style={{ color: `${COLOR.primaryColor}` }}
-              >
-                Tình trạng thanh toán:{" "}
-              </h5>
-              <span>
-                {data?.thongTinGiaoHang?.thanhToan
-                  ? "Đã thanh toán"
-                  : "Chưa thanh toán"}
-              </span>
-            </div>
+            {data?.tinhTrang < 2 ? (
+              <div className="flex items-center">
+                <h5
+                  className="mr-[10px] font-[500]"
+                  style={{ color: `${COLOR.primaryColor}` }}
+                >
+                  Tình trạng thanh toán:{" "}
+                </h5>
+                <span>
+                  {data?.thongTinThanhToan?.thanhToan
+                    ? "Đã thanh toán"
+                    : "Chưa thanh toán"}
+                </span>
+              </div>
+            ) : (
+              <></>
+            )}
             <div className="flex items-center">
               <h5
                 className="mr-[10px] font-[500]"
@@ -230,8 +236,10 @@ const ModalOrderDetail = ({ open, onOpen, title, data }) => {
                   : data?.tinhTrang == 1
                   ? "Đang giao"
                   : data?.tinhTrang == 2
-                  ? "Đã giao" : data?.tinhTrang == 3
-                  ? "Đang trả đơn" : "Đã trả đơn"}
+                  ? "Đã giao"
+                  : data?.tinhTrang == 3
+                  ? "Đang trả đơn"
+                  : "Đã trả đơn"}
               </span>
             </div>
             {data?.tinhTrang == 0 && (

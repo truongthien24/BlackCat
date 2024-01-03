@@ -7,7 +7,8 @@ import { useTranslation } from "react-i18next";
 
 export const TableMain = (props) => {
   // Props
-  const { data, columns, handleEdit, handleDelete } = props;
+  const { data, columns, handleEdit, handleDelete, allowEdit = true, allowDel = true} =
+    props;
 
   // State
   const [searchText, setSearchText] = useState("");
@@ -146,9 +147,8 @@ export const TableMain = (props) => {
         // if(item.dât)
         let obj = {};
         if (item.cell) {
-          obj = { ...item, render: (text, row) => item.cell(row) }
-        }
-        else {
+          obj = { ...item, render: (text, row) => item.cell(row) };
+        } else {
           if (item.key === "tinhTrang") {
             obj = {
               ...item,
@@ -169,28 +169,28 @@ export const TableMain = (props) => {
                           {t("Đang giao")}
                         </span>
                       </div>
-                    ) : text === 3 ?
+                    ) : text === 3 ? (
                       <div className="flex items-center">
                         <span className="w-[4px] h-[4px] rounded-[50%] bg-[#00a2ff] block mr-[5px]"></span>
                         <span className="text-[13px] text-[#00a2ff]">
                           {t("Đang trả hàng")}
                         </span>
                       </div>
-                      : text === 4 ?
+                    ) : text === 4 ? (
                       <div className="flex items-center">
                         <span className="w-[4px] h-[4px] rounded-[50%] bg-[#9d35c3] block mr-[5px]"></span>
                         <span className="text-[13px] text-[#9d35c3]">
                           {t("Đã trả hàng")}
                         </span>
                       </div>
-                      : (
-                        <div className="flex items-center">
-                          <span className="w-[4px] h-[4px] rounded-[50%] bg-[orange] block mr-[5px]"></span>
-                          <span className="text-[13px] text-[orange]">
-                            {t("Chờ xác nhận")}
-                          </span>
-                        </div>
-                      )}
+                    ) : (
+                      <div className="flex items-center">
+                        <span className="w-[4px] h-[4px] rounded-[50%] bg-[orange] block mr-[5px]"></span>
+                        <span className="text-[13px] text-[orange]">
+                          {t("Chờ xác nhận")}
+                        </span>
+                      </div>
+                    )}
                   </div>
                 );
               },
@@ -238,20 +238,24 @@ export const TableMain = (props) => {
         width: "100px",
         render: (data) => (
           <div className="flex w-full items-center justify-center">
-            <button
-              type="text"
-              className="delete"
-              onClick={() => handleDelete(data)}
-            >
-              <DeleteFilled />
-            </button>
-            <button
-              type="text"
-              className="edit"
-              onClick={() => handleEdit(data)}
-            >
-              <EditFilled />
-            </button>
+            {allowDel && (
+              <button
+                type="text"
+                className="delete"
+                onClick={() => handleDelete(data)}
+              >
+                <DeleteFilled />
+              </button>
+            )}
+            {allowEdit && (
+              <button
+                type="text"
+                className="edit"
+                onClick={() => handleEdit(data)}
+              >
+                <EditFilled />
+              </button>
+            )}
           </div>
         ),
       });

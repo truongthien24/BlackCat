@@ -6,12 +6,13 @@ import { FormProvider, useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import usePayment from "../hook/usePayment";
 import ModalPayment from "./modals/ModalPayment";
+import { useSelector } from "react-redux";
 
 const MethodPayment = ({ onStep, step }) => {
   const method = useForm({
     mode: "onSubmit",
     defaultValues: {
-      methodPayment: 0,
+      methodPayment: null,
     },
   });
 
@@ -25,6 +26,8 @@ const MethodPayment = ({ onStep, step }) => {
   } = method;
 
   const { mutate, isLoading } = usePayment();
+
+  const { userInfo } = useSelector((state) => state.home);
 
   const [popupPayment, onPopupPayment] = useState({
     open: false,
@@ -100,10 +103,18 @@ const MethodPayment = ({ onStep, step }) => {
                 className="w-full px-[10px] py-[7px] rounded-[10px] cursor-pointer border-solid border-[1px]"
                 style={{
                   borderColor: `${
-                    watch("methodPayment") == 0 ? COLOR.primaryColor : ""
+                    userInfo?.baoXau
+                      ? "#4343434a"
+                      : watch("methodPayment") == 0
+                      ? COLOR.primaryColor
+                      : ""
                   }`,
                   backgroundColor: `${
-                    watch("methodPayment") == 0 ? "#66b5a14a" : ""
+                    userInfo?.baoXau
+                      ? "#4343434a"
+                      : watch("methodPayment") == 0
+                      ? "#66b5a14a"
+                      : ""
                   }`,
                   boxShadow:
                     "rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px",

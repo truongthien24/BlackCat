@@ -7,7 +7,6 @@ import { Layout1Admin } from "../page/admin/layout/Layout1Admin";
 import { Register } from "../page/user/page/register/Register";
 import { Profile } from "../page/user/page/profile/Profile";
 import { Dashboard } from "../page/admin/page/Dashboard/Dashboard";
-import AccountManagement from "../page/admin/page/AccountManagement";
 import { Login as LoginAdmin } from "../page/admin/page/login/Login";
 import { BookManagement } from "../page/admin/page/RoomManagement/BookManagement";
 import { Introduce } from "../page/user/page/introduce/Introduce";
@@ -30,6 +29,7 @@ import BookCategory from "page/user/page/bookCategory/BookCategory";
 import DonHangManagement from "page/admin/page/donHangManagement/DonHangManagement";
 import DanhGiaManagement from "page/admin/page/danhGiaManagement/DanhGiaManagement";
 import Favourite from "page/user/page/favourite/Favourite";
+import TaiKhoanManagement from "page/admin/page/AccountManagement/TaiKhoanManagement";
 
 export const MainRoutes = () => {
 
@@ -85,7 +85,7 @@ export const MainRoutes = () => {
         <Route path="/admin" element={<Layout1Admin />}>
           <Route index element={<Dashboard />} />
           <Route path="dashboard" element={<Dashboard />} />
-          <Route path="accountManagement" element={<AccountManagement />} />
+          <Route path="accountManagement" element={<TaiKhoanManagement />} />
           <Route path="bookManagement" element={<BookManagement />} />
           <Route path="theLoaiManagement" element={<TheLoaiManagement />} />
           <Route path="tacGiaManagement" element={<TacGiaManagement />} />

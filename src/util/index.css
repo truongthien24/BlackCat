@@ -192,6 +192,10 @@ html {
 .ant-table-wrapper .ant-spin-nested-loading .ant-spin-container .ant-table {
   height: 90% !important;
 }
+.ant-table-wrapper .ant-spin-nested-loading .ant-spin-container .ant-table .ant-table-container {
+  height: 100%;
+  overflow-y: scroll;
+}
 .ant-table-wrapper .ant-spin-nested-loading .ant-spin-container .ant-table .ant-table-content {
   height: 100% !important;
   overflow-y: hidden !important;
@@ -352,11 +356,6 @@ html {
 
 .ant-btn-primary {
   background-color: #498374 !important;
-  color: white;
-}
-
-.ant-btn-secondary {
-  background-color: #f7941d !important;
   color: white;
 }
 

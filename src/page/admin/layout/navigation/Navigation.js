@@ -59,7 +59,7 @@ export const Navigation = () => {
         Quản
         lý
       >
-        Account
+        Quản lý tài khoản
       </div>,
       "2",
       <DesktopOutlined />
@@ -70,12 +70,12 @@ export const Navigation = () => {
           navigate("/admin/bookManagement");
         }}
       >
-        Quản lý Sách
+        Quản lý sách
       </div>,
       "3",
       <BookOutlined />
     ),
-    getItem("System", "sub1", <SettingOutlined />, [
+    getItem("Hệ thống", "sub1", <SettingOutlined />, [
       getItem(
         <div
           onClick={() => {
@@ -143,28 +143,39 @@ export const Navigation = () => {
         <PercentageOutlined />
       ),
     ]),
-    getItem("Booking", "sub2", <MailOutlined />, [
-      getItem(
-        <div
-          onClick={() => {
-            navigate("/admin/donHangManagement");
-          }}
-        >
-          Đơn Hàng Management
-        </div>,
-        "10"
-      ),
-      getItem(
-        <div
-          onClick={() => {
-            navigate("/admin/bookingService");
-          }}
-        >
-          Booking Service
-        </div>,
-        "11"
-      ),
-    ]),
+    // getItem("Booking", "sub2", <MailOutlined />, [
+    //   getItem(
+    //     <div
+    //       onClick={() => {
+    //         navigate("/admin/donHangManagement");
+    //       }}
+    //     >
+    //       Quản lý đơn hàng
+    //     </div>,
+    //     "10"
+    //   ),
+    //   getItem(
+    //     <div
+    //       onClick={() => {
+    //         navigate("/admin/bookingService");
+    //       }}
+    //     >
+    //       Booking Service
+    //     </div>,
+    //     "11"
+    //   ),
+    // ]),
+    getItem(
+      <div
+        onClick={() => {
+          navigate("/admin/donHangManagement");
+        }}
+      >
+        Quản lý đơn hàng
+      </div>,
+      "10",
+      <MailOutlined />
+    ),
     getItem(
       <div
         onClick={() => {
@@ -182,7 +193,7 @@ export const Navigation = () => {
           navigate("/admin/baiVietManagement");
         }}
       >
-        Bai Viet
+        Quản lý bài viết
       </div>,
       "13",
       <WindowsOutlined />

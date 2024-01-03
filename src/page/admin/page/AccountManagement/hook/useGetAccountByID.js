@@ -2,6 +2,9 @@ import apiService from "api";
 import { useQuery } from "react-query";
 
 const getAccount = async (params = {}) => {
+  if(!params?.id) {
+    return;
+  }
   const accounts = await apiService.taiKhoan.getAccountByID(
     params?.id,
   );
