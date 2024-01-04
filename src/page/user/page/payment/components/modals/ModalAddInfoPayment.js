@@ -52,7 +52,7 @@ const ModalAddInfoPayment = ({ open, onOpen, title }) => {
     newInfoNhanHang.push(data);
     await mutate({
       Data: {
-        id: userInfo?._id,
+        ...userInfo,
         thongTinNhanHang: newInfoNhanHang?.map((info, index) => {
           return { ...info, id: index };
         }),
