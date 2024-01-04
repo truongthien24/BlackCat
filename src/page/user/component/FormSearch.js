@@ -8,8 +8,10 @@ import toast from "react-hot-toast";
 import useFindDataBook from "page/admin/page/RoomManagement/hook/useFindBook";
 import { Empty } from "antd";
 import ResultSearch from "./ResultSearch";
+import { useTranslation } from "react-i18next";
 
 const FormSearch = (props) => {
+  const { t } = useTranslation();
   // Props
   const { data } = props;
 
@@ -43,7 +45,7 @@ const FormSearch = (props) => {
         <input
           type="text"
           className="w-full px-[20px] py-[8px] text-[12px] outline-none"
-          placeholder="Nhập từ khoá tìm kiếm"
+          placeholder={t("SearchPlaceholder")}
           {...register("valueSearch")}
           onKeyDown={(e) => {
             searchResultRef.current.style.display = "block";

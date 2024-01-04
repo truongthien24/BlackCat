@@ -1,11 +1,13 @@
 import React from "react";
 import ItemMenu from "./components/ItemMenu";
+import { I18nextProvider, useTranslation } from 'react-i18next';
 
 const Menu = () => {
+  const { t } = useTranslation();
   const listMenu = [
     {
       key: "all",
-      title: "All Books",
+      title: "AllBooks",
       path: "/allBooks",
       child: [],
     },
@@ -17,7 +19,7 @@ const Menu = () => {
     // },
     {
       key: "aboutUs",
-      title: "About Us",
+      title: "AboutUs",
       path: "/aboutUs",
       child: [],
     },
@@ -29,7 +31,7 @@ const Menu = () => {
     },
     {
       key: "BaiViet",
-      title: "Bài viết",
+      title: "News",
       path: "/baiviet",
       child: [],
     },
