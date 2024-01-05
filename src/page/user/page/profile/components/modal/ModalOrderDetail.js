@@ -136,6 +136,8 @@ const ModalOrderDetail = ({ open, onOpen, title, data, fetcher }) => {
 
   useLoadingEffect(isLoading);
 
+  console.log(data);
+
   const renderListOrder = () => {
     return data?.danhSach?.map((sach, index) => {
       return (
@@ -255,7 +257,7 @@ const ModalOrderDetail = ({ open, onOpen, title, data, fetcher }) => {
               </h5>
               <span>{data?.thongTinThanhToan?.phuongThucThanhToan}</span>
             </div>
-            {data?.tinhTrang < 2 ? (
+            {data?.tinhTrang <= 2 ? (
               <div className="flex items-center">
                 <h5
                   className="mr-[10px] font-[500]"

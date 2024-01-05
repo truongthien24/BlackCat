@@ -1,19 +1,24 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useContext } from "react";
 import { useTranslation } from "react-i18next";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Icon } from "../../../assets/icon";
 import { Drawer } from "antd";
 import toast from "react-hot-toast";
+import { setUserInfo } from "redux/action/homeAction";
+import { LayoutContext } from "../layout/Layout1";
 
 export const ProfileTab = (props) => {
   // Props
   const { setIsProfile, isProfile } = props;
 
+  const { fetchDataAccount } = useContext(LayoutContext);
+
   // Somethings
   const ref = useRef();
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   // API
   const { userInfo } = useSelector((state) => state.home);
@@ -29,9 +34,11 @@ export const ProfileTab = (props) => {
     setIsProfile(false);
   };
 
-  const handleLogOut = () => {
+  const handleLogOut = async () => {
     localStorage.removeItem("jwt");
     localStorage.removeItem("userLogin");
+    await dispatch(setUserInfo({}));
+    await fetchDataAccount();
     navigate("/login");
     setIsProfile(false);
   };

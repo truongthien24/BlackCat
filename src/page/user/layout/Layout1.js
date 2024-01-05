@@ -38,10 +38,11 @@ export const Layout1 = () => {
     const jwt = JSON.parse(localStorage.getItem("jwt"));
     if (jwt) {
       const jwtDC = jwtDecode(jwt);
+      console.log("jwtDC", jwtDC);
       if (["user"].includes(jwtDC?.users?.loaiTaiKhoan)) {
         setId(jwtDC?.users?._id);
       } else {
-        navigate("/admin")
+        navigate("/admin");
         toast.error("Tài khoản không được phân quyền");
       }
     }

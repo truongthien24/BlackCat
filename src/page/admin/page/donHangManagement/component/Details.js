@@ -207,30 +207,37 @@ const Details = ({
             name="tinhTrang"
             errors={errors}
             required
+            disable={watch("tinhTrang") >= 2 && watch("tinhTrang") != 3}
             option={[
               {
                 label: "Đang xác nhận",
                 value: 0,
+                disabled: watch("tinhTrang") > 0,
               },
               {
                 label: "Đang giao",
                 value: 1,
+                disabled: watch("tinhTrang") > 1,
               },
               {
                 label: "Đã giao",
                 value: 2,
+                disabled: watch("tinhTrang") > 2,
               },
               {
                 label: "Đang trả hàng",
                 value: 3,
+                disabled: watch("tinhTrang") > 2,
               },
               {
                 label: "Đã trả hàng",
                 value: 4,
+                disabled: watch("tinhTrang") === 5,
               },
               {
                 label: "Đã hủy",
                 value: 5,
+                disabled: watch("tinhTrang") >= 1,
               },
             ]}
             control={control}

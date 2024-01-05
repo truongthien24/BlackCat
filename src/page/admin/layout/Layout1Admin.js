@@ -22,11 +22,11 @@ export const Layout1Admin = () => {
     const jwt = JSON.parse(localStorage.getItem("jwt"));
     if (jwt) {
       const jwtDC = jwtDecode(jwt);
-      if(["admin", "employee"].includes(jwtDC?.users?.loaiTaiKhoan)) {
+      if (["admin", "employee"].includes(jwtDC?.users?.loaiTaiKhoan)) {
         setId(jwtDC?.users?._id);
       } else {
-        navigate("/")
-        toast.error('Tài khoản không được phân quyền');
+        navigate("/");
+        toast.error("Tài khoản không được phân quyền");
       }
     }
   }, []);
@@ -47,9 +47,7 @@ export const Layout1Admin = () => {
   }, [accountData]);
 
   return (
-    <LayoutContextAdmin.Provider
-      value={{ fetchDataAccount: fetchData }}
-    >
+    <LayoutContextAdmin.Provider value={{ fetchDataAccount: fetchData }}>
       <div className="flex h-screen">
         <Navigation />
         <div className="w-[calc(100%-250px)] h-full">

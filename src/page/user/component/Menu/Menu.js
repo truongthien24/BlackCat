@@ -5,7 +5,7 @@ const Menu = () => {
   const listMenu = [
     {
       key: "home",
-      title: "Home",
+      title: "Trang chủ",
       path: "/",
       child: [],
     },
@@ -23,7 +23,7 @@ const Menu = () => {
     // },
     {
       key: "aboutUs",
-      title: "About Us",
+      title: "Về chúng tôi",
       path: "/aboutUs",
       child: [],
     },

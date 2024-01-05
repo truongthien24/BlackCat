@@ -96,7 +96,7 @@ const Payment = () => {
               thongTinThanhToan: {
                 phuongThucThanhToan: paymentStep?.data?.thanhToan.online
                   ? "online"
-                  : "cod",
+                  : "Thanh toán khi nhận hàng",
                 thanhToan: paymentStep?.data.thanhToan.done,
                 viThanhToan: paymentStep?.data?.thanhToan.viThanhToan,
               },
@@ -258,10 +258,8 @@ const Payment = () => {
                     paymentStep?.step == 2 &&
                     paymentStep?.data?.thanhToan?.method === "online" &&
                     paymentStep?.data?.thanhToan?.done === false
-                  ) 
-                  &&
-                  !(paymentStep?.step == 2 &&
-                    !paymentStep?.data?.thanhToan)
+                  ) &&
+                  !(paymentStep?.step == 2 && !paymentStep?.data?.thanhToan)
                     ? COLOR.primaryColor
                     : "gray"
                 }`,
@@ -276,8 +274,7 @@ const Payment = () => {
                 (paymentStep?.step == 2 &&
                   paymentStep?.data?.thanhToan?.method === "online" &&
                   paymentStep?.data?.thanhToan?.done === false) ||
-                (paymentStep?.step == 2 &&
-                  !paymentStep?.data?.thanhToan)
+                (paymentStep?.step == 2 && !paymentStep?.data?.thanhToan)
               }
             >
               Tiếp theo
