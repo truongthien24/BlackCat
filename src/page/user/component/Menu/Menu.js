@@ -4,6 +4,12 @@ import ItemMenu from "./components/ItemMenu";
 const Menu = () => {
   const listMenu = [
     {
+      key: "home",
+      title: "Home",
+      path: "/",
+      child: [],
+    },
+    {
       key: "all",
       title: "All Books",
       path: "/allBooks",

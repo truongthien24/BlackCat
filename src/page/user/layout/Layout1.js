@@ -38,11 +38,11 @@ export const Layout1 = () => {
     const jwt = JSON.parse(localStorage.getItem("jwt"));
     if (jwt) {
       const jwtDC = jwtDecode(jwt);
-      if (["user"].includes(jwtDC?.users.loaiTaiKhoan)) {
+      if (["user"].includes(jwtDC?.users?.loaiTaiKhoan)) {
         setId(jwtDC?.users?._id);
       } else {
-        // navigate("/admin")
-        // toast.error("Tài khoản không được phân quyền");
+        navigate("/admin")
+        toast.error("Tài khoản không được phân quyền");
       }
     }
   }, []);
