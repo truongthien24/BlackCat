@@ -228,6 +228,10 @@ const Details = ({
                 label: "Đã trả hàng",
                 value: 4,
               },
+              {
+                label: "Đã hủy",
+                value: 5,
+              },
             ]}
             control={control}
           />

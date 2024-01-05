@@ -146,7 +146,7 @@ const Details = ({
             name="loaiTaiKhoan"
             errors={errors}
             control={control}
-            disable={disable}
+            // disable={disable}
             option={[
               {
                 label: "Khách hàng",

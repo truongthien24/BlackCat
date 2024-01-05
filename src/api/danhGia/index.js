@@ -32,7 +32,8 @@ export default {
   },
 
   deleteDanhGia: (params) => {
-    return axiosWrapper.delete(`/deleteDanhGia/${params?._id}`, {
+    console.log('params',params)
+    return axiosWrapper.delete(`/deleteDanhGia/${params?.id}`, {
       ...params,
     });
   },

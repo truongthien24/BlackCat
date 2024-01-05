@@ -137,6 +137,7 @@ const MethodPayment = ({ onStep, step }) => {
                 hidden
                 name="methodPayment"
                 value={0}
+                disabled={userInfo?.baoXau}
                 onChange={() => {
                   setValue("methodPayment", 0);
                   onStep((prev) => {

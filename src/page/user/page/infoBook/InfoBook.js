@@ -211,6 +211,7 @@ const InfoBook = () => {
                     data={danhGia}
                     key={index}
                     onSubmitReply={handleDanhGia}
+                    fetcher={fetchDanhGia}
                   />
                 );
               })}
