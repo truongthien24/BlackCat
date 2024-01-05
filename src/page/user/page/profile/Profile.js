@@ -35,10 +35,10 @@ export const Profile = () => {
 
   const donHangList = useMemo(() => {
     if (!_.isEmpty(donHangData)) {
-      if(statusOrder == 2) {
+      if (statusOrder == 2) {
         return donHangData?.filter((i) => i.tinhTrang >= 2);
       }
-      return donHangData?.filter((i) => i.tinhTrang === statusOrder)
+      return donHangData?.filter((i) => i.tinhTrang === statusOrder);
     }
     return [];
   }, [donHangData, statusOrder]);
@@ -96,7 +96,7 @@ export const Profile = () => {
             <div className="flex items-center text-[12px] xl:text-[13px]">
               <div>
                 <strong>
-                  Số lượng sách đang thuê : {donHang?.danhSach?.length}
+                  Loại sách đang thuê : {donHang?.danhSach?.length}
                 </strong>
               </div>
               <div className="ml-[10px]">

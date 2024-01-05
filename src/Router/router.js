@@ -31,6 +31,7 @@ import DanhGiaManagement from "page/admin/page/danhGiaManagement/DanhGiaManageme
 import Favourite from "page/user/page/favourite/Favourite";
 import TaiKhoanManagement from "page/admin/page/AccountManagement/TaiKhoanManagement";
 import { About } from "page/user/page/about/about";
+import { BaiViet } from "page/user/page/baiViet/baiViet";
 
 export const MainRoutes = () => {
   const { pathname } = useLocation();
@@ -62,6 +63,7 @@ export const MainRoutes = () => {
           <Route path="payment" element={<Payment />} />
           <Route path="book" element={<BookCategory />} />
           <Route path="favourite" element={<Favourite />} />
+          <Route path="baiViet" element={<BaiViet />} />
         </Route>
         <Route
           path="*"

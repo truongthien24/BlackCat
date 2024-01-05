@@ -92,19 +92,7 @@ const ModalOrderDetail = ({ open, onOpen, title, data, fetcher }) => {
 
   const cancelOrder = async () => {
     setContentConfirm({
-      content: (
-        <div>
-          Bạn chỉ được phép hủy tối đa{" "}
-          <span style={{ color: COLOR.secondaryColor, fontStyle: "bold" }}>
-            3
-          </span>{" "}
-          đơn hàng trong{" "}
-          <span style={{ color: COLOR.secondaryColor, fontStyle: "bold" }}>
-            1
-          </span>{" "}
-          tháng. Bạn chắc chứ?
-        </div>
-      ),
+      content: <div> Bạn chắc hủy đơn hàng?</div>,
     });
     await dispatch(
       setConfirm({

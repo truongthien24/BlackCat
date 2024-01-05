@@ -1,8 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { Avatar, Empty, Popover, Tooltip } from "antd";
-import { formateDate } from "../../../method/formatDate";
 import { Icon } from "../../../assets/icon";
-import Swal from "sweetalert2";
 import { useTranslation } from "react-i18next";
 import { COLOR } from "../shareComponent/constant";
 import { toast } from "react-hot-toast";
@@ -191,7 +189,7 @@ export const Reaction = (props) => {
             </div>
           </>
         )}
-        <div
+        {/* <div
           className="flex items-center cursor-pointer p-[5px] rounded-[5px] duration-300 hover:bg-[#eaeaea]"
           onClick={() => {
             toast("Chức năng đang phát triển");
@@ -199,7 +197,7 @@ export const Reaction = (props) => {
         >
           <Icon name="warning" font="small" />
           <span className="ml-[7px]">Báo cáo</span>
-        </div>
+        </div> */}
       </div>
     );
   };

@@ -36,7 +36,7 @@ const Menu = () => {
     {
       key: "BaiViet",
       title: "Bài viết",
-      path: "/baiviet",
+      path: "/baiViet",
       child: [],
     },
   ];
