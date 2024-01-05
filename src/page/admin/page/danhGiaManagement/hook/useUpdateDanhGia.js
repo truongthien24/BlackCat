@@ -1,16 +1,16 @@
 import apiService from "api";
 import { useMutation } from "react-query";
 
-const updateGioHang = async (params = {}) => {
-  const gioHang = await apiService.gioHang.updateGioHang({
+const updateDanhGia = async (params = {}) => {
+  const danhGia = await apiService.danhGia.updateDanhGia({
     ...params?.Data,
   });
 
-  return gioHang;
+  return danhGia;
 };
 
-const useUpdateGioHang = () => {
-  return useMutation(updateGioHang, {
+const useUpdateDanhGia = () => {
+  return useMutation(updateDanhGia, {
     onSuccess: (_, { onSuccess, status }) => {
       onSuccess(_);
     },
@@ -20,4 +20,4 @@ const useUpdateGioHang = () => {
   });
 };
 
-export default useUpdateGioHang;
+export default useUpdateDanhGia;

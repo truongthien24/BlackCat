@@ -183,6 +183,13 @@ export const TableMain = (props) => {
                           {t("Đã trả hàng")}
                         </span>
                       </div>
+                    ) : text === 5 ? (
+                      <div className="flex items-center">
+                        <span className="w-[4px] h-[4px] rounded-[50%] bg-[#7a7a7a] block mr-[5px]"></span>
+                        <span className="text-[13px] text-[#7a7a7a]">
+                          {t("Đã hủy")}
+                        </span>
+                      </div>
                     ) : (
                       <div className="flex items-center">
                         <span className="w-[4px] h-[4px] rounded-[50%] bg-[orange] block mr-[5px]"></span>

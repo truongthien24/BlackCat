@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { Avatar, Empty, Tooltip } from "antd";
+import { Avatar, Empty, Popover, Tooltip } from "antd";
 import { formateDate } from "../../../method/formatDate";
 import { Icon } from "../../../assets/icon";
 import Swal from "sweetalert2";
@@ -10,14 +10,28 @@ import { FormProvider, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import _ from "lodash";
+import { useDispatch, useSelector } from "react-redux";
+import { setConfirm } from "redux/action/homeAction";
+import useDeleteDanhGia from "page/admin/page/danhGiaManagement/hook/useDeleteDanhGia";
+import useLoadingEffect from "fuse/hook/useLoadingEffect";
+import { ModalDanhGia } from "./modal/ModalDanhGia";
+import { Confirm } from "component/Confirm/Confirm";
 
 export const Reaction = (props) => {
   // Props
-  const { data, onSubmitReply } = props;
+  const { data, onSubmitReply, fetcher } = props;
 
   // State
   const [isReply, setIsReply] = useState(false);
   const [isSeenReply, setIsSeenReply] = useState(false);
+  const [isEditReaction, setIsEditReaction] = useState({
+    open: false,
+    initData: null,
+  });
+  const { userInfo } = useSelector((state) => state.home);
+  const dispatch = useDispatch();
+
+  const { mutate, isLoading } = useDeleteDanhGia();
 
   // Somethings
   const { t } = useTranslation();
@@ -64,26 +78,53 @@ export const Reaction = (props) => {
         const admin = reply?.admin;
         return (
           <div>
-            <div className="flex items-start">
-              <Avatar
-                size={40}
-                style={{
-                  backgroundColor: `${admin ? "#f56a00" : "#fde3cf"}`,
-                  color: `${admin ? "#fde3cf" : "#f56a00"}`
-                }}
-              >
-                {admin ? 'Q' : reply?.idTaiKhoan?.tenDangNhap
-                  ?.toString()
-                  .toUpperCase()
-                  .charAt(0)}
-              </Avatar>
-              <div className="ml-[8px] h-max">
-                <h5 className="text-[11px] md:text-[13px] font-bold" style={{color: `${admin ? "#f56a00" : "#000"}`}}>
-                  {admin ? "Quản trị viên" :reply?.idTaiKhoan?.tenDangNhap}
-                </h5>
-                <p className="text-[10px] md:text-[12px]">
-                  {new Date(reply?.ngayTao)?.toLocaleDateString("en-GB")}
-                </p>
+            <div className="flex items-start justify-between">
+              <div className="flex items-start">
+                <Avatar
+                  size={40}
+                  style={{
+                    backgroundColor: `${admin ? "#f56a00" : "#fde3cf"}`,
+                    color: `${admin ? "#fde3cf" : "#f56a00"}`,
+                  }}
+                >
+                  {admin
+                    ? "Q"
+                    : reply?.idTaiKhoan?.tenDangNhap
+                        ?.toString()
+                        .toUpperCase()
+                        .charAt(0)}
+                </Avatar>
+                <div className="ml-[8px] h-max">
+                  <h5
+                    className="text-[11px] md:text-[13px] font-bold"
+                    style={{
+                      color: `${
+                        admin
+                          ? "#f56a00"
+                          : userInfo?._id === reply?.idTaiKhoan?._id
+                          ? COLOR.primaryColor
+                          : "#000"
+                      }`,
+                    }}
+                  >
+                    {admin ? "Quản trị viên" : reply?.idTaiKhoan?.tenDangNhap}
+                  </h5>
+                  <p className="text-[10px] md:text-[12px]">
+                    {new Date(reply?.ngayTao)?.toLocaleDateString("en-GB")}
+                  </p>
+                </div>
+              </div>
+              <div className="relative">
+                <Popover
+                  content={() => contentTuyChinh(reply)}
+                  title="Tùy chọn"
+                  trigger="click"
+                  placement="bottom"
+                >
+                  <button className="translate-y-[-4px]">
+                    <Icon name="more" />
+                  </button>
+                </Popover>
               </div>
             </div>
             <p
@@ -98,6 +139,69 @@ export const Reaction = (props) => {
     } else {
       return <Empty description="Chưa có bình luận nào" />;
     }
+  };
+
+  const contentTuyChinh = (danhGia) => {
+    return (
+      <div className="grid grid-cols-1 mt-[10px]">
+        {userInfo?._id === danhGia?.idTaiKhoan?._id && (
+          <>
+            <div
+              className="flex items-center cursor-pointer p-[5px] rounded-[5px] duration-300 hover:bg-[#eaeaea]"
+              onClick={async () => {
+                await dispatch(
+                  setConfirm({
+                    status: "open",
+                    method: async () =>
+                      await mutate({
+                        Data: { id: danhGia?._id },
+                        onSuccess: async (res) => {
+                          toast.success(res?.data?.message);
+                          fetcher();
+                          dispatch(
+                            setConfirm({
+                              status: "close",
+                              method: () => {},
+                            })
+                          );
+                        },
+                        onError: async (error) => {
+                          toast.error(error?.message);
+                        },
+                      }),
+                  })
+                );
+              }}
+            >
+              <Icon name="trash" font="small" />
+              <span className="ml-[7px]">Xóa đánh giá</span>
+            </div>
+            <div
+              className="flex items-center cursor-pointer p-[5px] rounded-[5px] duration-300 hover:bg-[#eaeaea]"
+              onClick={() => {
+                // toast("Chức năng đang phát triển");
+                onEditReaction({
+                  open: true,
+                  initData: danhGia,
+                });
+              }}
+            >
+              <Icon name="edit" font="small" />
+              <span className="ml-[7px]">Chỉnh sửa đánh giá</span>
+            </div>
+          </>
+        )}
+        <div
+          className="flex items-center cursor-pointer p-[5px] rounded-[5px] duration-300 hover:bg-[#eaeaea]"
+          onClick={() => {
+            toast("Chức năng đang phát triển");
+          }}
+        >
+          <Icon name="warning" font="small" />
+          <span className="ml-[7px]">Báo cáo</span>
+        </div>
+      </div>
+    );
   };
 
   const handleLikeReaction = () => {
@@ -116,6 +220,12 @@ export const Reaction = (props) => {
     onSubmitReply(data, reset);
   };
 
+  const onEditReaction = (data) => {
+    setIsEditReaction(data);
+  };
+
+  useLoadingEffect(isLoading);
+
   // Return
   return (
     <div className="bg-[#f4f7f8] p-[10px] rounded-[15px]">
@@ -133,7 +243,16 @@ export const Reaction = (props) => {
             {data?.idTaiKhoan?.tenDangNhap?.toString().toUpperCase().charAt(0)}
           </Avatar>
           <div className="ml-[8px] h-max">
-            <h5 className="text-[11px] md:text-[13px] font-bold">
+            <h5
+              className="text-[11px] md:text-[13px] font-bold"
+              style={{
+                color: `${
+                  userInfo?._id === data?.idTaiKhoan?._id
+                    ? COLOR.primaryColor
+                    : "#000"
+                }`,
+              }}
+            >
               {/* Tên hiển thị */}
               {data?.idTaiKhoan?.tenDangNhap}
             </h5>
@@ -142,7 +261,21 @@ export const Reaction = (props) => {
             </p>
           </div>
         </div>
-        <div className="flex">{renderSoSao()}</div>
+        <div className="flex">
+          <div className="flex mr-[10px]">{renderSoSao()}</div>
+          <div className="relative">
+            <Popover
+              content={() => contentTuyChinh(data)}
+              title="Tùy chọn"
+              trigger="click"
+              placement="bottom"
+            >
+              <button className="translate-y-[-4px]">
+                <Icon name="more" />
+              </button>
+            </Popover>
+          </div>
+        </div>
       </div>
       <p
         className="text-white rounded-[15px] py-[7px] px-[15px] mt-[8px] mx-[10px] text-[12px] md:text-[14px] w-fit"
@@ -209,6 +342,19 @@ export const Reaction = (props) => {
           </>
         )}
       </div>
+      <Confirm />
+      <ModalDanhGia
+        open={isEditReaction.open}
+        methodCancel={() =>
+          onEditReaction({
+            open: false,
+            initData: null,
+          })
+        }
+        title="Chỉnh sửa đánh giá"
+        data={isEditReaction.initData}
+        fetcher={fetcher}
+      />
     </div>
   );
 };

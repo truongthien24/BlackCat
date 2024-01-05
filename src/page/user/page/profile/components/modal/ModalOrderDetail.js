@@ -11,11 +11,12 @@ import useLoadingEffect from "fuse/hook/useLoadingEffect";
 import moment from "moment";
 import { checkDiffDate } from "page/user/shareComponent/Function/checkDiffDate";
 
-const ModalOrderDetail = ({ open, onOpen, title, data }) => {
+const ModalOrderDetail = ({ open, onOpen, title, data, fetcher }) => {
   const [openReturnOrder, setOpenReturnOrder] = useState(false);
 
   const [contentConfirm, setContentConfirm] = useState({
     diffDate: 0,
+    content: "",
   });
 
   const { mutate, isLoading } = useUpdateDonHang();
@@ -41,7 +42,15 @@ const ModalOrderDetail = ({ open, onOpen, title, data }) => {
   const returnBook = () => {
     const diffDate = checkDiffDate(ngayDenHan);
     setContentConfirm({
-      diffDate: diffDate,
+      content: (
+        <div>
+          Hạn thuê sách còn{" "}
+          <span style={{ color: `${COLOR.secondaryColor}` }}>
+            {diffDate} ngày
+          </span>
+          . Bạn đã chắc chắn ?
+        </div>
+      ),
     });
     dispatch(
       setConfirm({
@@ -81,8 +90,48 @@ const ModalOrderDetail = ({ open, onOpen, title, data }) => {
     );
   };
 
-  const cancelOrder = () => {
-    toast("Chức năng đang phát triển");
+  const cancelOrder = async () => {
+    setContentConfirm({
+      content: (
+        <div>
+          Bạn chỉ được phép hủy tối đa{" "}
+          <span style={{ color: COLOR.secondaryColor, fontStyle: "bold" }}>
+            3
+          </span>{" "}
+          đơn hàng trong{" "}
+          <span style={{ color: COLOR.secondaryColor, fontStyle: "bold" }}>
+            1
+          </span>{" "}
+          tháng. Bạn chắc chứ?
+        </div>
+      ),
+    });
+    await dispatch(
+      setConfirm({
+        status: "open",
+        method: async () => {
+          await mutate({
+            Data: { ...data, tinhTrang: 5 },
+            onSuccess: async (res) => {
+              toast.success("Bạn đã huỷ đơn hàng thành công");
+              fetcher();
+              dispatch(
+                setConfirm({
+                  status: "close",
+                  method: () => {},
+                })
+              );
+              onOpen({
+                open: false,
+              });
+            },
+            onError: async (error) => {
+              toast.error(error?.error?.message);
+            },
+          });
+        },
+      })
+    );
   };
 
   useLoadingEffect(isLoading);
@@ -272,17 +321,7 @@ const ModalOrderDetail = ({ open, onOpen, title, data }) => {
           </div>
         </div>
       </Modal>
-      <Confirm
-        content={
-          <div>
-            Hạn thuê sách còn{" "}
-            <span style={{ color: `${COLOR.secondaryColor}` }}>
-              {contentConfirm?.diffDate} ngày
-            </span>
-            . Bạn đã chắc chắn ?
-          </div>
-        }
-      />
+      <Confirm content={contentConfirm?.content} />
     </>
   );
 };
