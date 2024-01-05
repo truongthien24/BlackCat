@@ -43,7 +43,7 @@ const FormSearch = (props) => {
         <input
           type="text"
           className="w-full px-[20px] py-[8px] text-[12px] outline-none"
-          placeholder="Nhập từ khoá tìm kiếm"
+          placeholder="Nhập tên sách, tên tác giả, tên nhà xuất bản"
           {...register("valueSearch")}
           onKeyDown={(e) => {
             searchResultRef.current.style.display = "block";

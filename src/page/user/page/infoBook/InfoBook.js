@@ -143,25 +143,30 @@ const InfoBook = () => {
   //   }
   // };
   const handleDanhGia = async (data, reset) => {
-    await createDanhGia({
-      Data: {
-        idTaiKhoan: userInfo?._id,
-        idSach: sachDataDetail?._id,
-        noiDung: data?.noiDung,
-        soSao: 5,
-        ...(data?.idDanhGiaFather && {
-          idDanhGiaFather: data?.idDanhGiaFather,
-        }),
-      },
-      onSuccess: async (res) => {
-        await fetchDanhGia();
-        await reset();
-        toast.success(res?.data?.message);
-      },
-      onError: (err) => {
-        toast.error(err?.error?.message);
-      },
-    });
+    if (checkLogin()) {
+      await createDanhGia({
+        Data: {
+          idTaiKhoan: userInfo?._id,
+          idSach: sachDataDetail?._id,
+          noiDung: data?.noiDung,
+          soSao: 5,
+          ...(data?.idDanhGiaFather && {
+            idDanhGiaFather: data?.idDanhGiaFather,
+          }),
+        },
+        onSuccess: async (res) => {
+          await fetchDanhGia();
+          await reset();
+          toast.success(res?.data?.message);
+        },
+        onError: (err) => {
+          toast.error(err?.error?.message);
+        },
+      });
+    } else {
+      toast.error("Bạn chưa đăng nhập");
+      navigate(`/login`);
+    }
   };
 
   const items = [

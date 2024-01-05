@@ -202,7 +202,7 @@ const CheckCart = ({ onStep, step }) => {
               </div>
               <div className="flex justify-between">
                 <span>Giảm giá phí vận chuyển</span>
-                <span>{"-25.000"}</span>
+                <span>{"-30.000"}</span>
               </div>
             </div>
             <div
@@ -214,7 +214,7 @@ const CheckCart = ({ onStep, step }) => {
                 className="ml-[10px] font-[500]"
                 style={{ color: `${COLOR.secondaryColor}` }}
               >
-                {(gioHangDataDetail?.tongGia + 5000).toLocaleString()}
+                {(gioHangDataDetail?.tongGia).toLocaleString()}
               </span>
             </div>
           </div>
@@ -232,7 +232,8 @@ const CheckCart = ({ onStep, step }) => {
                           ngayBatDau: getDateShipping(new Date())[0],
                           ngayKetThuc: getDateShipping(new Date())[1],
                         },
-                        thongTinNguoiNhan: prev?.data?.thongTinGiaoHang?.thongTinNguoiNhan,
+                        thongTinNguoiNhan:
+                          prev?.data?.thongTinGiaoHang?.thongTinNguoiNhan,
                       },
                     },
                   };

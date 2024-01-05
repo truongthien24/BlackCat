@@ -60,7 +60,13 @@ const ReviewContent = ({ data }) => {
           </span>
         </div>
         <div className="flex items-center">
-          Chỉ với
+          <span
+            className="cursor-pointer font-[500]"
+            onClick={onRules1}
+            style={{ color: `${COLOR1.secondaryColor}` }}
+          >
+            Thuê chỉ với
+          </span>
           <span
             className="text-[white] p-[5px] rounded-[5px] inline-block mx-[5px]"
             style={{ backgroundColor: `${COLOR.primaryColor}` }}

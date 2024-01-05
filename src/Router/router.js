@@ -30,18 +30,18 @@ import DonHangManagement from "page/admin/page/donHangManagement/DonHangManageme
 import DanhGiaManagement from "page/admin/page/danhGiaManagement/DanhGiaManagement";
 import Favourite from "page/user/page/favourite/Favourite";
 import TaiKhoanManagement from "page/admin/page/AccountManagement/TaiKhoanManagement";
+import { About } from "page/user/page/about/about";
 
 export const MainRoutes = () => {
-
-  const {pathname} = useLocation();
+  const { pathname } = useLocation();
 
   useEffect(() => {
-    if(pathname === "/login") {
-      if(localStorage.getItem('jwt')) {
-        window.location.replace('/')
+    if (pathname === "/login") {
+      if (localStorage.getItem("jwt")) {
+        window.location.replace("/");
       }
     }
-  }, [pathname])
+  }, [pathname]);
 
   return (
     <div>
@@ -54,6 +54,7 @@ export const MainRoutes = () => {
           <Route path="register" element={<Register />} />
           <Route path="infoBook/:id" element={<InfoBook />} />
           <Route path="allBooks" element={<AllBooks />} />
+          <Route path="aboutUs" element={<About />} />
           <Route path="profile" element={<Profile />} />
           <Route path="introduce" element={<Introduce />} />
           <Route path="contact" element={<Contact />} />

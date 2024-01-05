@@ -12,11 +12,11 @@ export const Contact = () => {
           <div className="w-full sm:w-[50%] lg:w-[50%] 2xl:w-[35%] bg-[#3790c7] rounded-[20px] p-[30px] relative test">
             <div className="z-[2] relative">
               <h5 className="text-[20px] lg:text-[23px] text-[white]">
-                {t("Contact Information")}
+                {t("Thông tin liên lạc")}
               </h5>
               <p className="text-[13px] text-[#f0f0f0] mt-[13px] font-100">
-                Fill up the form and our Team will get back to you within 24
-                hours.
+                Nếu có thắc mắc gì xin hãy liên hệ cho BlackCat. BlackCat sẽ trả
+                lời trong vòng 24h
               </p>
             </div>
             <div className="grid grid-cols-1 grid-rows-3 gap-[30px] py-[40px] z-[2] relative">
@@ -29,7 +29,7 @@ export const Contact = () => {
               <div className="flex items-center text-[white]">
                 <Icon name="mail" color="#fff" font="small" fill="#fff" />
                 <span className="ml-[10px] text-[12px] lg:text-[14px]">
-                  email@gmail.com
+                  BlackCat@gmail.com
                 </span>
               </div>
               <div className="flex items-center text-[white]">
