@@ -87,6 +87,7 @@ export const Register = () => {
       Data: { ...data?.data },
       onSuccess: async (msg) => {
         toast.success(msg?.data?.message);
+        navigate('/login')
       },
       onError: async (err) => {
         toast.error(err?.error?.message);

@@ -11,7 +11,7 @@ import { COLOR } from "page/user/shareComponent/constant";
 const InfoPayment = ({step, onStep}) => {
   const jwt = localStorage.getItem("jwt");
 
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState({open: false, initData: null});
 
   const { userInfo } = useSelector((state) => state.home);
 
@@ -33,10 +33,10 @@ const InfoPayment = ({step, onStep}) => {
   const renderThongTinGiaoHang = () => {
     return userInfo?.thongTinNhanHang?.map((diaChi, index) => {
       return (
-        <>
+        <div className="flex items-center">
           <label
             htmlFor={`info${diaChi?.id}`}
-            className="w-full px-[10px] py-[7px] rounded-[10px] cursor-pointer border-solid border-[1px]"
+            className="w-[calc(100%_-_50px)] px-[10px] py-[7px] rounded-[10px] cursor-pointer border-solid border-[1px]"
             style={{
               borderColor: `${
                 diaChi?.id === watch("id") ? COLOR.primaryColor : ""
@@ -67,7 +67,7 @@ const InfoPayment = ({step, onStep}) => {
             hidden
             name="id"
             value={diaChi?.id}
-            onChange={() => {
+            onChange={(e) => {
               setValue("id", diaChi?.id);
               onStep(prev=> {
                 return {
@@ -85,7 +85,13 @@ const InfoPayment = ({step, onStep}) => {
               })
             }}
           />
-        </>
+          <button className="w-[40px] h-[40px] ml-[10px] rounded-[50%] flex items-center justify-center" onClick={()=> onOpen({
+            open: true,
+            initData: diaChi
+          })}>
+            <Icon name="edit" color={COLOR.primaryColor}/>
+          </button>
+        </div>
       );
     });
   };
@@ -102,7 +108,10 @@ const InfoPayment = ({step, onStep}) => {
                 boxShadow:
                   "rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px",
               }}
-              onClick={() => onOpen(true)}
+              onClick={() => onOpen({
+                open: true,
+                initData: null
+              })}
             >
               <Button
                 type="primary"
@@ -114,7 +123,7 @@ const InfoPayment = ({step, onStep}) => {
           </div>
         </form>
       </FormProvider>
-      <ModalAddInfoPayment open={open} onOpen={onOpen} />
+      <ModalAddInfoPayment open={open.open} onOpen={onOpen} data={open?.initData}/>
     </>
   );
 };

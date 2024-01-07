@@ -2,7 +2,7 @@ import { Modal } from "antd";
 import FormNumberPhone from "page/admin/shareComponent/form/FormNumberPhone";
 import FormTextField from "page/admin/shareComponent/form/FormTextField";
 import { COLOR } from "page/user/shareComponent/constant";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import {
   GoogleMap,
@@ -13,13 +13,14 @@ import useUpdateAccount from "page/admin/page/AccountManagement/hook/useUpdateAc
 import { useSelector } from "react-redux";
 import toast from "react-hot-toast";
 import { LayoutContext } from "page/user/layout/Layout1";
+import _ from "lodash";
 
 const center = {
   lat: 14.0583,
   lng: 108.2772,
 };
 
-const ModalAddInfoPayment = ({ open, onOpen, title }) => {
+const ModalAddInfoPayment = ({ open, onOpen, title, data }) => {
   const [selectedPlace, setSelectedPlace] = useState(null);
   const [map, setMap] = React.useState(null);
   const { fetchDataAccount } = useContext(LayoutContext);
@@ -32,9 +33,15 @@ const ModalAddInfoPayment = ({ open, onOpen, title }) => {
 
   const { mutate, isLoading } = useUpdateAccount();
 
+  const defaultValues = {
+    hoTen: "",
+    soDt: null,
+    diaChi: "",
+  }
+
   const method = useForm({
     mode: "onSubmit",
-    defaultValues: {},
+    defaultValues,
   });
 
   const {
@@ -43,13 +50,26 @@ const ModalAddInfoPayment = ({ open, onOpen, title }) => {
     setValue,
     getValues,
     reset,
+    watch,
     control,
     formState: { errors },
   } = method;
 
+  useEffect(() => {
+    if (!_.isEmpty(data)) {
+      reset(data);
+    } else {
+      reset(defaultValues)
+    }
+  }, [data, open])
+
   const addInfoPayment = async (data) => {
-    const newInfoNhanHang = userInfo?.thongTinNhanHang;
-    newInfoNhanHang.push(data);
+    let newInfoNhanHang = userInfo?.thongTinNhanHang;
+    if (data?.id != undefined || data?.id != null) {
+      newInfoNhanHang[data?.id] = { soDt: data?.soDt, hoTen: data?.hoTen, diaChi: data?.diaChi };
+    } else {
+      newInfoNhanHang.push(data);
+    }
     await mutate({
       Data: {
         ...userInfo,
@@ -102,7 +122,10 @@ const ModalAddInfoPayment = ({ open, onOpen, title }) => {
       className="!w-[90%] md:!w-[80%] lg:!w-[70%] xl:!w-[60%]"
       open={open}
       onCancel={() => {
-        onOpen(false);
+        onOpen({
+          open: false,
+          initData: null
+        });
       }}
       footer={null}
       title={title}
@@ -111,7 +134,7 @@ const ModalAddInfoPayment = ({ open, onOpen, title }) => {
         className="text-[15px] lg:text-[20px] mb-[20px]"
         style={{ color: `${COLOR.primaryColor}` }}
       >
-        Thêm thông tin nhận hàng
+        {data ? 'Chỉnh sửa thông tin nhận hàng' : 'Thêm thông tin nhận hàng'}
       </h2>
       <FormProvider {...method}>
         <form
