@@ -1,6 +1,7 @@
 export const COLOR = {
   primaryColor: "#498374",
   secondaryColor: "#f7941d",
+  cancelColor: "#f26161",
 };
 
 export const COLOR1 = {
