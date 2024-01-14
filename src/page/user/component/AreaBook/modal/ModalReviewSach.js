@@ -16,6 +16,8 @@ import { ExpandAltOutlined } from "@ant-design/icons";
 import FsLightbox from "fslightbox-react";
 import { checkLogin } from "page/user/shareComponent/Function/checkLogin";
 import { getPercentRent } from "method/getPercentRent";
+import { useSelector } from "react-redux";
+import useGetDetailGioHang from "page/admin/page/GioHangManagement/hook/userGetDetailGioHang";
 
 const ModalReviewSach = ({ data, open = false, onReview, title }) => {
   const navigate = useNavigate();
@@ -25,14 +27,13 @@ const ModalReviewSach = ({ data, open = false, onReview, title }) => {
 
   const jwt = localStorage.getItem("jwt");
 
-  const userInfo = useMemo(() => {
-    if (jwt) {
-      const jwtDC = jwtDecode(jwt);
-      return jwtDC?.users;
-    }
-  }, [jwt]);
+  const { userInfo } = useSelector((state) => state.home);
+
   const { sachDataDetail, isDataDetailLoading, fetchData, isFetching } =
     useGetDetailBook("0", "0", data?._id);
+
+  const { gioHangDataDetail, isDataDetailLoading: isGioHangLoading, fetchData: fetchGioHangDetail, isFetching: isFetchingGioHangDetail } =
+    useGetDetailGioHang("0", "0", userInfo?.gioHang);
 
   const { mutate, isLoading } = useUpdateGioHang();
 
@@ -67,6 +68,10 @@ const ModalReviewSach = ({ data, open = false, onReview, title }) => {
       reset({ ...sachDataDetail, soLuong: 1 });
     }
   }, [sachDataDetail]);
+
+  const checkExitsOrMaxCart = useMemo(() => {
+    return gioHangDataDetail?.danhSach?.findIndex((sach) => sach.sach._id === sachDataDetail._id) != -1 || gioHangDataDetail?.danhSach?.length == 5
+  }, [gioHangDataDetail])
 
   const addToCart = async (data) => {
     if (checkLogin()) {
@@ -206,15 +211,24 @@ const ModalReviewSach = ({ data, open = false, onReview, title }) => {
               )}
             </div>
             <button
-              disabled={sachDataDetail?.soLuong < 1}
+              disabled={sachDataDetail?.soLuong < 1 || checkExitsOrMaxCart}
               className="text-[#fff] w-full p-[10px] rounded-[5px] flex items-center justify-center"
               style={{
-                backgroundColor: `${
-                  sachDataDetail?.soLuong > 0 ? COLOR.primaryColor : "gray"
-                }`,
+                backgroundColor: `${!checkExitsOrMaxCart && sachDataDetail?.soLuong > 0 ? COLOR.primaryColor : "gray"
+                  }`,
               }}
             >
-              Thêm vào giỏ hàng
+              {
+                checkExitsOrMaxCart
+                  ?
+                  gioHangDataDetail?.danhSach.length == 5
+                  ?
+                  "Gio hang da day"
+                  :
+                  "Sản phẩm đã có trong giỏ hàng"
+                  :
+                  "Thêm vào giỏ hàng"
+              }
             </button>
           </div>
         </div>

@@ -1,6 +1,6 @@
 import useLoadingEffect from "fuse/hook/useLoadingEffect";
 import useGetDetailBook from "page/admin/page/RoomManagement/hook/useGetDetailBook";
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import ReviewInfoItem from "page/user/component/AreaBook/modal/components/ReviewInfoItem";
 import { COLOR, COLOR1 } from "page/user/shareComponent/constant";
@@ -24,6 +24,7 @@ import { useState } from "react";
 import ModalRules from "./modal/ModalRules";
 import RelatedList from "./components/RelatedList";
 import useFindDataBook from "page/admin/page/RoomManagement/hook/useFindBook";
+import useGetDetailGioHang from "page/admin/page/GioHangManagement/hook/userGetDetailGioHang";
 
 const InfoBook = () => {
   const { id } = useParams();
@@ -44,6 +45,13 @@ const InfoBook = () => {
     fetchData: fetchDanhGia,
     isFetching: isFetchingDanhGia,
   } = useGetDataDanhGiaByIdSanPham("0", "0", { idSanPham: id });
+
+  const {
+    gioHangDataDetail,
+    isDataDetailLoading: isGioHangLoading,
+    fetchData,
+    isFetching,
+  } = useGetDetailGioHang("0", "0", userInfo?.gioHang);
 
   // console.log("danhGiaDataDetail", danhGiaDataDetail);
 
@@ -244,6 +252,14 @@ const InfoBook = () => {
       isLoadingCreateDanhGia
   );
 
+  const checkExitsOrMaxCart = useMemo(() => {
+    return (
+      gioHangDataDetail?.danhSach?.findIndex(
+        (sach) => sach.sach._id === sachDataDetail._id
+      ) != -1 || gioHangDataDetail?.danhSach?.length == 5
+    );
+  }, [gioHangDataDetail]);
+
   return (
     <div className="md:pt-[150px] pb-[20px] min-h-[calc(100vh_-_300px)] flex flex-col items-center justify-center">
       <div className="flex flex-col bg-[#eaeaea] w-[95%] xl:w-[90%] 2xl:w-[70%] px-[25px] py-[20px]">
@@ -428,15 +444,21 @@ const InfoBook = () => {
                 )}
               </div>
               <button
-                disabled={sachDataDetail?.soLuong < 1}
+                disabled={sachDataDetail?.soLuong < 1 || checkExitsOrMaxCart}
                 className="text-[#fff] w-full p-[10px] rounded-[5px] flex items-center justify-center"
                 style={{
                   backgroundColor: `${
-                    sachDataDetail?.soLuong > 0 ? COLOR.primaryColor : "gray"
+                    !checkExitsOrMaxCart && sachDataDetail?.soLuong > 0
+                      ? COLOR.primaryColor
+                      : "gray"
                   }`,
                 }}
               >
-                Thêm vào giỏ hàng
+                {checkExitsOrMaxCart
+                  ? gioHangDataDetail?.danhSach.length == 5
+                    ? "Gio hang da day"
+                    : "Sản phẩm đã có trong giỏ hàng"
+                  : "Thêm vào giỏ hàng"}
               </button>
             </div>
           </div>
