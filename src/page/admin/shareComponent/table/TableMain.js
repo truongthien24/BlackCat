@@ -7,8 +7,14 @@ import { useTranslation } from "react-i18next";
 
 export const TableMain = (props) => {
   // Props
-  const { data, columns, handleEdit, handleDelete, allowEdit = true, allowDel = true} =
-    props;
+  const {
+    data,
+    columns,
+    handleEdit,
+    handleDelete,
+    allowEdit = true,
+    allowDel = true,
+  } = props;
 
   // State
   const [searchText, setSearchText] = useState("");
@@ -185,8 +191,8 @@ export const TableMain = (props) => {
                       </div>
                     ) : text === 5 ? (
                       <div className="flex items-center">
-                        <span className="w-[4px] h-[4px] rounded-[50%] bg-[#7a7a7a] block mr-[5px]"></span>
-                        <span className="text-[13px] text-[#7a7a7a]">
+                        <span className="w-[4px] h-[4px] rounded-[50%] bg-[#FF0000] block mr-[5px]"></span>
+                        <span className="text-[13px] text-[#FF0000]">
                           {t("Đã hủy")}
                         </span>
                       </div>

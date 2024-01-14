@@ -52,11 +52,24 @@ const ReviewContent = ({ data }) => {
             transform: "skew(10deg)",
           }}
         >
-          <span
+          {/* <span
             className="inline-block text-[18px] md:text-[22px] text-bold"
             style={{ transform: "skew(-10deg)" }}
           >
             {data?.gia?.toLocaleString()}đ
+          </span> */}
+          <span
+            className="inline-block text-[18px] md:text-[22px] text-bold"
+            style={{ transform: "skew(-10deg)" }}
+          >
+            {/* {sachDataDetail?.gia?.toLocaleString()}đ */}
+            {data?.maGiamGia
+              ? (
+                  data?.gia -
+                  (data?.gia * data?.phanTramGiamGia) / 100
+                )?.toLocaleString()
+              : data?.gia?.toLocaleString()}{" "}
+            VND
           </span>
         </div>
         <div className="flex items-center">
@@ -71,7 +84,11 @@ const ReviewContent = ({ data }) => {
             className="text-[white] p-[5px] rounded-[5px] inline-block mx-[5px]"
             style={{ backgroundColor: `${COLOR.primaryColor}` }}
           >
-            {(data?.gia * 0.1).toLocaleString()}
+            {(
+              (data?.maGiamGia
+                ? data?.gia - (data?.gia * data?.phanTramGiamGia) / 100
+                : data?.gia) * 0.1
+            )?.toLocaleString()}{" "}
           </span>
           / tuần
         </div>

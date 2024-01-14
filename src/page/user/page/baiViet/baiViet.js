@@ -23,7 +23,7 @@ export const BaiViet = () => {
             <img src={baiViet?.hinhAnh?.url} />
             <div className="p-[10px]">
               <span className="text-[12px] xl:text-[13px] text-[gray] mb-[5px]">
-                {baiViet?.ngayTao}
+                {new Date(baiViet?.ngayTao).toLocaleDateString()}
               </span>
               <p className="font-[500]">{baiViet?.noiDung}</p>
             </div>

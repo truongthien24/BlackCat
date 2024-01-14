@@ -35,7 +35,6 @@ const InfoBook = () => {
     setOnOpenRules((prev) => !prev);
   };
 
-
   // const { danhGiaData, isDataLoading, fetchData, isFetching } =
   //   useGetDataDanhGia(id);
 
@@ -124,6 +123,7 @@ const InfoBook = () => {
       }
     } else {
       toast.error("Bạn chưa đăng nhập");
+      navigate(`/login`);
     }
   };
 
@@ -239,9 +239,9 @@ const InfoBook = () => {
 
   useLoadingEffect(
     isDataDetailLoading ||
-    isLoading ||
-    isLoadingDanhGia ||
-    isLoadingCreateDanhGia
+      isLoading ||
+      isLoadingDanhGia ||
+      isLoadingCreateDanhGia
   );
 
   return (
@@ -288,7 +288,13 @@ const InfoBook = () => {
                 className="text-[white] p-[5px] rounded-[5px] inline-block mx-[5px]"
                 style={{ backgroundColor: `${COLOR.primaryColor}` }}
               >
-                {((sachDataDetail?.maGiamGia ? (sachDataDetail?.gia - ((sachDataDetail?.gia * sachDataDetail?.phanTramGiamGia) / 100)) : sachDataDetail?.gia) * 0.1)?.toLocaleString()}
+                {(
+                  (sachDataDetail?.maGiamGia
+                    ? sachDataDetail?.gia -
+                      (sachDataDetail?.gia * sachDataDetail?.phanTramGiamGia) /
+                        100
+                    : sachDataDetail?.gia) * 0.1
+                )?.toLocaleString()}
               </span>
               / tuần
             </div>
@@ -305,13 +311,29 @@ const InfoBook = () => {
                   style={{ transform: "skew(-10deg)" }}
                 >
                   {/* {sachDataDetail?.gia?.toLocaleString()}đ */}
-                  {sachDataDetail?.maGiamGia ? (sachDataDetail?.gia - ((sachDataDetail?.gia * sachDataDetail?.phanTramGiamGia) / 100))?.toLocaleString() : sachDataDetail?.gia?.toLocaleString()} VND
+                  {sachDataDetail?.maGiamGia
+                    ? (
+                        sachDataDetail?.gia -
+                        (sachDataDetail?.gia *
+                          sachDataDetail?.phanTramGiamGia) /
+                          100
+                      )?.toLocaleString()
+                    : sachDataDetail?.gia?.toLocaleString()}{" "}
+                  VND
                 </span>
               </div>
               <div className="ml-[30px]">
-                <p className="leading-[20px] text-[13px] md:text-[15px] lg:text-[17px] h-[20px]">{sachDataDetail?.maGiamGia ? <>
-                  <span className="text-[gray] line-through mr-[10px]">{sachDataDetail?.gia?.toLocaleString()}</span>
-                </> : ""}</p>
+                <p className="leading-[20px] text-[13px] md:text-[15px] lg:text-[17px] h-[20px]">
+                  {sachDataDetail?.maGiamGia ? (
+                    <>
+                      <span className="text-[gray] line-through mr-[10px]">
+                        {sachDataDetail?.gia?.toLocaleString()}
+                      </span>
+                    </>
+                  ) : (
+                    ""
+                  )}
+                </p>
               </div>
             </div>
             <div className="flex flex-col">
@@ -409,8 +431,9 @@ const InfoBook = () => {
                 disabled={sachDataDetail?.soLuong < 1}
                 className="text-[#fff] w-full p-[10px] rounded-[5px] flex items-center justify-center"
                 style={{
-                  backgroundColor: `${sachDataDetail?.soLuong > 0 ? COLOR.primaryColor : "gray"
-                    }`,
+                  backgroundColor: `${
+                    sachDataDetail?.soLuong > 0 ? COLOR.primaryColor : "gray"
+                  }`,
                 }}
               >
                 Thêm vào giỏ hàng
@@ -424,7 +447,7 @@ const InfoBook = () => {
           onChange={onChange}
           className="mt-[20px]"
         />
-        {/* Danh sach lien quan */}
+        {/* Danh sach liên quan */}
         <ModalRules
           open={openRules}
           onOpen={onRules}
