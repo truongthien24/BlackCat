@@ -32,7 +32,7 @@ export const ModalCreateRoom = (props) => {
 
   const { t } = useTranslation();
 
-  const { tacGia, theLoai, nhaXuatBan, nhaCungCap, ngonNgu } = useSelector(
+  const { tacGia, theLoai, nhaXuatBan, nhaCungCap, ngonNgu, giamGia } = useSelector(
     (state) => state.commonCode
   );
 
@@ -188,8 +188,24 @@ export const ModalCreateRoom = (props) => {
         required: true,
         label: "Bìa sách",
       },
+      {
+        name: "giamGia",
+        type: "select",
+        label: "Giam gia",
+        dataSelect: [
+          {
+            label: "No data",
+            value: null,
+          },
+          ...giamGia?.map((tg) => {
+          return {
+            label: tg?.tenMaGiamGia,
+            value: tg?._id,
+          }})
+        ],
+      },
     ];
-  }, [tacGia, theLoai, nhaXuatBan, nhaCungCap, ngonNgu]);
+  }, [tacGia, theLoai, nhaXuatBan, nhaCungCap, ngonNgu, giamGia]);
 
   const validationSchema = yup.object().shape({
     tienCoc: yup
@@ -233,7 +249,6 @@ export const ModalCreateRoom = (props) => {
 
   // Method
   const handleChangeImage = async (e) => {
-    console.log(e);
     const file = e.target.files[0];
     const base64 = await convertToBase64(file);
     console.log("base64", base64);

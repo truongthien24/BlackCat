@@ -20,7 +20,7 @@ const Book = (props) => {
 
   const navigate = useNavigate();
 
-  const {fetchDataAccount} = useContext(LayoutContext);
+  const { fetchDataAccount } = useContext(LayoutContext);
 
   const { userInfo } = useSelector((state) => state.home);
 
@@ -41,9 +41,8 @@ const Book = (props) => {
       if (findIndex == -1) {
         // Chưa tồn tại thì thêm vào mảng
         oldFavouriteCard.push({ sach: data?._id });
-        console.log('oldFavouriteCard', oldFavouriteCard)
         await mutate({
-          Data: { id: userInfo?._id, danhSachYeuThich: oldFavouriteCard },
+          Data: { _id: userInfo?._id, danhSachYeuThich: oldFavouriteCard },
           onSuccess: async (res) => {
             toast.success(res.data.message);
             await fetchDataAccount();
@@ -75,6 +74,11 @@ const Book = (props) => {
     <>
       <div className="rounded-[5px] bg-[white] cursor-pointer book">
         <div className="relative w-full book__heading">
+          {
+            data?.maGiamGia
+            &&
+            <img src="/images/sale.png" className="absolute top-[-2px] left-[-2px] w-[40px] md:w-[50px] xl:w-[60px] 2xl:w-[70px]" />
+          }
           <img
             src={data?.hinhAnh?.url}
             className="w-full h-[220px] md:h-[260px] 2xl:h-[300px] rounded-[5px] book__heading-img"
@@ -103,11 +107,21 @@ const Book = (props) => {
           onClick={chooseBook}
         >
           <h5>{data?.tenSach}</h5>
-          <span style={{ color: `${COLOR.primaryColor}` }} className="my-[7px]">
+          {/* <span style={{ color: `${COLOR.primaryColor}` }} className="my-[7px]">
             {(data?.gia * 0.1).toLocaleString()} VND
           </span>
           <span className="text-[13px] text-[#f7941d]">
             {data?.soLuong > 0 ? "Còn hàng" : "Hết hàng"}
+          </span> */}
+          <span style={{ color: `${COLOR.primaryColor}` }} className="my-[7px] font-[500]">
+            {data?.maGiamGia ? (data?.gia - ((data?.gia * data?.phanTramGiamGia) / 100))?.toLocaleString() : data?.gia?.toLocaleString()} VND
+          </span>
+          <p className="leading-[20px] text-[12px] md:text-[13px] lg:text-[14px] h-[20px]">{data?.maGiamGia ? <>
+            <span className="text-[#a5a4a4] line-through mr-[10px]">{data?.gia?.toLocaleString()}</span>
+            <span>-{data?.phanTramGiamGia}%</span>
+          </> : ""}</p>
+          <span className="text-[13px] text-[#f7941d] mt-[10px]">
+            {data?.soLuong > 0 ? "In Stock" : "Sold out"}
           </span>
         </div>
       </div>

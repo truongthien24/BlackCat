@@ -1,8 +1,11 @@
 import apiServices from "api";
+import _ from "lodash";
 import { useQuery } from "react-query";
 
 const getApiData = async (data) => {
   const params = data;
+
+  if(_.isEmpty(params?.theLoai) && _.isEmpty(params?.tenSach)) return;
 
   const sachs = await apiServices.book.findSach({
     ...params,

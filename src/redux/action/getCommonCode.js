@@ -26,6 +26,10 @@ export const getCommonCode = (name) => async (dispatch) => {
         routerCommonCode = "/getAllNgonNgu";
         break;
       }
+      case "giamGia": {
+        routerCommonCode = "/getAllGiamGia";
+        break;
+      }
       default:
         break;
     }

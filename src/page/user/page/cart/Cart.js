@@ -62,8 +62,6 @@ const Cart = () => {
 
   const { handleSubmit, watch, reset } = method;
 
-  console.log("watch", watch());
-
   useEffect(() => {
     if (gioHangDataDetail) {
       reset({ ...gioHangDataDetail });
@@ -123,7 +121,7 @@ const Cart = () => {
           await dispatch(
             setConfirm({
               status: "close",
-              method: () => {},
+              method: () => { },
             })
           );
         },
@@ -215,7 +213,8 @@ const Cart = () => {
                       ?.reduce(
                         (a, b) =>
                           a +
-                          b?.sach?.tienCoc * b?.soLuong +
+                          (b?.sach?.maGiamGia ? (b?.sach?.tienCoc - ((b?.sach?.tienCoc * b?.sach?.phanTramGiamGia) / 100)) : b?.sach?.tienCoc)
+                          * b?.soLuong +
                           b?.giaThue * b?.soLuong,
                         0
                       )
@@ -233,11 +232,10 @@ const Cart = () => {
                       //Điều kiện ở đây là !watch('danhSach')?.length > 0 || isEdit, có nghĩa là nút sẽ bị tắt nếu độ dài của  "danhSach" (thường là một mảng) là 0 hoặc biến isEdit có giá true
                     }
                     style={{
-                      backgroundColor: `${
-                        watch("danhSach")?.length > 0 && !isEdit
+                      backgroundColor: `${watch("danhSach")?.length > 0 && !isEdit
                           ? COLOR.primaryColor
                           : "gray"
-                      }`,
+                        }`,
                       // ?: là cặp if else
                       //watch('danhSach')?.length > 0 && !isEdit là true, màu nền sẽ được thiết lập thành COLOR.primaryColor, ngược lại nếu là false thì màu nền sẽ là "gray" (màu xám).
                     }}

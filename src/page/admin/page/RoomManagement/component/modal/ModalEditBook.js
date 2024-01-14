@@ -49,7 +49,7 @@ export const ModalEditBook = (props) => {
 
   const [isChangeImage, setIsChangeImage] = useState(false);
 
-  const { tacGia, theLoai, nhaXuatBan, nhaCungCap, ngonNgu } = useSelector(
+  const { tacGia, theLoai, nhaXuatBan, nhaCungCap, ngonNgu, giamGia } = useSelector(
     (state) => state.commonCode
   );
 
@@ -203,8 +203,24 @@ export const ModalEditBook = (props) => {
         required: true,
         label: "Bìa sách",
       },
+      {
+        name: "maGiamGia",
+        type: "select",
+        label: "Giam gia",
+        dataSelect: [
+          {
+            label: "No data",
+            value: "",
+          },
+          ...giamGia?.map((tg) => {
+          return {
+            label: tg?.tenMaGiamGia,
+            value: tg?._id,
+          }})
+        ],
+      },
     ];
-  }, [tacGia, theLoai, nhaXuatBan, nhaCungCap, ngonNgu]);
+  }, [tacGia, theLoai, nhaXuatBan, nhaCungCap, ngonNgu, giamGia]);
 
   const validationSchema = yup.object().shape({
     tienCoc: yup
@@ -273,6 +289,7 @@ export const ModalEditBook = (props) => {
         nhaCungCap: data?.maNhaCungCap,
         tacGia: data?.maTacGia,
         ngonNgu: data?.maNgonNgu,
+        giamGia: data?.maGiamGia,
       },
       onSuccess: async (msg) => {
         toast.success(msg?.data?.message);

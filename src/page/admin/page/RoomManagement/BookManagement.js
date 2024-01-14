@@ -33,6 +33,7 @@ export const BookManagement = () => {
     await dispatch(getCommonCode("nhaXuatBan"));
     await dispatch(getCommonCode("nhaCungCap"));
     await dispatch(getCommonCode("ngonNgu"));
+    await dispatch(getCommonCode("giamGia"));
   }, []);
 
   const { sachData, isDataLoading, fetchData, isFetching } = useGetDataBook(

@@ -22,6 +22,8 @@ import useCreateDanhGia from "page/admin/page/danhGiaManagement/hook/useCreateDa
 import { Reaction } from "page/user/component/Reaction";
 import { useState } from "react";
 import ModalRules from "./modal/ModalRules";
+import RelatedList from "./components/RelatedList";
+import useFindDataBook from "page/admin/page/RoomManagement/hook/useFindBook";
 
 const InfoBook = () => {
   const { id } = useParams();
@@ -32,6 +34,7 @@ const InfoBook = () => {
   const onRules = () => {
     setOnOpenRules((prev) => !prev);
   };
+
 
   // const { danhGiaData, isDataLoading, fetchData, isFetching } =
   //   useGetDataDanhGia(id);
@@ -236,13 +239,13 @@ const InfoBook = () => {
 
   useLoadingEffect(
     isDataDetailLoading ||
-      isLoading ||
-      isLoadingDanhGia ||
-      isLoadingCreateDanhGia
+    isLoading ||
+    isLoadingDanhGia ||
+    isLoadingCreateDanhGia
   );
 
   return (
-    <div className="md:pt-[150px] pb-[20px] min-h-[calc(100vh_-_300px)] flex justify-center">
+    <div className="md:pt-[150px] pb-[20px] min-h-[calc(100vh_-_300px)] flex flex-col items-center justify-center">
       <div className="flex flex-col bg-[#eaeaea] w-[95%] xl:w-[90%] 2xl:w-[70%] px-[25px] py-[20px]">
         <form
           className="grid md:grid-cols-2 lg:grid-cols-5 gap-[30px]"
@@ -285,23 +288,31 @@ const InfoBook = () => {
                 className="text-[white] p-[5px] rounded-[5px] inline-block mx-[5px]"
                 style={{ backgroundColor: `${COLOR.primaryColor}` }}
               >
-                {(sachDataDetail?.gia * 0.1).toLocaleString()}
+                {((sachDataDetail?.maGiamGia ? (sachDataDetail?.gia - ((sachDataDetail?.gia * sachDataDetail?.phanTramGiamGia) / 100)) : sachDataDetail?.gia) * 0.1)?.toLocaleString()}
               </span>
               / tuần
             </div>
-            <div
-              className="text-[white] py-[5px] px-[12px] max-w-fit my-[20px] ml-[5px]"
-              style={{
-                backgroundColor: `${COLOR.secondaryColor}`,
-                transform: "skew(10deg)",
-              }}
-            >
-              <span
-                className="inline-block text-[18px] md:text-[22px] text-bold"
-                style={{ transform: "skew(-10deg)" }}
+            <div className="my-[20px] ml-[5px] flex items-center">
+              <div
+                className="text-[white] py-[5px] px-[12px] max-w-fit"
+                style={{
+                  backgroundColor: `${COLOR.secondaryColor}`,
+                  transform: "skew(10deg)",
+                }}
               >
-                {sachDataDetail?.gia?.toLocaleString()}đ
-              </span>
+                <span
+                  className="inline-block text-[18px] md:text-[22px] text-bold"
+                  style={{ transform: "skew(-10deg)" }}
+                >
+                  {/* {sachDataDetail?.gia?.toLocaleString()}đ */}
+                  {sachDataDetail?.maGiamGia ? (sachDataDetail?.gia - ((sachDataDetail?.gia * sachDataDetail?.phanTramGiamGia) / 100))?.toLocaleString() : sachDataDetail?.gia?.toLocaleString()} VND
+                </span>
+              </div>
+              <div className="ml-[30px]">
+                <p className="leading-[20px] text-[13px] md:text-[15px] lg:text-[17px] h-[20px]">{sachDataDetail?.maGiamGia ? <>
+                  <span className="text-[gray] line-through mr-[10px]">{sachDataDetail?.gia?.toLocaleString()}</span>
+                </> : ""}</p>
+              </div>
             </div>
             <div className="flex flex-col">
               <ReviewInfoItem
@@ -398,9 +409,8 @@ const InfoBook = () => {
                 disabled={sachDataDetail?.soLuong < 1}
                 className="text-[#fff] w-full p-[10px] rounded-[5px] flex items-center justify-center"
                 style={{
-                  backgroundColor: `${
-                    sachDataDetail?.soLuong > 0 ? COLOR.primaryColor : "gray"
-                  }`,
+                  backgroundColor: `${sachDataDetail?.soLuong > 0 ? COLOR.primaryColor : "gray"
+                    }`,
                 }}
               >
                 Thêm vào giỏ hàng
@@ -414,12 +424,16 @@ const InfoBook = () => {
           onChange={onChange}
           className="mt-[20px]"
         />
+        {/* Danh sach lien quan */}
         <ModalRules
           open={openRules}
           onOpen={onRules}
           title="Chi tiết tác giả"
           data={sachDataDetail}
         />
+      </div>
+      <div className="w-[95%] xl:w-[90%] 2xl:w-[70%] px-[25px] py-[20px]">
+        <RelatedList data={sachDataDetail} />
       </div>
     </div>
   );

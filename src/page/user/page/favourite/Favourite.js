@@ -1,6 +1,9 @@
 import { Empty } from "antd";
+import useUpdateAccount from "page/admin/page/AccountManagement/hook/useUpdateAccount";
+import { LayoutContext } from "page/user/layout/Layout1";
 import { COLOR } from "page/user/shareComponent/constant";
-import React from "react";
+import React, { useContext } from "react";
+import { toast } from "react-hot-toast";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
@@ -9,8 +12,35 @@ const Favourite = () => {
 
   const navigate = useNavigate();
 
+  const { fetchDataAccount } = useContext(LayoutContext);
+
+  const { mutate, isLoading } = useUpdateAccount();
+
   const handleInfoBook = (sach) => {
     navigate(`/infoBook/${sach?._id}`);
+  };
+
+  const removeFromFavourite = async (data) => {
+    const newList = userInfo?.danhSachYeuThich;
+    const index = newList?.findIndex((item) => item.sach === data);
+    console.log('data', data)
+    console.log('index', index)
+    if (index > -1) {
+      newList.splice(index, 1);
+    }
+    await mutate({
+      Data: {
+        _id: userInfo?._id,
+        danhSachYeuThich: newList,
+      },
+      onSuccess: async (res) => {
+        await fetchDataAccount();
+        toast.success("Remove from favourite successfull");
+      },
+      onError: (err) => {
+        toast.error(err?.message);
+      },
+    });
   };
 
   const renderBook = () => {
@@ -25,16 +55,22 @@ const Favourite = () => {
               boxShadow: "rgba(17, 17, 26, 0.1) 0px 0px 16px",
               backgroundColor: `${COLOR.primaryColor}`,
             }}
-            onClick={() => handleInfoBook(sach?.sach)}
           >
+            <div
+              className="absolute top-[5px] right-[5px] text-[20px] z-[99] p-[5px]"
+              onClick={()=>removeFromFavourite(sach.sach)}
+            >
+              &times;
+            </div>
             <img
               className="col-span-2 h-full object-fit rounded-[10px]"
               src={sach?.sach?.hinhAnh?.url}
+              onClick={() => handleInfoBook(sach?.sach)}
             />
             <div className="col-span-3">
               <h5
                 className="text-[14px] md:text-[16px] lg:text-[18px] font-[500] text-[#fff]"
-                // style={{ color: `${COLOR.primaryColor}` }}
+              // style={{ color: `${COLOR.primaryColor}` }}
               >
                 {sach?.sach?.tenSach}
               </h5>
@@ -50,6 +86,8 @@ const Favourite = () => {
       return <Empty description="Chưa có sách yêu thích nào" />;
     }
   };
+
+
 
   return (
     <div className="md:pt-[150px] pb-[20px] min-h-[calc(100vh_-_300px)] flex justify-center">

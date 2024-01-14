@@ -24,8 +24,6 @@ const Cart = () => {
     }
   };
 
-  console.log("userInfo", userInfo);
-
   return (
     <button className="relative" onClick={handleClick}>
       <Icon name="cart" color={COLOR.primaryColor} />

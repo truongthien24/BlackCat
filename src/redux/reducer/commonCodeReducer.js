@@ -4,6 +4,7 @@ const initialValue = {
   nhaXuatBan: [],
   nhaCungCap: [],
   ngonNgu: [],
+  giamGia: [],
 };
 
 export const CommonCodeReducer = (state = initialValue, action) => {
@@ -28,6 +29,10 @@ export const CommonCodeReducer = (state = initialValue, action) => {
         }
         case "ngonNgu": {
           state.ngonNgu = action.payload.Data;
+          return { ...state };
+        }
+        case "giamGia": {
+          state.giamGia = action.payload.Data;
           return { ...state };
         }
         default:
