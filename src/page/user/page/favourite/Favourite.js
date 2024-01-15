@@ -23,9 +23,10 @@ const Favourite = () => {
   const removeFromFavourite = async (data) => {
     const newList = userInfo?.danhSachYeuThich;
     const index = newList?.findIndex((item) => item.sach === data);
-    console.log('data', data)
-    console.log('index', index)
+    console.log("data", data);
+    console.log("index", index);
     if (index > -1) {
+      //splice cắt vị trí thứ index bao nhiêu phần tử
       newList.splice(index, 1);
     }
     await mutate({
@@ -58,7 +59,7 @@ const Favourite = () => {
           >
             <div
               className="absolute top-[5px] right-[5px] text-[20px] z-[99] p-[5px]"
-              onClick={()=>removeFromFavourite(sach.sach)}
+              onClick={() => removeFromFavourite(sach.sach)}
             >
               &times;
             </div>
@@ -70,7 +71,7 @@ const Favourite = () => {
             <div className="col-span-3">
               <h5
                 className="text-[14px] md:text-[16px] lg:text-[18px] font-[500] text-[#fff]"
-              // style={{ color: `${COLOR.primaryColor}` }}
+                // style={{ color: `${COLOR.primaryColor}` }}
               >
                 {sach?.sach?.tenSach}
               </h5>
@@ -86,8 +87,6 @@ const Favourite = () => {
       return <Empty description="Chưa có sách yêu thích nào" />;
     }
   };
-
-
 
   return (
     <div className="md:pt-[150px] pb-[20px] min-h-[calc(100vh_-_300px)] flex justify-center">

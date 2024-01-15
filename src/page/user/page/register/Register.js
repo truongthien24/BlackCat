@@ -82,12 +82,12 @@ export const Register = () => {
   // })
 
   const registerUserTest = async (data) => {
-    // axios.post("http://localhost:3001/create-TaiKhoan", data?.data).then(result=>
     await mutate({
       Data: { ...data?.data },
       onSuccess: async (msg) => {
         toast.success(msg?.data?.message);
-        navigate('/login')
+        window.open("https://mail.google.com/mail", "_blank");
+        navigate("/login");
       },
       onError: async (err) => {
         toast.error(err?.error?.message);

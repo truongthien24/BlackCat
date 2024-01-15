@@ -1,6 +1,6 @@
 import useLoadingEffect from "fuse/hook/useLoadingEffect";
 import useGetDetailBook from "page/admin/page/RoomManagement/hook/useGetDetailBook";
-import React, { useEffect, useMemo } from "react";
+import React, { useContext, useEffect, useMemo } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import ReviewInfoItem from "page/user/component/AreaBook/modal/components/ReviewInfoItem";
 import { COLOR, COLOR1 } from "page/user/shareComponent/constant";
@@ -25,6 +25,7 @@ import ModalRules from "./modal/ModalRules";
 import RelatedList from "./components/RelatedList";
 import useFindDataBook from "page/admin/page/RoomManagement/hook/useFindBook";
 import useGetDetailGioHang from "page/admin/page/GioHangManagement/hook/userGetDetailGioHang";
+import { LayoutContext } from "page/user/layout/Layout1";
 
 const InfoBook = () => {
   const { id } = useParams();
@@ -35,6 +36,7 @@ const InfoBook = () => {
   const onRules = () => {
     setOnOpenRules((prev) => !prev);
   };
+  const { fetchDataAccount } = useContext(LayoutContext);
 
   // const { danhGiaData, isDataLoading, fetchData, isFetching } =
   //   useGetDataDanhGia(id);
@@ -120,7 +122,9 @@ const InfoBook = () => {
             },
             insert: true,
           },
-          onSuccess: (res) => {
+          onSuccess: async (res) => {
+            // await fetchDataAccount();
+            // window.location.reload();
             navigate(`/cart/${userInfo?.gioHang}`);
           },
           onError: (err) => {
@@ -254,9 +258,10 @@ const InfoBook = () => {
 
   const checkExitsOrMaxCart = useMemo(() => {
     return (
+      // kiểm tra giỏ hàng hiện tại
       gioHangDataDetail?.danhSach?.findIndex(
-        (sach) => sach.sach._id === sachDataDetail._id
-      ) != -1 || gioHangDataDetail?.danhSach?.length == 5
+        (item) => item?.sach?._id === sachDataDetail._id
+      ) != -1 || gioHangDataDetail?.danhSach?.length == 10
     );
   }, [gioHangDataDetail]);
 
@@ -455,7 +460,7 @@ const InfoBook = () => {
                 }}
               >
                 {checkExitsOrMaxCart
-                  ? gioHangDataDetail?.danhSach.length == 5
+                  ? gioHangDataDetail?.danhSach?.length == 10
                     ? "Gio hang da day"
                     : "Sản phẩm đã có trong giỏ hàng"
                   : "Thêm vào giỏ hàng"}

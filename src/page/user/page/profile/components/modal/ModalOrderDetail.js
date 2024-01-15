@@ -19,6 +19,8 @@ const ModalOrderDetail = ({ open, onOpen, title, data, fetcher }) => {
     content: "",
   });
 
+  console.log(data);
+
   const { mutate, isLoading } = useUpdateDonHang();
 
   const dispatch = useDispatch();
@@ -269,7 +271,10 @@ const ModalOrderDetail = ({ open, onOpen, title, data, fetcher }) => {
               >
                 Tình trạng đơn hàng:{" "}
               </h5>
-              <span>
+              <span
+                className="mr-[10px] font-[500] text-[15px]"
+                style={{ color: `${COLOR.secondaryColor}` }}
+              >
                 {data?.tinhTrang == 0
                   ? "Đã xác nhận"
                   : data?.tinhTrang == 1
@@ -281,6 +286,37 @@ const ModalOrderDetail = ({ open, onOpen, title, data, fetcher }) => {
                   : "Đã trả đơn"}
               </span>
             </div>
+            {data?.tinhTrang == 4 && (
+              <div className="flex items-center">
+                <h5
+                  className="mr-[10px] font-[500]"
+                  style={{ color: `${COLOR.primaryColor}` }}
+                >
+                  Ngày đã trả:{" "}
+                </h5>
+                <span>
+                  {new Date(
+                    data?.thongTinTraHang?.ngayKetThuc
+                  ).toLocaleDateString()}
+                </span>
+              </div>
+            )}
+
+            {data?.tinhTrang == 3 && (
+              <div className="flex items-center">
+                <h5
+                  className="mr-[10px] font-[500]"
+                  style={{ color: `${COLOR.primaryColor}` }}
+                >
+                  Ngày bắt đầu trả:{" "}
+                </h5>
+                <span>
+                  {new Date(
+                    data?.thongTinTraHang?.ngayBatDau
+                  ).toLocaleDateString()}
+                </span>
+              </div>
+            )}
             {data?.tinhTrang == 0 && (
               <button
                 className="flex justify-center w-full rounded-[10px] px-[20px] py-[10px] text-[white]"

@@ -32,8 +32,12 @@ const ModalReviewSach = ({ data, open = false, onReview, title }) => {
   const { sachDataDetail, isDataDetailLoading, fetchData, isFetching } =
     useGetDetailBook("0", "0", data?._id);
 
-  const { gioHangDataDetail, isDataDetailLoading: isGioHangLoading, fetchData: fetchGioHangDetail, isFetching: isFetchingGioHangDetail } =
-    useGetDetailGioHang("0", "0", userInfo?.gioHang);
+  const {
+    gioHangDataDetail,
+    isDataDetailLoading: isGioHangLoading,
+    fetchData: fetchGioHangDetail,
+    isFetching: isFetchingGioHangDetail,
+  } = useGetDetailGioHang("0", "0", userInfo?.gioHang);
 
   const { mutate, isLoading } = useUpdateGioHang();
 
@@ -70,8 +74,12 @@ const ModalReviewSach = ({ data, open = false, onReview, title }) => {
   }, [sachDataDetail]);
 
   const checkExitsOrMaxCart = useMemo(() => {
-    return gioHangDataDetail?.danhSach?.findIndex((sach) => sach.sach._id === sachDataDetail._id) != -1 || gioHangDataDetail?.danhSach?.length == 5
-  }, [gioHangDataDetail])
+    return (
+      gioHangDataDetail?.danhSach?.findIndex(
+        (sach) => sach.sach._id === sachDataDetail._id
+      ) != -1 || gioHangDataDetail?.danhSach?.length == 10
+    );
+  }, [gioHangDataDetail]);
 
   const addToCart = async (data) => {
     if (checkLogin()) {
@@ -83,7 +91,13 @@ const ModalReviewSach = ({ data, open = false, onReview, title }) => {
         await mutate({
           Data: {
             id: userInfo?.gioHang,
-            sach: { idSach: data?._id, soLuong: data?.soLuong, soNgayThue: 7, giaThue: getPercentRent(7) * data?.gia, tienCoc: data?.gia },
+            sach: {
+              idSach: data?._id,
+              soLuong: data?.soLuong,
+              soNgayThue: 7,
+              giaThue: getPercentRent(7) * data?.gia,
+              tienCoc: data?.gia,
+            },
             insert: true,
           },
           onSuccess: (res) => {
@@ -214,21 +228,18 @@ const ModalReviewSach = ({ data, open = false, onReview, title }) => {
               disabled={sachDataDetail?.soLuong < 1 || checkExitsOrMaxCart}
               className="text-[#fff] w-full p-[10px] rounded-[5px] flex items-center justify-center"
               style={{
-                backgroundColor: `${!checkExitsOrMaxCart && sachDataDetail?.soLuong > 0 ? COLOR.primaryColor : "gray"
-                  }`,
+                backgroundColor: `${
+                  !checkExitsOrMaxCart && sachDataDetail?.soLuong > 0
+                    ? COLOR.primaryColor
+                    : "gray"
+                }`,
               }}
             >
-              {
-                checkExitsOrMaxCart
-                  ?
-                  gioHangDataDetail?.danhSach.length == 5
-                  ?
-                  "Gio hang da day"
-                  :
-                  "Sản phẩm đã có trong giỏ hàng"
-                  :
-                  "Thêm vào giỏ hàng"
-              }
+              {checkExitsOrMaxCart
+                ? gioHangDataDetail?.danhSach.length == 10
+                  ? "Gio hang da day"
+                  : "Sản phẩm đã có trong giỏ hàng"
+                : "Thêm vào giỏ hàng"}
             </button>
           </div>
         </div>
