@@ -295,7 +295,7 @@ export const ModalEditBook = (props) => {
         toast.success(msg?.data?.message);
         await fetcher();
         await fetch();
-        // handleCancel();
+        handleCancel();
       },
       onError: async (err) => {
         toast.error(err?.error);

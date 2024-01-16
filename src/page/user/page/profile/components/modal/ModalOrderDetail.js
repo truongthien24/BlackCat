@@ -131,15 +131,17 @@ const ModalOrderDetail = ({ open, onOpen, title, data, fetcher }) => {
   const renderListOrder = () => {
     return data?.danhSach?.map((sach, index) => {
       return (
-        <div className="grid grid-cols-5 gap-[10px]" key={index}>
+        <div className="grid grid-cols-6 gap-[10px]" key={index}>
           <img
             src={sach?.sach?.hinhAnh?.url}
             className="w-[50px] xl:w-[70px] h-[100px]"
           />
           <p className="col-span-1">Tên sách: {sach?.sach?.tenSach}</p>
           <p>Thuê: {sach?.soNgayThue}ngày</p>
+          <p>Tiền thuê: {sach?.giaThue}</p>
           <p>Tiền cọc: {sach?.tienCoc}</p>
           <p>Số lượng: {sach?.soLuong}</p>
+
           {/* {data?.tinhTrang == 2 && (
             <PopoverReturnOrder
               sach={sach}

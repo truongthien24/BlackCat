@@ -127,6 +127,7 @@ const Book = (props) => {
               : data?.gia?.toLocaleString()}{" "}
             VND
           </span>
+          {/* {Hiển thị giá cũ và tiền giảm giá ra} */}
           <p className="leading-[20px] text-[12px] md:text-[13px] lg:text-[14px] h-[20px]">
             {data?.maGiamGia ? (
               <>
@@ -140,7 +141,7 @@ const Book = (props) => {
             )}
           </p>
           <span className="text-[13px] text-[#f7941d] mt-[10px]">
-            {data?.soLuong > 0 ? "In Stock" : "Sold out"}
+            {data?.soLuong > 0 ? "Còn hàng" : "Hết hàng"}
           </span>
         </div>
       </div>

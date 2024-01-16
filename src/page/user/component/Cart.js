@@ -29,6 +29,7 @@ const Cart = () => {
       <Icon name="cart" color={COLOR.primaryColor} />
       {!_.isEmpty(userInfo) ? (
         <div className="text-[#fff] p-[2px] min-w-[20px] box-border text-[10px] rounded-[50%] flex items-center justify-center absolute top-0 left-[70%] bg-[#498374]">
+          {/* {số lượng giỏ hàng có bao nhiêu sản phẩm} */}
           {gioHangDataDetail?.danhSach?.length}
         </div>
       ) : (

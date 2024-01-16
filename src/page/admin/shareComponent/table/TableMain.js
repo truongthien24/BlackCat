@@ -158,6 +158,7 @@ export const TableMain = (props) => {
           if (item.key === "tinhTrang") {
             obj = {
               ...item,
+              // ...getColumnSearchProps(`${item.dataIndex}`),
               render: (text) => {
                 return (
                   <div>
@@ -244,6 +245,7 @@ export const TableMain = (props) => {
 
         return dataResult.push(obj);
       });
+      /// hiển thị trên talbe
       dataResult.push({
         title: "Action",
         key: "operation",

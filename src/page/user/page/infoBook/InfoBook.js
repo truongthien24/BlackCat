@@ -449,19 +449,26 @@ const InfoBook = () => {
                 )}
               </div>
               <button
-                disabled={sachDataDetail?.soLuong < 1 || checkExitsOrMaxCart}
+                disabled={
+                  checkLogin() &&
+                  (sachDataDetail?.soLuong < 1 || checkExitsOrMaxCart)
+                }
                 className="text-[#fff] w-full p-[10px] rounded-[5px] flex items-center justify-center"
                 style={{
                   backgroundColor: `${
-                    !checkExitsOrMaxCart && sachDataDetail?.soLuong > 0
+                    !checkLogin()
+                      ? COLOR.primaryColor
+                      : !checkExitsOrMaxCart && sachDataDetail?.soLuong > 0
                       ? COLOR.primaryColor
                       : "gray"
                   }`,
                 }}
               >
-                {checkExitsOrMaxCart
+                {!checkLogin()
+                  ? "Thêm vào giỏ hàng"
+                  : checkExitsOrMaxCart
                   ? gioHangDataDetail?.danhSach?.length == 10
-                    ? "Gio hang da day"
+                    ? "Giỏ hàng đã đầy"
                     : "Sản phẩm đã có trong giỏ hàng"
                   : "Thêm vào giỏ hàng"}
               </button>
