@@ -11,6 +11,7 @@ import { Empty } from "antd";
 import { toast } from "react-hot-toast";
 import ModalOrderDetail from "./components/modal/ModalOrderDetail";
 import Setting from "./components/Setting";
+import ModalHistoryOrder from "./components/modal/ModalHistoryOrder";
 
 export const Profile = () => {
   // State
@@ -21,12 +22,17 @@ export const Profile = () => {
     selector: null,
   });
 
+  const [orderHistory, setOrderHistory] = useState({
+    open: false,
+    selector: null,
+  });
+
   // Somethings
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
   // Effect
-  useEffect(() => {}, []);
+  useEffect(() => { }, []);
 
   const { userInfo } = useSelector((state) => state.home);
 
@@ -36,7 +42,7 @@ export const Profile = () => {
   const donHangList = useMemo(() => {
     if (!_.isEmpty(donHangData)) {
       if (statusOrder == 2) {
-        return donHangData?.filter((i) => i.tinhTrang >= 2);
+        return donHangData?.filter((i) => i.tinhTrang == 2 || i.tinhTrang == 3 || i.tinhTrang == 4);
       }
       return donHangData?.filter((i) => i.tinhTrang === statusOrder);
     }
@@ -45,6 +51,10 @@ export const Profile = () => {
 
   const onOrderDetail = (onOrder) => {
     setOrderDetail(onOrder);
+  };
+
+  const onOrderHistory = (onOrder) => {
+    setOrderHistory(onOrder);
   };
 
   const onStatusOrder = (status) => {
@@ -209,7 +219,11 @@ export const Profile = () => {
                   <button
                     className="text-[13px] md:text-[14px] text-[#585858]"
                     onClick={() => {
-                      toast("Chức năng đang phát triển");
+                      // toast("Chức năng đang phát triển");
+                      onOrderHistory({
+                        open: true,
+                        selector: donHangData?.filter((item) => item.tinhTrang === 5)
+                      })
                     }}
                   >
                     Xem lịch sử đơn hàng
@@ -219,9 +233,8 @@ export const Profile = () => {
                   <button
                     className="flex relative justify-center items-center text-[13px] md:text-[14px] lg:text-[15px] rounded-[10px] py-[5px] px-[10px] duration-300"
                     style={{
-                      backgroundColor: `${
-                        statusOrder === 0 ? COLOR.primaryColor : "#fff"
-                      }`,
+                      backgroundColor: `${statusOrder === 0 ? COLOR.primaryColor : "#fff"
+                        }`,
                       color: `${statusOrder === 0 ? "#fff" : "#000"}`,
                     }}
                     onClick={() => onStatusOrder(0)}
@@ -252,9 +265,8 @@ export const Profile = () => {
                   <button
                     className="flex relative justify-center items-center text-[13px] md:text-[14px] lg:text-[15px] rounded-[10px] py-[5px] px-[10px] duration-300"
                     style={{
-                      backgroundColor: `${
-                        statusOrder === 1 ? COLOR.primaryColor : "#fff"
-                      }`,
+                      backgroundColor: `${statusOrder === 1 ? COLOR.primaryColor : "#fff"
+                        }`,
                       color: `${statusOrder === 1 ? "#fff" : "#000"}`,
                     }}
                     onClick={() => onStatusOrder(1)}
@@ -285,9 +297,8 @@ export const Profile = () => {
                   <button
                     className="flex relative justify-center items-center text-[13px] md:text-[14px] lg:text-[15px] rounded-[10px] py-[5px] px-[10px] duration-300"
                     style={{
-                      backgroundColor: `${
-                        statusOrder === 2 ? COLOR.primaryColor : "#fff"
-                      }`,
+                      backgroundColor: `${statusOrder === 2 ? COLOR.primaryColor : "#fff"
+                        }`,
                       color: `${statusOrder >= 2 ? "#fff" : "#000"}`,
                     }}
                     onClick={() => onStatusOrder(2)}
@@ -331,6 +342,9 @@ export const Profile = () => {
         title="Chi tiết đơn hàng"
         fetcher={fetchData}
       />
+      <ModalHistoryOrder open={orderHistory.open} data={orderHistory.selector}
+        onOpen={onOrderHistory}
+        title="Lich su don hang" />
     </>
   );
 };
