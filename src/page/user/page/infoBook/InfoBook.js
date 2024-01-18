@@ -1,6 +1,6 @@
 import useLoadingEffect from "fuse/hook/useLoadingEffect";
 import useGetDetailBook from "page/admin/page/RoomManagement/hook/useGetDetailBook";
-import React, { useEffect, useMemo } from "react";
+import React, { useContext, useEffect, useMemo } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import ReviewInfoItem from "page/user/component/AreaBook/modal/components/ReviewInfoItem";
 import { COLOR, COLOR1 } from "page/user/shareComponent/constant";
@@ -25,6 +25,7 @@ import ModalRules from "./modal/ModalRules";
 import RelatedList from "./components/RelatedList";
 import useFindDataBook from "page/admin/page/RoomManagement/hook/useFindBook";
 import useGetDetailGioHang from "page/admin/page/GioHangManagement/hook/userGetDetailGioHang";
+import { LayoutContext } from "page/user/layout/Layout1";
 
 const InfoBook = () => {
   const { id } = useParams();
@@ -35,7 +36,7 @@ const InfoBook = () => {
   const onRules = () => {
     setOnOpenRules((prev) => !prev);
   };
-
+  const { fetchDataAccount } = useContext(LayoutContext);
 
   // const { danhGiaData, isDataLoading, fetchData, isFetching } =
   //   useGetDataDanhGia(id);
@@ -47,8 +48,12 @@ const InfoBook = () => {
     isFetching: isFetchingDanhGia,
   } = useGetDataDanhGiaByIdSanPham("0", "0", { idSanPham: id });
 
-  const { gioHangDataDetail, isDataDetailLoading: isGioHangLoading, fetchData, isFetching } =
-    useGetDetailGioHang("0", "0", userInfo?.gioHang);
+  const {
+    gioHangDataDetail,
+    isDataDetailLoading: isGioHangLoading,
+    fetchData,
+    isFetching,
+  } = useGetDetailGioHang("0", "0", userInfo?.gioHang);
 
   // console.log("danhGiaDataDetail", danhGiaDataDetail);
 
@@ -117,7 +122,9 @@ const InfoBook = () => {
             },
             insert: true,
           },
-          onSuccess: (res) => {
+          onSuccess: async (res) => {
+            // await fetchDataAccount();
+            // window.location.reload();
             navigate(`/cart/${userInfo?.gioHang}`);
           },
           onError: (err) => {
@@ -128,6 +135,7 @@ const InfoBook = () => {
       }
     } else {
       toast.error("Bạn chưa đăng nhập");
+      navigate(`/login`);
     }
   };
 
@@ -243,14 +251,19 @@ const InfoBook = () => {
 
   useLoadingEffect(
     isDataDetailLoading ||
-    isLoading ||
-    isLoadingDanhGia ||
-    isLoadingCreateDanhGia
+      isLoading ||
+      isLoadingDanhGia ||
+      isLoadingCreateDanhGia
   );
 
   const checkExitsOrMaxCart = useMemo(() => {
-    return gioHangDataDetail?.danhSach?.findIndex((sach) => sach.sach._id === sachDataDetail._id) != -1 || gioHangDataDetail?.danhSach?.length == 5
-  }, [gioHangDataDetail])
+    return (
+      // kiểm tra giỏ hàng hiện tại
+      gioHangDataDetail?.danhSach?.findIndex(
+        (item) => item?.sach?._id === sachDataDetail._id
+      ) != -1 || gioHangDataDetail?.danhSach?.length == 10
+    );
+  }, [gioHangDataDetail]);
 
   return (
     <div className="md:pt-[150px] pb-[20px] min-h-[calc(100vh_-_300px)] flex flex-col items-center justify-center">
@@ -296,7 +309,13 @@ const InfoBook = () => {
                 className="text-[white] p-[5px] rounded-[5px] inline-block mx-[5px]"
                 style={{ backgroundColor: `${COLOR.primaryColor}` }}
               >
-                {((sachDataDetail?.maGiamGia ? (sachDataDetail?.gia - ((sachDataDetail?.gia * sachDataDetail?.phanTramGiamGia) / 100)) : sachDataDetail?.gia) * 0.1)?.toLocaleString()}
+                {(
+                  (sachDataDetail?.maGiamGia
+                    ? sachDataDetail?.gia -
+                      (sachDataDetail?.gia * sachDataDetail?.phanTramGiamGia) /
+                        100
+                    : sachDataDetail?.gia) * 0.1
+                )?.toLocaleString()}
               </span>
               / tuần
             </div>
@@ -313,13 +332,29 @@ const InfoBook = () => {
                   style={{ transform: "skew(-10deg)" }}
                 >
                   {/* {sachDataDetail?.gia?.toLocaleString()}đ */}
-                  {sachDataDetail?.maGiamGia ? (sachDataDetail?.gia - ((sachDataDetail?.gia * sachDataDetail?.phanTramGiamGia) / 100))?.toLocaleString() : sachDataDetail?.gia?.toLocaleString()} VND
+                  {sachDataDetail?.maGiamGia
+                    ? (
+                        sachDataDetail?.gia -
+                        (sachDataDetail?.gia *
+                          sachDataDetail?.phanTramGiamGia) /
+                          100
+                      )?.toLocaleString()
+                    : sachDataDetail?.gia?.toLocaleString()}{" "}
+                  VND
                 </span>
               </div>
               <div className="ml-[30px]">
-                <p className="leading-[20px] text-[13px] md:text-[15px] lg:text-[17px] h-[20px]">{sachDataDetail?.maGiamGia ? <>
-                  <span className="text-[gray] line-through mr-[10px]">{sachDataDetail?.gia?.toLocaleString()}</span>
-                </> : ""}</p>
+                <p className="leading-[20px] text-[13px] md:text-[15px] lg:text-[17px] h-[20px]">
+                  {sachDataDetail?.maGiamGia ? (
+                    <>
+                      <span className="text-[gray] line-through mr-[10px]">
+                        {sachDataDetail?.gia?.toLocaleString()}
+                      </span>
+                    </>
+                  ) : (
+                    ""
+                  )}
+                </p>
               </div>
             </div>
             <div className="flex flex-col">
@@ -414,24 +449,28 @@ const InfoBook = () => {
                 )}
               </div>
               <button
-                disabled={sachDataDetail?.soLuong < 1 || checkExitsOrMaxCart}
+                disabled={
+                  checkLogin() &&
+                  (sachDataDetail?.soLuong < 1 || checkExitsOrMaxCart)
+                }
                 className="text-[#fff] w-full p-[10px] rounded-[5px] flex items-center justify-center"
                 style={{
-                  backgroundColor: `${!checkExitsOrMaxCart && sachDataDetail?.soLuong > 0 ? COLOR.primaryColor : "gray"
-                    }`,
+                  backgroundColor: `${
+                    !checkLogin()
+                      ? COLOR.primaryColor
+                      : !checkExitsOrMaxCart && sachDataDetail?.soLuong > 0
+                      ? COLOR.primaryColor
+                      : "gray"
+                  }`,
                 }}
               >
-                {
-                  checkExitsOrMaxCart
-                    ?
-                    gioHangDataDetail?.danhSach.length == 5
-                    ?
-                    "Gio hang da day"
-                    :
-                    "Sản phẩm đã có trong giỏ hàng"
-                    :
-                    "Thêm vào giỏ hàng"
-                }
+                {!checkLogin()
+                  ? "Thêm vào giỏ hàng"
+                  : checkExitsOrMaxCart
+                  ? gioHangDataDetail?.danhSach?.length == 10
+                    ? "Giỏ hàng đã đầy"
+                    : "Sản phẩm đã có trong giỏ hàng"
+                  : "Thêm vào giỏ hàng"}
               </button>
             </div>
           </div>
@@ -442,7 +481,7 @@ const InfoBook = () => {
           onChange={onChange}
           className="mt-[20px]"
         />
-        {/* Danh sach lien quan */}
+        {/* Danh sach liên quan */}
         <ModalRules
           open={openRules}
           onOpen={onRules}

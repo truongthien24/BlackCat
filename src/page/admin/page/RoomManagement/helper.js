@@ -12,12 +12,27 @@ export const columns = (onClickFuncc) => {
       key: "tenTheLoai",
       width: "15%",
     },
+
     {
       title: "Số lượng",
       dataIndex: "soLuong",
       key: "soLuong",
-      width: "10%",
+      width: "15%",
     },
+
+    // {
+    //   title: "Tong hop",
+    //   dataIndex: "soLuong",
+    //   key: "soLuong",
+    //   width: "10%",
+    //   cell: (cell) => {
+    //     return (
+    //       <span>
+    //         {cell?.tenTheLoai} - {cell?.soLuong}
+    //       </span>
+    //     );
+    //   },
+    // },
     {
       title: "Tác giả",
       dataIndex: "tenTacGia",

@@ -49,9 +49,8 @@ export const ModalEditBook = (props) => {
 
   const [isChangeImage, setIsChangeImage] = useState(false);
 
-  const { tacGia, theLoai, nhaXuatBan, nhaCungCap, ngonNgu, giamGia } = useSelector(
-    (state) => state.commonCode
-  );
+  const { tacGia, theLoai, nhaXuatBan, nhaCungCap, ngonNgu, giamGia } =
+    useSelector((state) => state.commonCode);
 
   const { mutate, isLoading: isSubmitting } = useUpdateBook();
 
@@ -209,14 +208,15 @@ export const ModalEditBook = (props) => {
         label: "Giam gia",
         dataSelect: [
           {
-            label: "No data",
+            label: "Không có giảm giá",
             value: "",
           },
           ...giamGia?.map((tg) => {
-          return {
-            label: tg?.tenMaGiamGia,
-            value: tg?._id,
-          }})
+            return {
+              label: tg?.tenMaGiamGia,
+              value: tg?._id,
+            };
+          }),
         ],
       },
     ];
@@ -295,7 +295,7 @@ export const ModalEditBook = (props) => {
         toast.success(msg?.data?.message);
         await fetcher();
         await fetch();
-        // handleCancel();
+        handleCancel();
       },
       onError: async (err) => {
         toast.error(err?.error);

@@ -152,7 +152,7 @@ export const Reaction = (props) => {
                     status: "open",
                     method: async () =>
                       await mutate({
-                        Data: { id: danhGia?._id },
+                        Data: { _id: danhGia?._id },
                         onSuccess: async (res) => {
                           toast.success(res?.data?.message);
                           fetcher();

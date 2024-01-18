@@ -138,7 +138,8 @@ const CartItem = ({ arrayData, data, columns, isEdit, gioHang }) => {
                           className="bg-[#dcdbdb] w-[20px] h-[20px] md:w-[35px] md:h-[35px] flex items-center justify-center"
                           onClick={() => handleChangeQuantity("plus")}
                           disabled={
-                            watch(`danhSach[${indexItem}].soLuong`) === 5
+                            watch(`danhSach[${indexItem}].soLuong`) ===
+                            data?.sach?.soLuong
                           }
                         >
                           <svg

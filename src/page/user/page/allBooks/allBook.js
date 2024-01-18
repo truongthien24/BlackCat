@@ -27,7 +27,6 @@ export const AllBooks = () => {
 
   const navigate = useNavigate();
 
-  
   const items = [];
 
   const onChange = (key) => {
@@ -35,10 +34,10 @@ export const AllBooks = () => {
   };
 
   const renderBook = () => {
-    return sachData?.map((book, index)=> {
-      return <Book data={book} key={index}/>
-    })
-  }
+    return sachData?.map((book, index) => {
+      return <Book data={book} key={index} />;
+    });
+  };
 
   useLoadingEffect(isDataLoading);
 

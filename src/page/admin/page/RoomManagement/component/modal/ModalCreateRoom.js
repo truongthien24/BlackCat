@@ -32,9 +32,8 @@ export const ModalCreateRoom = (props) => {
 
   const { t } = useTranslation();
 
-  const { tacGia, theLoai, nhaXuatBan, nhaCungCap, ngonNgu, giamGia } = useSelector(
-    (state) => state.commonCode
-  );
+  const { tacGia, theLoai, nhaXuatBan, nhaCungCap, ngonNgu, giamGia } =
+    useSelector((state) => state.commonCode);
 
   useEffect(() => {
     if (isOpen) {
@@ -194,14 +193,15 @@ export const ModalCreateRoom = (props) => {
         label: "Giam gia",
         dataSelect: [
           {
-            label: "No data",
+            label: "Không có giảm giá",
             value: null,
           },
           ...giamGia?.map((tg) => {
-          return {
-            label: tg?.tenMaGiamGia,
-            value: tg?._id,
-          }})
+            return {
+              label: tg?.tenMaGiamGia,
+              value: tg?._id,
+            };
+          }),
         ],
       },
     ];

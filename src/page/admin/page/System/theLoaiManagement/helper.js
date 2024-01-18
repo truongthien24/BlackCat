@@ -1,12 +1,15 @@
 export const columns = (onClickFuncc) => {
   return [
     {
-      title: 'Tên thể loại',
-      dataIndex: 'tenTheLoai',
-      key: 'tenTheLoai',
+      title: "Tên thể loại",
+      dataIndex: "tenTheLoai",
+      key: "tenTheLoai",
     },
-  ]
-}
+    {
+      title: "Sửa",
+    },
+  ];
+};
 
 // getDataTable
 export const getDataTable = (data) => {
