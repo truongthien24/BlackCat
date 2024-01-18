@@ -131,6 +131,8 @@ const Cart = () => {
 
   useLoadingEffect(isLoading || isDataDetailLoading || isLoadingUpdateGioHang);
 
+  console.log('watch("danhSach")', watch("danhSach"))
+
   return (
     <>
       <div className="md:pt-[150px] pb-[20px] min-h-[calc(100vh_-_300px)] flex justify-center">
@@ -177,7 +179,7 @@ const Cart = () => {
                             Data: {
                               id: userInfo?.gioHang,
                               // watch là lấy dữ liệu trong form
-                              sach: watch("danhSach"),
+                              sach: watch("danhSach")?.filter((item)=> item.sach != null),
                               insert: false,
                               update: true,
                             },

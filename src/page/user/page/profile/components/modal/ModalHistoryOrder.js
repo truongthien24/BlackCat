@@ -1,12 +1,13 @@
 import { Empty, Modal } from 'antd';
 import _ from 'lodash';
-import React from 'react'
+import React, { useState } from 'react'
 
-const ModalHistoryOrder = ({ open, onOpen, title, donHangList }) => {
+const ModalHistoryOrder = ({ open, onOpen, title, data, onOrderDetail }) => {
+
     const renderData = () => {
-        if (!_.isEmpty(donHangList)) {
+        if (!_.isEmpty(data)) {
             /// map là xử lý mảng
-            return donHangList?.map((donHang, index) => {
+            return data?.map((donHang, index) => {
                 return (
                     <div className="grid grid-cols-1 gap-[10px] bg-[#84bcaf4a] p-[10px] rounded-[5px]">
                         <div className="flex justify-between text-[13px] xl:text-[14px]">
@@ -32,17 +33,17 @@ const ModalHistoryOrder = ({ open, onOpen, title, donHangList }) => {
                                         donHang?.thongTinGiaoHang?.ngayNhanHangDuKien?.ngayKetThuc}
                                 </div>
                             </div>
-                            {/* <button
-                      className="text-[12px] lg:text-[13px] font-[600] text-[#f78700]"
-                      onClick={() => {
-                        onOrderDetail({
-                          open: true,
-                          selector: donHang,
-                        });
-                      }}
-                    >
-                      Xem chi tiết
-                    </button> */}
+                            <button
+                                className="text-[12px] lg:text-[13px] font-[600] text-[#f78700]"
+                                onClick={() => {
+                                    onOrderDetail({
+                                        open: true,
+                                        selector: donHang,
+                                    });
+                                }}
+                            >
+                                Xem chi tiết
+                            </button>
                         </div>
                         <div className="flex items-center text-[12px] xl:text-[13px]">
                             <div>

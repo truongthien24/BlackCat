@@ -42,7 +42,7 @@ export const Profile = () => {
   const donHangList = useMemo(() => {
     if (!_.isEmpty(donHangData)) {
       if (statusOrder == 2) {
-        return donHangData?.filter((i) => i.tinhTrang == 2 || i.tinhTrang == 3 || i.tinhTrang == 4);
+        return donHangData?.filter((i) => i.tinhTrang == 2);
       }
       return donHangData?.filter((i) => i.tinhTrang === statusOrder);
     }
@@ -222,7 +222,7 @@ export const Profile = () => {
                       // toast("Chức năng đang phát triển");
                       onOrderHistory({
                         open: true,
-                        selector: donHangData?.filter((item) => item.tinhTrang === 5)
+                        selector: donHangData?.filter((item) => item.tinhTrang > 2)
                       })
                     }}
                   >
@@ -321,7 +321,7 @@ export const Profile = () => {
                     <span className="absolute right-[0px] top-[-10px] bg-[#e42e2e] text-[#fff] flex items-center justify-center text-[13px] w-[20px] h-[20px] rounded-[50%]">
                       {
                         (donHangData?.filter(
-                          (donHang) => donHang.tinhTrang >= 2
+                          (donHang) => donHang.tinhTrang == 2
                         )).length
                       }
                     </span>
@@ -344,6 +344,7 @@ export const Profile = () => {
       />
       <ModalHistoryOrder open={orderHistory.open} data={orderHistory.selector}
         onOpen={onOrderHistory}
+        onOrderDetail={onOrderDetail}
         title="Lich su don hang" />
     </>
   );
