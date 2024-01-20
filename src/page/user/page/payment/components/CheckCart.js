@@ -10,6 +10,7 @@ import { useSelector } from "react-redux";
 import ModalRules from "./modals/ModalRules";
 
 const BookCartItem = ({ book }) => {
+  console.log('book', book)
   return (
     <div className="flex items-center justify-between w-full">
       <div className="flex">
@@ -55,7 +56,12 @@ const BookCartItem = ({ book }) => {
       </div>
       <div className="">
         <p className="text-[12px] md:text-[14px]">
-          Thành tiền: <span>{book?.tongTien}</span>
+          {/* Thành tiền: <span>{book?.tongTien}</span> */}
+          Thành tiền: <span className="font-bold" style={{color: COLOR.secondaryColor}}>{(
+                    parseInt(book?.sach?.tienCoc) * parseInt(book?.soLuong) +
+                    book.giaThue *
+                      parseInt(book?.soLuong)
+                  )?.toLocaleString()}</span>
         </p>
       </div>
     </div>

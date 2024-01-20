@@ -32,6 +32,7 @@ import Favourite from "page/user/page/favourite/Favourite";
 import TaiKhoanManagement from "page/admin/page/AccountManagement/TaiKhoanManagement";
 import { About } from "page/user/page/about/about";
 import { BaiViet } from "page/user/page/baiViet/baiViet";
+import KhachHangManagement from "page/admin/page/KhachHangManagement/KhachHangManagement";
 
 export const MainRoutes = () => {
   const { pathname } = useLocation();
@@ -97,6 +98,7 @@ export const MainRoutes = () => {
           <Route path="baiVietManagement" element={<BaiVietManagement />} />
           <Route path="donHangManagement" element={<DonHangManagement />} />
           <Route path="danhGiaManagement" element={<DanhGiaManagement />} />
+          <Route path="khachHangManagement" element={<KhachHangManagement />} />
           <Route
             path="nhaCungCapManagement"
             element={<NhaCungCapManagement />}

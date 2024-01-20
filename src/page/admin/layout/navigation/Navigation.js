@@ -198,6 +198,17 @@ export const Navigation = () => {
       "13",
       <WindowsOutlined />
     ),
+    getItem(
+      <div
+        onClick={() => {
+          navigate("/admin/khachHangManagement");
+        }}
+      >
+        Quản lý khach hang
+      </div>,
+      "14",
+      <WindowsOutlined />
+    ),
   ];
 
   return (

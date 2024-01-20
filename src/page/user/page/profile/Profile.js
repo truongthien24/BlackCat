@@ -41,9 +41,9 @@ export const Profile = () => {
 
   const donHangList = useMemo(() => {
     if (!_.isEmpty(donHangData)) {
-      if (statusOrder == 2) {
-        return donHangData?.filter((i) => i.tinhTrang == 2);
-      }
+      // if (statusOrder == 2) {
+      //   return donHangData?.filter((i) => i.tinhTrang == 2);
+      // }
       return donHangData?.filter((i) => i.tinhTrang === statusOrder);
     }
     return [];
@@ -130,9 +130,9 @@ export const Profile = () => {
   return (
     <>
       <div className="md:pt-[150px] pb-[20px] min-h-[calc(100vh_-_300px)] flex justify-center">
-        <div className="flex flex-col items-center bg-[#eaeaea] w-[95%] xl:w-[90%] 2xl:w-[70%] px-[25px] py-[20px]">
+        <div className="flex flex-col items-center bg-[#eaeaea] w-[95%] xl:w-[90%] 2xl:w-[70%] px-[15px] py-[20px]">
           <h3 className="mb-[30px] text-[20px]">Thông tin tài khoản</h3>
-          <div className="w-full grid lg:grid-cols-5 gap-[20px]">
+          <div className="w-full grid lg:grid-cols-6 gap-[10px]">
             <div
               className="rounded-[10px] p-[10px] col-span-2"
               style={{
@@ -191,7 +191,7 @@ export const Profile = () => {
               </div>
             </div>
             <div
-              className="rounded-[10px] p-[10px] col-span-3 grid grid-cols-1 gap-[30px]"
+              className="rounded-[10px] p-[10px] col-span-4 grid grid-cols-1 gap-[30px]"
               style={{
                 boxShadow:
                   "rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px",
@@ -222,14 +222,14 @@ export const Profile = () => {
                       // toast("Chức năng đang phát triển");
                       onOrderHistory({
                         open: true,
-                        selector: donHangData?.filter((item) => item.tinhTrang > 2)
+                        selector: donHangData?.filter((item) => item.tinhTrang === 4)
                       })
                     }}
                   >
                     Xem lịch sử đơn hàng
                   </button>
                 </div>
-                <div className="grid grid-cols-3 gap-[10px] mt-[15px]">
+                <div className="grid grid-cols-5 gap-[10px] mt-[15px]">
                   <button
                     className="flex relative justify-center items-center text-[13px] md:text-[14px] lg:text-[15px] rounded-[10px] py-[5px] px-[10px] duration-300"
                     style={{
@@ -253,7 +253,7 @@ export const Profile = () => {
                         d="M4.5 12.75l6 6 9-13.5"
                       />
                     </svg>
-                    <span className="ml-[5px]">Đã xác nhận</span>
+                    <span className="ml-[5px]">Xác nhận</span>
                     <span className="absolute right-[0px] top-[-10px] bg-[#e42e2e] text-[#fff] flex items-center justify-center text-[13px] w-[20px] h-[20px] rounded-[50%]">
                       {
                         (donHangData?.filter(
@@ -299,7 +299,7 @@ export const Profile = () => {
                     style={{
                       backgroundColor: `${statusOrder === 2 ? COLOR.primaryColor : "#fff"
                         }`,
-                      color: `${statusOrder >= 2 ? "#fff" : "#000"}`,
+                      color: `${statusOrder === 2 ? "#fff" : "#000"}`,
                     }}
                     onClick={() => onStatusOrder(2)}
                   >
@@ -322,6 +322,49 @@ export const Profile = () => {
                       {
                         (donHangData?.filter(
                           (donHang) => donHang.tinhTrang == 2
+                        )).length
+                      }
+                    </span>
+                  </button>
+                  <button
+                    className="flex relative justify-center items-center text-[13px] md:text-[14px] lg:text-[15px] rounded-[10px] py-[5px] px-[10px] duration-300"
+                    style={{
+                      backgroundColor: `${statusOrder === 3 ? COLOR.primaryColor : "#fff"
+                        }`,
+                      color: `${statusOrder ===3 ? "#fff" : "#000"}`,
+                    }}
+                    onClick={() => onStatusOrder(3)}
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" />
+                    </svg>
+                    <span className="ml-[5px]">Đang trả</span>
+                    <span className="absolute right-[0px] top-[-10px] bg-[#e42e2e] text-[#fff] flex items-center justify-center text-[13px] w-[20px] h-[20px] rounded-[50%]">
+                      {
+                        (donHangData?.filter(
+                          (donHang) => donHang.tinhTrang == 3
+                        )).length
+                      }
+                    </span>
+                  </button>
+                  <button
+                    className="flex relative justify-center items-center text-[13px] md:text-[14px] lg:text-[15px] rounded-[10px] py-[5px] px-[10px] duration-300"
+                    style={{
+                      backgroundColor: `${statusOrder === 5 ? COLOR.primaryColor : "#fff"
+                        }`,
+                      color: `${statusOrder === 5  ? "#fff" : "#000"}`,
+                    }}
+                    onClick={() => onStatusOrder(5)}
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M15.182 16.318A4.486 4.486 0 0 0 12.016 15a4.486 4.486 0 0 0-3.198 1.318M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0ZM9.75 9.75c0 .414-.168.75-.375.75S9 10.164 9 9.75 9.168 9 9.375 9s.375.336.375.75Zm-.375 0h.008v.015h-.008V9.75Zm5.625 0c0 .414-.168.75-.375.75s-.375-.336-.375-.75.168-.75.375-.75.375.336.375.75Zm-.375 0h.008v.015h-.008V9.75Z" />
+                    </svg>
+
+                    <span className="ml-[5px]">Đã huỷ</span>
+                    <span className="absolute right-[0px] top-[-10px] bg-[#e42e2e] text-[#fff] flex items-center justify-center text-[13px] w-[20px] h-[20px] rounded-[50%]">
+                      {
+                        (donHangData?.filter(
+                          (donHang) => donHang.tinhTrang == 5
                         )).length
                       }
                     </span>

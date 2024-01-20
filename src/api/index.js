@@ -12,6 +12,7 @@ import gioHang from "./gioHang";
 import maGiam from "./giamGia";
 import donHang from "./donHang";
 import danhGia from "./danhGia";
+import khachHang from "./khachHang";
 
 const apiService = {
   taiKhoan,
@@ -28,6 +29,7 @@ const apiService = {
   maGiam,
   donHang,
   danhGia,
+  khachHang,
 };
 
 export default apiService;
